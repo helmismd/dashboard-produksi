@@ -106,3 +106,32 @@ async function loadDashboard() {
 loadDashboard();
 
 setInterval(loadDashboard, 60000);
+
+function updateJam(){
+
+    const sekarang = new Date();
+
+    const hari = [
+        "Minggu","Senin","Selasa","Rabu",
+        "Kamis","Jumat","Sabtu"
+    ];
+
+    const bulan = [
+        "Januari","Februari","Maret","April",
+        "Mei","Juni","Juli","Agustus",
+        "September","Oktober","November","Desember"
+    ];
+
+    const teks =
+        hari[sekarang.getDay()] + ", " +
+        sekarang.getDate() + " " +
+        bulan[sekarang.getMonth()] + " " +
+        sekarang.getFullYear() + " | " +
+        sekarang.toLocaleTimeString("id-ID") + " WITA";
+
+    document.getElementById("jamDigital").textContent = teks;
+}
+
+updateJam();
+
+setInterval(updateJam,1000);

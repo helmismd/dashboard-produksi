@@ -128,3 +128,21 @@ h2{
     max-height:400px;
 
 }
+
+.info-header{
+    text-align:center;
+    margin:15px 0 25px;
+}
+
+#onlineStatus{
+    color:#16a34a;
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+#jamDigital{
+    color:#555;
+    font-size:20px;
+    font-weight:bold;
+}
