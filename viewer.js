@@ -15,6 +15,8 @@ async function loadDashboard() {
 
         const data = await response.json();
 
+console.log(data.stokSilo);
+
         document.getElementById("periode").textContent =
             data.periode;
 
@@ -35,6 +37,15 @@ async function loadDashboard() {
 
         document.getElementById("total").textContent =
             formatTon(data.grandTotal);
+
+	document.getElementById("stokOPC").textContent =
+  	  formatTon(data.stokSilo.opc);
+
+	document.getElementById("stokPCC").textContent =
+   	 formatTon(data.stokSilo.pcc);
+
+	document.getElementById("stokEfektif").textContent =
+    	formatTon(data.stokSilo.efektif);
 
         document.getElementById("opcPersen").textContent =
             ((data.totalOPC / data.grandTotal) * 100).toFixed(2) + " %";
@@ -131,6 +142,8 @@ function updateJam(){
 
     document.getElementById("jamDigital").textContent = teks;
 }
+
+console.log(teks);
 
 updateJam();
 
