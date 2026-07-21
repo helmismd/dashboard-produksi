@@ -35,7 +35,6 @@ fetch("data.json")
 
     console.error(err);
 
-    document.getElementById("lastUpdate").textContent =
-        "Gagal membaca data.json";
+    alert(err);
 
 });
