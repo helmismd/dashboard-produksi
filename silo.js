@@ -38,4 +38,38 @@ fetch("data.json")
 
     persenPCC = Math.max(0, Math.min(100, persenPCC));
 
+    // ==========================
+    // TAMPILKAN OPC
+    // ==========================
+
+    document.getElementById("stockOPC").textContent =
+        stokOPC.toFixed(2) + " Ton";
+
+    document.getElementById("percentOPC").textContent =
+        persenOPC.toFixed(1) + " %";
+
+    document.getElementById("levelOPC").style.height =
+        persenOPC + "%";
+
+    // ==========================
+    // TAMPILKAN PCC
+    // ==========================
+
+    document.getElementById("stockPCC").textContent =
+        stokPCC.toFixed(2) + " Ton";
+
+    document.getElementById("percentPCC").textContent =
+        persenPCC.toFixed(1) + " %";
+
+    document.getElementById("levelPCC").style.height =
+        persenPCC + "%";
+
+})
+.catch(err => {
+
+    console.error(err);
+
+    document.getElementById("lastUpdate").textContent =
+        "Gagal membaca data.json";
+
 });
