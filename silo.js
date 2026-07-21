@@ -1,4 +1,4 @@
-//const level = document.getElementById("level1");
+const level = document.getElementById("level1");
 //
 //level.style.height = "10%";
 //
@@ -7,16 +7,4 @@ const kapasitas = 6000;
 
 const persen = (stok / kapasitas) * 100;
 
-level.style.height = persen + "%";//
-//
-
-fetch("data.json")
-    .then(res => res.json())
-    .then(data => {
-
-        console.log(data);
-
-    });
-
-
-
+level.style.height = persen + "%";
