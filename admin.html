@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Produksi Harian</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>PACKING PLANT SAMARINDA</h1>
+        <h2>Dashboard Produksi</h2>
+
+
+<div style="text-align:center; margin:20px 0;">
+
+    <input type="file"
+           id="excelFile"
+           accept=".xlsx,.xls">
+
+    <br><br>
+
+    <button id="publishBtn">🚀 Publish Dashboard</button>
+<hr style="margin:30px 0">
+
+<h3>⚙️ Pengaturan GitHub</h3>
+
+<input type="password"
+       id="githubToken"
+       placeholder="Masukkan GitHub Personal Access Token"
+       style="width:500px;max-width:95%;padding:8px;">
+
+<br><br>
+
+<label>
+<input type="checkbox" id="rememberToken">
+ Ingat token di komputer ini
+</label>
+
+<br><br>
+
+<button id="saveTokenBtn">
+💾 Simpan Token
+</button>
+
+</div>        <div class="card tanggal">
+    <h2>AKUMULASI PRODUKSI</h2>
+
+<h3 id="periode"></h3>
+
+<p id="lastUpdate">
+    Data terakhir diperbarui : -
+</p>
+</div>
+
+	<div class="cards">
+
+        <div class="card">
+            <h3>Produksi OPC</h3>
+            <h2 id="opc">0 Ton</h2>
+            <p id="opcPersen">0%</p>
+        </div>
+
+        <div class="card">
+            <h3>Produksi PCC</h3>
+            <h2 id="pcc">0 Ton</h2>
+            <p id="pccPersen">0%</p>
+        </div>
+
+        <div class="card">
+            <h3>Produksi Bag</h3>
+            <h2 id="bag">0 Ton</h2>
+            <p id="bagPersen">0%</p>
+        </div>
+
+        <div class="card">
+            <h3>Produksi Bulk</h3>
+            <h2 id="bulk">0 Ton</h2>
+            <p id="bulkPersen">0%</p>
+        </div>
+	
+	</div>
+        <div class="total">
+            <h2>TOTAL PRODUKSI</h2>
+            <h1 id="total">0 Ton</h1>
+        </div>
+
+	<div class="grafik">
+
+    <h2>Grafik Produksi Harian</h2>
+
+    <canvas id="grafikProduksi"></canvas>
+
+	</div>
+       
+
+        <div class="status">
+            <b>Status Produksi :</b>
+            <span id="status">-</span>
+        </div>
+
+    </div>
+
+    </div>
+
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
