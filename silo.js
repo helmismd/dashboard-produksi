@@ -2,39 +2,40 @@ fetch("data.json")
 .then(res => res.json())
 .then(data => {
 
-    // Last Update
+    // ==========================
+    // LAST UPDATE
+    // ==========================
+
     document.getElementById("lastUpdate").textContent =
         data.lastUpdate;
 
-    // Stock OPC
-    const stok = data.stokSilo.opc;
+    // ==========================
+    // KONSTANTA
+    // ==========================
 
-    // Kapasitas
     const kapasitas = 6000;
     const deadStock = 200;
 
-    // Hitung %
-    let persen =
-        ((stok - deadStock) / (kapasitas - deadStock)) * 100;
+    // ==========================
+    // DATA OPC
+    // ==========================
 
-    persen = Math.max(0, Math.min(100, persen));
+    const stokOPC = data.stokSilo.opc;
 
-    // Tampilkan data
-    document.querySelector(".stock").textContent =
-        stok.toFixed(2) + " Ton";
+    let persenOPC =
+        ((stokOPC - deadStock) / (kapasitas - deadStock)) * 100;
 
-    document.querySelector(".percent").textContent =
-        persen.toFixed(1) + " %";
+    persenOPC = Math.max(0, Math.min(100, persenOPC));
 
-    // Isi silo
-    document.getElementById("level1").style.height =
-        persen + "%";
+    // ==========================
+    // DATA PCC
+    // ==========================
 
-})
-.catch(err => {
+    const stokPCC = data.stokSilo.pcc;
 
-    console.error(err);
+    let persenPCC =
+        ((stokPCC - deadStock) / (kapasitas - deadStock)) * 100;
 
-    alert(err);
+    persenPCC = Math.max(0, Math.min(100, persenPCC));
 
 });
