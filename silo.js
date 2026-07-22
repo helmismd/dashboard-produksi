@@ -44,7 +44,10 @@ fetch("data.json")
     // ==========================
 
     document.getElementById("stockOPC").textContent =
-        stokOPC.toFixed(2) + " Ton";
+    stokOPC.toLocaleString("id-ID", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }) + " Ton";
 
     document.getElementById("percentOPC").textContent =
         persenOPC.toFixed(1) + " %";
@@ -95,7 +98,10 @@ else {
     // ==========================
 
     document.getElementById("stockPCC").textContent =
-        stokPCC.toFixed(2) + " Ton";
+    stokPCC.toLocaleString("id-ID", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }) + " Ton";
 
     document.getElementById("percentPCC").textContent =
         persenPCC.toFixed(1) + " %";
