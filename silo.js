@@ -9,34 +9,28 @@ fetch("data.json")
     document.getElementById("lastUpdate").textContent =
         data.lastUpdate;
 
-   // ==========================
-   // KONSTANTA
-   // ==========================
+    // ==========================
+    // KONSTANTA
+    // ==========================
 
-	const kapasitas = 6000;
-	const deadStock = 200;
-	const batasKuning = 50;
+    const kapasitas = 6000;
+    const deadStock = 200;
+    const batasKuning = 50;
 
     // ==========================
-    // DATA OPC
+    // DATA SILO
     // ==========================
 
     const stokOPC = data.stokSilo.opc;
+    const stokPCC = data.stokSilo.pcc;
 
     let persenOPC =
         ((stokOPC - deadStock) / (kapasitas - deadStock)) * 100;
 
-    persenOPC = Math.max(0, Math.min(100, persenOPC));
-
-    // ==========================
-    // DATA PCC
-    // ==========================
-
-    const stokPCC = data.stokSilo.pcc;
-
     let persenPCC =
         ((stokPCC - deadStock) / (kapasitas - deadStock)) * 100;
 
+    persenOPC = Math.max(0, Math.min(100, persenOPC));
     persenPCC = Math.max(0, Math.min(100, persenPCC));
 
     // ==========================
@@ -44,64 +38,48 @@ fetch("data.json")
     // ==========================
 
     document.getElementById("stockOPC").textContent =
-    stokOPC.toLocaleString("id-ID", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    }) + " Ton";
-console.log(stokOPC.toLocaleString("id-ID"));
+        stokOPC.toLocaleString("id-ID", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }) + " Ton";
+
     document.getElementById("percentOPC").textContent =
         persenOPC.toFixed(1) + " %";
 
     document.getElementById("levelOPC").style.height =
         persenOPC + "%";
 
-// Warna Level OPC
-if (stokOPC <= deadStock) {
+    const statusOPC = document.getElementById("statusOPC");
 
-    document.getElementById("levelOPC").style.background = "#d60000";
+    if (stokOPC <= deadStock) {
 
-}
-else if (persenOPC <= batasKuning) {
+        document.getElementById("levelOPC").style.background = "#d60000";
+        statusOPC.textContent = "KRITIS";
+        statusOPC.style.color = "#d60000";
 
-    document.getElementById("levelOPC").style.background = "#ffd400";
+    } else if (persenOPC <= batasKuning) {
 
-}
-else {
+        document.getElementById("levelOPC").style.background = "#ffd400";
+        statusOPC.textContent = "WASPADA";
+        statusOPC.style.color = "#ffd400";
 
-    document.getElementById("levelOPC").style.background = "#00a651";
+    } else {
 
-}
+        document.getElementById("levelOPC").style.background = "#00a651";
+        statusOPC.textContent = "NORMAL";
+        statusOPC.style.color = "#00a651";
 
-// Status OPC
-const statusOPC = document.getElementById("statusOPC");
+    }
 
-if (stokOPC <= deadStock) {
-
-    statusOPC.textContent = "KRITIS";
-    statusOPC.style.color = "#d60000";
-
-}
-else if (persenOPC <= batasKuning) {
-
-    statusOPC.textContent = "WASPADA";
-    statusOPC.style.color = "#ffd400";
-
-}
-else {
-
-    statusOPC.textContent = "NORMAL";
-    statusOPC.style.color = "#00a651";
-
-}
     // ==========================
     // TAMPILKAN PCC
     // ==========================
 
     document.getElementById("stockPCC").textContent =
-    stokPCC.toLocaleString("id-ID", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    }) + " Ton";
+        stokPCC.toLocaleString("id-ID", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }) + " Ton";
 
     document.getElementById("percentPCC").textContent =
         persenPCC.toFixed(1) + " %";
@@ -109,88 +87,73 @@ else {
     document.getElementById("levelPCC").style.height =
         persenPCC + "%";
 
-// Warna Level PCC
-if (stokPCC <= deadStock) {
+    const statusPCC = document.getElementById("statusPCC");
 
-    document.getElementById("levelPCC").style.background = "#d60000";
+    if (stokPCC <= deadStock) {
 
-}
-else if (persenPCC <= batasKuning) {
+        document.getElementById("levelPCC").style.background = "#d60000";
+        statusPCC.textContent = "KRITIS";
+        statusPCC.style.color = "#d60000";
 
-    document.getElementById("levelPCC").style.background = "#ffd400";
+    } else if (persenPCC <= batasKuning) {
 
-}
-else {
+        document.getElementById("levelPCC").style.background = "#ffd400";
+        statusPCC.textContent = "WASPADA";
+        statusPCC.style.color = "#ffd400";
 
-    document.getElementById("levelPCC").style.background = "#00a651";
+    } else {
 
-}
+        document.getElementById("levelPCC").style.background = "#00a651";
+        statusPCC.textContent = "NORMAL";
+        statusPCC.style.color = "#00a651";
 
-// Status PCC
-const statusPCC = document.getElementById("statusPCC");
+    }
 
-if (stokPCC <= deadStock) {
+    // ==========================
+    // DATA KAPAL
+    // ==========================
 
-    statusPCC.textContent = "KRITIS";
-    statusPCC.style.color = "#d60000";
+    if (data.kapal) {
 
-}
-else if (persenPCC <= batasKuning) {
+        const kapal = data.kapal;
 
-    statusPCC.textContent = "WASPADA";
-    statusPCC.style.color = "#ffd400";
+        const sisaMuatan =
+            kapal.muatanAwal - kapal.terbongkar;
 
-}
-else {
+        document.getElementById("shipName").textContent =
+            kapal.nama;
 
-    statusPCC.textContent = "NORMAL";
-    statusPCC.style.color = "#00a651";
+        document.getElementById("shipProduct").textContent =
+            kapal.produk;
 
-}
+        document.getElementById("shipCargo").textContent =
+            kapal.muatanAwal.toLocaleString("id-ID", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }) + " Ton";
+
+        document.getElementById("shipUnload").textContent =
+            kapal.terbongkar.toLocaleString("id-ID", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }) + " Ton";
+
+        document.getElementById("shipRemain").textContent =
+            sisaMuatan.toLocaleString("id-ID", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }) + " Ton";
+
+        document.getElementById("shipSilo").textContent =
+            kapal.tujuanSilo;
+
+        document.getElementById("shipStatus").textContent =
+            kapal.status;
+
+    }
 
 })
-
-// ==========================
-// DATA KAPAL
-// ==========================
-
-if (data.kapal) {
-
-    const kapal = data.kapal;
-
-    const sisaMuatan = kapal.muatanAwal - kapal.terbongkar;
-
-    document.getElementById("shipName").textContent =
-        kapal.nama;
-
-    document.getElementById("shipProduct").textContent =
-        kapal.produk;
-
-    document.getElementById("shipCargo").textContent =
-        kapal.muatanAwal.toLocaleString("id-ID", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        }) + " Ton";
-
-    document.getElementById("shipUnload").textContent =
-        kapal.terbongkar.toLocaleString("id-ID", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        }) + " Ton";
-
-    document.getElementById("shipRemain").textContent =
-        sisaMuatan.toLocaleString("id-ID", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        }) + " Ton";
-
-    document.getElementById("shipSilo").textContent =
-        kapal.tujuanSilo;
-
-    document.getElementById("shipStatus").textContent =
-        kapal.status;
-
-}.catch(err => {
+.catch(err => {
 
     console.error(err);
 
