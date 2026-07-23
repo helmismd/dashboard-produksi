@@ -191,3 +191,12 @@ h2{
 
 }
 
+.periode{
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #003b7a;
+    margin: 10px 0 10px 0;
+}
