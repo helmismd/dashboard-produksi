@@ -2,78 +2,63 @@
 <html lang="id">
 
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>SPMS - Silo Performance Monitoring System</title>
-
-<link rel="stylesheet" href="silo.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPMS - Silo Performance Monitoring System</title>
+    <link rel="stylesheet" href="silo.css">
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>PACKING PLANT SAMARINDA</h1>
+    <h1>PACKING PLANT SAMARINDA</h1>
 
-<h2>SILO PERFORMANCE MONITORING SYSTEM</h2>
+    <h2>SILO PERFORMANCE MONITORING SYSTEM</h2>
 
-<div id="lastUpdate">
+    <div id="lastUpdate">Loading...</div>
 
-Loading...
+    <div class="siloContainer">
 
-</div>
+        <!-- OPC -->
+        <div class="siloCard">
 
-<div class="siloContainer">
+            <div class="silo">
+                <div class="level" id="levelOPC"></div>
+            </div>
 
-    <!-- OPC -->
-    <div class="siloCard">
+            <div class="siloName">SILO OPC</div>
 
-        <div class="silo">
-            <div class="line50"></div>
-            <div class="lineDead"></div>
-            <div class="level" id="levelOPC"></div>
+            <div class="stock" id="stockOPC">0 Ton</div>
+
+            <div class="percent" id="percentOPC">0%</div>
+
+            <div class="status" id="statusOPC">NORMAL</div>
+
         </div>
 
-        <div class="siloName">
-            SILO OPC
-        </div>
+        <!-- PCC -->
+        <div class="siloCard">
 
-        <div class="stock" id="stockOPC">0 Ton</div>
+            <div class="silo">
+                <div class="level" id="levelPCC"></div>
+            </div>
 
-        <div class="percent" id="percentOPC">0%</div>
+            <div class="siloName">SILO PCC</div>
 
-        <div class="status" id="statusOPC">
-            NORMAL
-        </div>
+            <div class="stock" id="stockPCC">0 Ton</div>
 
-    </div>
+            <div class="percent" id="percentPCC">0%</div>
 
-    <!-- PCC -->
-    <div class="siloCard">
+            <div class="status" id="statusPCC">NORMAL</div>
 
-        <div class="silo">
-            <div class="line50"></div>
-            <div class="lineDead"></div>
-            <div class="level" id="levelPCC"></div>
-        </div>
-
-        <div class="siloName">
-            SILO PCC
-        </div>
-
-        <div class="stock" id="stockPCC">0 Ton</div>
-
-        <div class="percent" id="percentPCC">0%</div>
-
-        <div class="status" id="statusPCC">
-            NORMAL
         </div>
 
     </div>
 
 </div>
+
+<script src="silo.js"></script>
+
+</body>
+</html>
