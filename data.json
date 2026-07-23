@@ -1,19 +1,11 @@
 {
-  "periode": "01-18 JULI 2026",
-  "lastUpdate": "Data terakhir diperbarui : 18 JULI 2026",
-  "totalOPC": 13343.419999999998,
-  "totalPCC": 10401.859999999999,
-  "totalBag": 10073.3,
-  "totalBulk": 13671.98,
-  "grandTotal": 23745.280000000006,
-  "kapal": {
-    "nama": "TONASA LINES XXV",
-    "produk": "PCC",
-    "muatanAwal": 5000,
-    "terbongkar": 2450,
-    "tujuanSilo": "SILO PCC",
-    "status": "SEDANG BONGKAR"
-  },
+  "periode": "01-21 JULI 2026",
+  "lastUpdate": "Data terakhir diperbarui : 21 JULI 2026",
+  "totalOPC": 14948.279999999997,
+  "totalPCC": 11990.359999999999,
+  "totalBag": 11661.8,
+  "totalBulk": 15276.839999999998,
+  "grandTotal": 26938.640000000007,
   "labelTanggal": [
     "",
     "01/07",
@@ -33,7 +25,10 @@
     "15/07",
     "16/07",
     "17/07",
-    "18/07"
+    "18/07",
+    "19/07",
+    "20/07",
+    "21/07"
   ],
   "dataProduksi": [
     0,
@@ -54,6 +49,16 @@
     1343.14,
     1263.6999999999998,
     1355.1399999999999,
-    1269.49
-  ]
+    1269.49,
+    848.73,
+    1064.1399999999999,
+    1280.49
+  ],
+  "stokSilo": {
+    "opc": 2795.27,
+    "pcc": 3164.2,
+    "pccPlus": 0,
+    "maxstrength": 0,
+    "efektif": 5959.47
+  }
 }
