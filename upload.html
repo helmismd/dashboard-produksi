@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Admin</title>
+</head>
+<body>
+
+<h1>Dashboard Produksi - Admin</h1>
+
+<hr>
+
+<label>Pilih File Excel :</label><br><br>
+<p id="namaFile">Belum ada file dipilih.</p>
+
+<input type="file" id="excelFile" accept=".xlsx,.xls">
+
+<br><br>
+
+<button id="publishBtn">🚀 Publish Dashboard</button>
+
+<p id="status">Status : Menunggu file...</p>
+<script>
+document.getElementById("excelFile").addEventListener("change", function () {
+
+    const file = this.files[0];
+
+    if (file) {
+        document.getElementById("namaFile").textContent =
+            "Nama File : " + file.name;
+
+        document.getElementById("status").textContent =
+            "Status : File siap dipublish";
+    }
+
+});
+</script>
+</body>
+</html>
