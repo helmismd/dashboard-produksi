@@ -1,11 +1,13 @@
 fetch("data.json")
 .then(response => response.json())
 .then(data => {
-console.log(data);
+
     // ==========================
     // LAST UPDATE
     // ==========================
     document.getElementById("lastUpdate").textContent = data.lastUpdate;
+document.getElementById("periode").textContent =
+"Periode : " + data.periode;
 
     // ==========================
     // KONSTANTA
@@ -65,9 +67,11 @@ console.log(data);
     // ==========================
     // DATA SILO
     // ==========================
-    tampilkanSilo(data.totalOPC,"OPC");
-    tampilkanSilo(data.totalPCC,"PCC");
-
+    // ==========================
+// DATA SILO
+// ==========================
+tampilkanSilo(data.stokSilo.opc,"OPC");
+tampilkanSilo(data.stokSilo.pcc,"PCC");
     // ==========================
     // DATA KAPAL
     // ==========================
