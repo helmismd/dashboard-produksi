@@ -48,7 +48,7 @@ fetch("data.json")
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
     }) + " Ton";
-
+console.log(stokOPC.toLocaleString("id-ID"));
     document.getElementById("percentOPC").textContent =
         persenOPC.toFixed(1) + " %";
 
@@ -149,6 +149,35 @@ else {
 }
 
 })
+
+// ==========================
+// DATA KAPAL
+// ==========================
+
+const kapal = data.kapal;
+
+const sisaMuatan = kapal.muatanAwal - kapal.terbongkar;
+
+document.getElementById("shipName").textContent =
+    kapal.nama;
+
+document.getElementById("shipProduct").textContent =
+    kapal.produk;
+
+document.getElementById("shipCargo").textContent =
+    kapal.muatanAwal.toLocaleString("id-ID") + " Ton";
+
+document.getElementById("shipUnload").textContent =
+    kapal.terbongkar.toLocaleString("id-ID") + " Ton";
+
+document.getElementById("shipRemain").textContent =
+    sisaMuatan.toLocaleString("id-ID") + " Ton";
+
+document.getElementById("shipSilo").textContent =
+    kapal.tujuanSilo;
+
+document.getElementById("shipStatus").textContent =
+    kapal.status;
 .catch(err => {
 
     console.error(err);
