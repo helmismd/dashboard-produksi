@@ -77,33 +77,29 @@ tampilkanSilo(data.stokSilo.pcc,"PCC");
     // ==========================
     if(data.kapal){
 
-        const kapal = data.kapal;
+    const kapal = data.kapal;
 
-        const sisa =
-            kapal.muatanAwal - kapal.terbongkar;
+    const sisa = kapal.muatanAwal - kapal.terbongkar;
 
-        document.getElementById("shipName").textContent =
-            kapal.nama;
+    document.getElementById("shipName").textContent = kapal.nama;
+    document.getElementById("shipProduct").textContent = kapal.produk;
+    document.getElementById("shipCargo").textContent = kapal.muatanAwal.toLocaleString("id-ID") + " Ton";
+    document.getElementById("shipUnload").textContent = kapal.terbongkar.toLocaleString("id-ID") + " Ton";
+    document.getElementById("shipRemain").textContent = sisa.toLocaleString("id-ID") + " Ton";
+    document.getElementById("shipSilo").textContent = kapal.tujuanSilo;
+    document.getElementById("shipStatus").textContent = kapal.status;
 
-        document.getElementById("shipProduct").textContent =
-            kapal.produk;
+}else{
 
-        document.getElementById("shipCargo").textContent =
-            kapal.muatanAwal.toLocaleString("id-ID") + " Ton";
+    document.getElementById("shipName").textContent = "-";
+    document.getElementById("shipProduct").textContent = "-";
+    document.getElementById("shipCargo").textContent = "-";
+    document.getElementById("shipUnload").textContent = "-";
+    document.getElementById("shipRemain").textContent = "-";
+    document.getElementById("shipSilo").textContent = "-";
+    document.getElementById("shipStatus").textContent = "TIDAK ADA KAPAL";
 
-        document.getElementById("shipUnload").textContent =
-            kapal.terbongkar.toLocaleString("id-ID") + " Ton";
-
-        document.getElementById("shipRemain").textContent =
-            sisa.toLocaleString("id-ID") + " Ton";
-
-        document.getElementById("shipSilo").textContent =
-            kapal.tujuanSilo;
-
-        document.getElementById("shipStatus").textContent =
-            kapal.status;
-
-    }
+}
 
 })
 .catch(error=>{
