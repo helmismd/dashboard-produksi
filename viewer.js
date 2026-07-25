@@ -15,7 +15,7 @@ async function loadDashboard() {
 
         const data = await response.json();
 
-console.log(data.stokSilo);
+	console.log(data.stokSilo);
 
         document.getElementById("periode").textContent =
             data.periode;
@@ -44,9 +44,11 @@ console.log(data.stokSilo);
 	document.getElementById("stokPCC").textContent =
    	 formatTon(data.stokSilo.pcc);
 
-	document.getElementById("stokEfektif").textContent =
-    	formatTon(data.stokSilo.efektif);
+	const stokEfektif = data.stokSilo.opc + data.stokSilo.pcc;
 
+	document.getElementById("stokEfektif").textContent =
+        formatTon(stokEfektif);
+     
         document.getElementById("opcPersen").textContent =
             ((data.totalOPC / data.grandTotal) * 100).toFixed(2) + " %";
 
