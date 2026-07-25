@@ -99,8 +99,43 @@ document.getElementById("tahunTotal").textContent =
         document.getElementById("bulkPersen").textContent =
             ((data.totalBulk / data.grandTotal) * 100).toFixed(2) + " %";
 
-        document.getElementById("status").textContent =
-            "ONLINE";
+// ==========================
+// PERSENTASE BULANAN
+// ==========================
+
+document.getElementById("bulanOpcPersen").textContent =
+    ((data.bulanOPC / data.bulanTotal) * 100).toFixed(2) + " %";
+
+document.getElementById("bulanPccPersen").textContent =
+    ((data.bulanPCC / data.bulanTotal) * 100).toFixed(2) + " %";
+
+document.getElementById("bulanBagPersen").textContent =
+    ((data.bulanBag / data.bulanTotal) * 100).toFixed(2) + " %";
+
+document.getElementById("bulanBulkPersen").textContent =
+    ((data.bulanBulk / data.bulanTotal) * 100).toFixed(2) + " %";
+
+
+// ==========================
+// PERSENTASE TAHUNAN
+// ==========================
+
+document.getElementById("tahunOpcPersen").textContent =
+    ((data.tahunOPC / data.tahunTotal) * 100).toFixed(2) + " %";
+
+document.getElementById("tahunPccPersen").textContent =
+    ((data.tahunPCC / data.tahunTotal) * 100).toFixed(2) + " %";
+
+document.getElementById("tahunBagPersen").textContent =
+    ((data.tahunBag / data.tahunTotal) * 100).toFixed(2) + " %";
+
+document.getElementById("tahunBulkPersen").textContent =
+    ((data.tahunBulk / data.tahunTotal) * 100).toFixed(2) + " %";
+
+
+
+        // document.getElementById("status").textContent =
+        // "ONLINE";
 
         if (chartProduksi) {
             chartProduksi.destroy();
