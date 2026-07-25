@@ -134,8 +134,8 @@ document.getElementById("tahunBulkPersen").textContent =
 
 
 
-        // document.getElementById("status").textContent =
-        // "ONLINE";
+        document.getElementById("status").textContent =
+         "ONLINE";
 
         if (chartProduksi) {
             chartProduksi.destroy();
