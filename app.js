@@ -709,15 +709,6 @@ const historyBaru = history.filter(
 // Tambahkan data terbaru
 historyBaru.push(dataBaru);
 
-await uploadHistory(window.githubToken, historyBaru);
-
-const hasilTahun = hitungTahunanHistory(
-    historyBaru,
-    new Date().getFullYear()
-);
-
-console.log(JSON.stringify(hasilTahun, null, 2));
-console.log(JSON.stringify(historyBaru, null, 2));
 
 await uploadHistory(window.githubToken, history);
 
