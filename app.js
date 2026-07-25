@@ -238,79 +238,41 @@ const grandTotal =
     totalPCC;
 
 // ===========================
-// VARIABEL PRODUKSI TAHUNAN
+// PRODUKSI TAHUNAN
+// AMBIL DARI KOLOM S/D TAHUN INI
 // ===========================
 
 let tahunOPC = 0;
 let tahunPCC = 0;
 let tahunBag = 0;
 let tahunBulk = 0;
-let tahunTotal = 0; 
+let tahunTotal = 0;
 
+for (let i = 0; i < rows.length; i++) {
 
-// ===========================
-// PRODUKSI TAHUNAN
-// ===========================
+    const produk = String(rows[i][1] || "")
+        .toUpperCase()
+        .trim();
 
-const tahunAktif = namaSheet.substring(6, 8);
+    // Kolom J = Ton S/D Tahun Ini
+    const ton = Number(rows[i][9]) || 0;
 
-const daftarSheetTahun = daftarSheet.filter(
-    n => n.substring(6, 8) === tahunAktif
-);
+    const hasil = {
+        bag: tahunBag,
+        bulk: tahunBulk,
+        opc: tahunOPC,
+        pcc: tahunPCC
+    };
 
-for (const sheetTahunan of daftarSheetTahun) {
+    hitungKPI(produk, ton, hasil);
 
-    const wsTahunan = workbook.Sheets[sheetTahunan];
-
-    const rowsTahunan = XLSX.utils.sheet_to_json(wsTahunan, {
-        header: 1,
-        defval: ""
-    });
-
-    const rTotalTahunan = cariBaris(rowsTahunan, "TOTAL PRODUKSI");
-    const rPCCTahunan   = cariBaris(rowsTahunan, "Fisik Ukur SILO PCC");
-    const rOPCTahunan   = cariBaris(rowsTahunan, "Fisik Ukur SILO OPC");
-
-    if (rTotalTahunan < 0 || rPCCTahunan < 0 || rOPCTahunan < 0) continue;
-
-    let tOPC = 0;
-    let tPCC = 0;
-    let tBag = 0;
-    let tBulk = 0;
-
-    for (let i = 0; i < rowsTahunan.length; i++) {
-
-        const produk = String(rowsTahunan[i][1] || "")
-            .toUpperCase()
-            .trim();
-
-        const ton = Number(rowsTahunan[i][3]) || 0;
-
-        const hasil = {
-            bag: tBag,
-            bulk: tBulk,
-            opc: tOPC,
-            pcc: tPCC
-        };
-
-        hitungKPI(produk, ton, hasil);
-
-        tBag  = hasil.bag;
-        tBulk = hasil.bulk;
-        tOPC  = hasil.opc;
-        tPCC  = hasil.pcc;
-    }
-
-    tahunOPC += tOPC;
-    tahunPCC += tPCC;
-    tahunBag += tBag;
-    tahunBulk += tBulk;
-    tahunTotal += (tBag + tBulk);
-
+    tahunBag  = hasil.bag;
+    tahunBulk = hasil.bulk;
+    tahunOPC  = hasil.opc;
+    tahunPCC  = hasil.pcc;
 }
 
-
-
+tahunTotal = tahunBag + tahunBulk;
 // ===========================console.log("Hitung :", sheetBulanan);
 // PRODUKSI BULANAN
 // ===========================
@@ -557,7 +519,6 @@ document.getElementById("tahunBulkPersen").textContent =
     totalBulk: totalBulk,
     grandTotal: grandTotal,
 
-
     bulanOPC: bulanOPC,
     bulanPCC: bulanPCC,
     bulanBag: bulanBag,
@@ -572,13 +533,13 @@ document.getElementById("tahunBulkPersen").textContent =
         pcc: stokPCC
     },
 
-tahunOPC: tahunOPC,
-tahunPCC: tahunPCC,
-tahunBag: tahunBag,
-tahunBulk: tahunBulk,
-tahunTotal: tahunTotal
-};
+    tahunOPC: tahunOPC,
+    tahunPCC: tahunPCC,
+    tahunBag: tahunBag,
+    tahunBulk: tahunBulk,
+    tahunTotal: tahunTotal
 
+};
 
 
         // ===========================
@@ -674,6 +635,8 @@ document
 
 async function publishDashboard() {
 
+    console.log("dashboardData =", dashboardData);
+
     if (Object.keys(dashboardData).length === 0) {
         alert("Silakan pilih file Excel terlebih dahulu.");
         return;
@@ -681,68 +644,103 @@ async function publishDashboard() {
 
     try {
 
-        document.getElementById("status").textContent =
-    "Mengupload ke GitHub...";
+    const token = tokenInput.value.trim();
 
-await uploadGithub();
-const history = await downloadHistory(window.githubToken);
-console.log("Jumlah history =", history.length);
-console.log(history);
+    window.githubToken = token;
 
-const dataBaru = {
-    tahun: new Date().getFullYear(),
-
-    periode: dashboardData.periode,
-
-    totalOPC: dashboardData.totalOPC,
-    totalPCC: dashboardData.totalPCC,
-    totalBag: dashboardData.totalBag,
-    totalBulk: dashboardData.totalBulk,
-    grandTotal: dashboardData.grandTotal
-};
-
-// Hapus semua record dengan periode yang sama
-const historyBaru = history.filter(
-    item => item.periode !== dashboardData.periode
-);
-
-// Tambahkan data terbaru
-historyBaru.push(dataBaru);
-
-
-await uploadHistory(window.githubToken, historyBaru);
-
-const hasilTahun = hitungTahunanHistory(
-    historyBaru,
-    new Date().getFullYear()
-);
-
-dashboardData.tahunOPC   = hasilTahun.opc;
-dashboardData.tahunPCC   = hasilTahun.pcc;
-dashboardData.tahunBag   = hasilTahun.bag;
-dashboardData.tahunBulk  = hasilTahun.bulk;
-dashboardData.tahunTotal = hasilTahun.total;
-
-console.log(JSON.stringify(hasilTahun, null, 2));
-console.log(JSON.stringify(historyBaru, null, 2));
-
-document.getElementById("status").textContent =
-    "Dashboard berhasil dipublish.";
-}
- 
-   catch (err) {
-
-        if (err.name !== "AbortError") {
-            console.error(err);
-            alert(err.message);
+    if (!token) {
+        alert("Masukkan GitHub Token terlebih dahulu.");
+        return;
+    }
 
     document.getElementById("status").textContent =
-        "Publish gagal.";
-}
+        "Mengupload ke GitHub...";
+
+            
+        // =====================
+        // Download history
+        // =====================
+
+        const history = await downloadHistory(window.githubToken);
+
+        console.log("Jumlah history =", history.length);
+        console.log(history);
+
+        const dataBaru = {
+
+            tahun: new Date().getFullYear(),
+
+            periode: dashboardData.periode,
+
+            totalOPC: dashboardData.totalOPC,
+            totalPCC: dashboardData.totalPCC,
+            totalBag: dashboardData.totalBag,
+            totalBulk: dashboardData.totalBulk,
+            grandTotal: dashboardData.grandTotal
+
+        };
+
+        // =====================
+        // Update history
+        // =====================
+
+        const historyBaru = history.filter(
+            item => item.periode !== dashboardData.periode
+        );
+
+        historyBaru.push(dataBaru);
+
+        // =====================
+        // Hitung Tahunan
+        // =====================
+
+        const hasilTahun =
+            hitungTahunanHistory(
+                historyBaru,
+                new Date().getFullYear()
+            );
+
+        dashboardData.tahunOPC = hasilTahun.opc;
+        dashboardData.tahunPCC = hasilTahun.pcc;
+        dashboardData.tahunBag = hasilTahun.bag;
+        dashboardData.tahunBulk = hasilTahun.bulk;
+        dashboardData.tahunTotal = hasilTahun.total;
+
+        console.log(JSON.stringify(hasilTahun, null, 2));
+        console.log(JSON.stringify(historyBaru, null, 2));
+
+        // =====================
+        // Baru upload
+        // =====================
+
+        await uploadGithub();
+
+        await uploadHistory(
+            window.githubToken,
+            historyBaru
+        );
+
+        document.getElementById("status").textContent =
+            "Dashboard berhasil dipublish.";
+
+    }
+
+    catch (err) {
+
+        if (err.name !== "AbortError") {
+
+            console.error(err);
+
+            alert(err.message);
+
+            document.getElementById("status").textContent =
+                "Publish gagal.";
+
+        }
+
     }
 
 }
-
 // ===========================
 // SIMPAN TOKEN GITHUB
 // ===========================
@@ -934,8 +932,7 @@ async function uploadHistory(token, history) {
 
 async function uploadGithub() {
 
-    const token = tokenInput.value.trim();
-window.githubToken = token;
+    const token = window.githubToken;
 
     if (!token) {
         alert("Masukkan GitHub Token terlebih dahulu.");
