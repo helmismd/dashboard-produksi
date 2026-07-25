@@ -38,6 +38,44 @@ async function loadDashboard() {
         document.getElementById("total").textContent =
             formatTon(data.grandTotal);
 
+// ==========================
+// PRODUKSI BULANAN
+// ==========================
+
+document.getElementById("bulanOpc").textContent =
+    formatTon(data.bulanOPC);
+
+document.getElementById("bulanPcc").textContent =
+    formatTon(data.bulanPCC);
+
+document.getElementById("bulanBag").textContent =
+    formatTon(data.bulanBag);
+
+document.getElementById("bulanBulk").textContent =
+    formatTon(data.bulanBulk);
+
+document.getElementById("bulanTotal").textContent =
+    formatTon(data.bulanTotal);
+
+// ==========================
+// PRODUKSI TAHUNAN
+// ==========================
+
+document.getElementById("tahunOpc").textContent =
+    formatTon(data.tahunOPC);
+
+document.getElementById("tahunPcc").textContent =
+    formatTon(data.tahunPCC);
+
+document.getElementById("tahunBag").textContent =
+    formatTon(data.tahunBag);
+
+document.getElementById("tahunBulk").textContent =
+    formatTon(data.tahunBulk);
+
+document.getElementById("tahunTotal").textContent =
+    formatTon(data.tahunTotal);
+
 	document.getElementById("stokOPC").textContent =
   	  formatTon(data.stokSilo.opc);
 
