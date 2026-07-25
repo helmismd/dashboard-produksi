@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "periode": "Jumat, 24 Juli 2026",
+    "totalOPC": 308.89,
+    "totalPCC": 844.05,
+    "totalBag": 761.5,
+    "totalBulk": 391.44,
+    "grandTotal": 1152.94
+  }
+]
