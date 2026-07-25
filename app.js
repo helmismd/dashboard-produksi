@@ -717,6 +717,12 @@ const hasilTahun = hitungTahunanHistory(
     new Date().getFullYear()
 );
 
+dashboardData.tahunOPC   = hasilTahun.opc;
+dashboardData.tahunPCC   = hasilTahun.pcc;
+dashboardData.tahunBag   = hasilTahun.bag;
+dashboardData.tahunBulk  = hasilTahun.bulk;
+dashboardData.tahunTotal = hasilTahun.total;
+
 console.log(JSON.stringify(hasilTahun, null, 2));
 console.log(JSON.stringify(historyBaru, null, 2));
 
