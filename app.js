@@ -710,15 +710,15 @@ const historyBaru = history.filter(
 historyBaru.push(dataBaru);
 
 
-await uploadHistory(window.githubToken, history);
+await uploadHistory(window.githubToken, historyBaru);
 
 const hasilTahun = hitungTahunanHistory(
-    history,
+    historyBaru,
     new Date().getFullYear()
 );
 
 console.log(JSON.stringify(hasilTahun, null, 2));
-console.log(JSON.stringify(history, null, 2));
+console.log(JSON.stringify(historyBaru, null, 2));
 
 document.getElementById("status").textContent =
     "Dashboard berhasil dipublish.";
