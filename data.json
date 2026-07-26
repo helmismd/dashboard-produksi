@@ -25,5 +25,15 @@
   "tahunPCC": 118630.74999999999,
   "tahunBag": 114200.09999999999,
   "tahunBulk": 97935.65999999993,
-  "tahunTotal": 212135.75999999992
+  "tahunTotal": 212135.75999999992,
+  "kapal": {
+    "nama": "KM.TL-XVIII",
+    "voyage": "016/07/2026",
+    "opc": "5.061,991 Mts",
+    "pcc": "3.076,846 Mts",
+    "total": "8.138,837 mts",
+    "statusKapal": "Sandar kiri PP SAMARINDA Proses unloading.",
+    "statusOperasi": "Sedang Bongkar OPC",
+    "update": "2026-07-26 07:40"
+  }
 }
