@@ -68,13 +68,11 @@ document.getElementById("periode").textContent =
     // DATA SILO
     // ==========================
     // ==========================
-// ==========================
 // DATA SILO
 // ==========================
-tampilkanSilo(data.totalOPC, "OPC");
-tampilkanSilo(data.totalPCC, "PCC");    
-
-// ==========================
+tampilkanSilo(data.stokSilo.opc,"OPC");
+tampilkanSilo(data.stokSilo.pcc,"PCC");
+    // ==========================
     // DATA KAPAL
     // ==========================
     if(data.kapal){
