@@ -72,38 +72,47 @@ document.getElementById("periode").textContent =
 // ==========================
 tampilkanSilo(data.stokSilo.opc,"OPC");
 tampilkanSilo(data.stokSilo.pcc,"PCC");
+    
     // ==========================
-    // DATA KAPAL
-    // ==========================
-    if(data.kapal){
+// DATA KAPAL
+// ==========================
 
-        const kapal = data.kapal;
+if(data.kapal){
 
-        const sisa =
-            kapal.muatanAwal - kapal.terbongkar;
+    const kapal = data.kapal;
 
-        document.getElementById("shipName").textContent =
-            kapal.nama;
+    document.getElementById("shipName").textContent =
+        kapal.nama;
 
-        document.getElementById("shipProduct").textContent =
-            kapal.produk;
+    document.getElementById("shipProduct").textContent =
+        kapal.voyage;
 
-        document.getElementById("shipCargo").textContent =
-            kapal.muatanAwal.toLocaleString("id-ID") + " Ton";
+    document.getElementById("shipCargo").textContent =
+        kapal.opc;
 
-        document.getElementById("shipUnload").textContent =
-            kapal.terbongkar.toLocaleString("id-ID") + " Ton";
+    document.getElementById("shipUnload").textContent =
+        kapal.pcc;
 
-        document.getElementById("shipRemain").textContent =
-            sisa.toLocaleString("id-ID") + " Ton";
+    document.getElementById("shipRemain").textContent =
+        kapal.total;
 
-        document.getElementById("shipSilo").textContent =
-            kapal.tujuanSilo;
+    document.getElementById("shipSilo").textContent =
+        kapal.statusKapal;
 
-        document.getElementById("shipStatus").textContent =
-            kapal.status;
+    document.getElementById("shipStatus").textContent =
+        kapal.statusOperasi;
 
-    }
+}else{
+
+    document.getElementById("shipName").textContent = "-";
+    document.getElementById("shipProduct").textContent = "-";
+    document.getElementById("shipCargo").textContent = "-";
+    document.getElementById("shipUnload").textContent = "-";
+    document.getElementById("shipRemain").textContent = "-";
+    document.getElementById("shipSilo").textContent = "-";
+    document.getElementById("shipStatus").textContent = "TIDAK ADA KAPAL";
+
+}
 
 })
 .catch(error=>{
