@@ -49,7 +49,7 @@
 </button>
 
 </div>        <div class="card tanggal">
-    <h2>AKUMULASI PRODUKSI</h2>
+    <h2>DASHBOARD PACKING PLANT SAMARINDA</h2>
 
 <h3 id="periode"></h3>
 
@@ -84,12 +84,70 @@
             <p id="bulkPersen">0%</p>
         </div>
 	
-	</div>
         <div class="total">
-            <h2>TOTAL PRODUKSI</h2>
+            <h2>TOTAL HARIAN</h2>
             <h1 id="total">0 Ton</h1>
         </div>
 
+<div class="card">
+    <h3>Produksi OPC</h3>
+    <h2 id="bulanOpc">0 Ton</h2>
+    <p id="bulanOpcPersen">0%</p>
+</div>
+
+<div class="card">
+    <h3>Produksi PCC</h3>
+    <h2 id="bulanPcc">0 Ton</h2>
+    <p id="bulanPccPersen">0%</p>
+</div>
+
+<div class="card">
+    <h3>Produksi Bag</h3>
+    <h2 id="bulanBag">0 Ton</h2>
+    <p id="bulanBagPersen">0%</p>
+</div>
+
+<div class="card">
+    <h3>Produksi Bulk</h3>
+    <h2 id="bulanBulk">0 Ton</h2>
+    <p id="bulanBulkPersen">0%</p>
+</div>
+
+<div class="total">
+    <h2>TOTAL BULAN</h2>
+    <h1 id="bulanTotal">0 Ton</h1>
+</div>
+
+<div class="card">
+    <h3>Produksi OPC</h3>
+    <h2 id="tahunOpc">0 Ton</h2>
+    <p id="tahunOpcPersen">0%</p>
+</div>
+
+<div class="card">
+    <h3>Produksi PCC</h3>
+    <h2 id="tahunPcc">0 Ton</h2>
+    <p id="tahunPccPersen">0%</p>
+</div>
+
+<div class="card">
+    <h3>Produksi Bag</h3>
+    <h2 id="tahunBag">0 Ton</h2>
+    <p id="tahunBagPersen">0%</p>
+</div>
+
+<div class="card">
+    <h3>Produksi Bulk</h3>
+    <h2 id="tahunBulk">0 Ton</h2>
+    <p id="tahunBulkPersen">0%</p>
+</div>
+
+<div class="total">
+    <h2>TOTAL TAHUN</h2>
+    <h1 id="tahunTotal">0 Ton</h1>
+</div>
+</div>
+</div>
 	<div class="grafik">
 
     <h2>Grafik Produksi Harian</h2>
@@ -106,7 +164,103 @@
 
     </div>
 
-    </div>
+<div class="menu-dashboard">
+    <a href="silo.html" class="btn-menu">🛢️ Monitoring Silo</a>
+</div>
+
+<div class="card">
+    <h3>📱 Import Laporan WhatsApp</h3>
+
+    <textarea id="waInput"
+        rows="16"
+        placeholder="Paste seluruh isi laporan WhatsApp di sini..."></textarea>
+
+    <br><br>
+
+    <button onclick="analisaWA()">
+        🔍 Analisa Laporan
+    </button>
+</div>
+
+<div id="hasilAnalisa" class="hasil-analisa" style="display:none;">
+
+    <h3>📋 HASIL ANALISA LAPORAN WA</h3>
+
+    <table class="tabel-analisa">
+        <tr>
+            <td>🚢 Nama Kapal</td>
+            <td id="haNama"></td>
+        </tr>
+
+        <tr>
+            <td>🧭 Voyage</td>
+            <td id="haVoyage"></td>
+        </tr>
+
+        <tr>
+            <td>⚪ Cargo OPC</td>
+            <td id="haOPC"></td>
+        </tr>
+
+        <tr>
+            <td>🔵 Cargo PCC</td>
+            <td id="haPCC"></td>
+        </tr>
+
+        <tr>
+            <td>📦 Total Cargo</td>
+            <td id="haTotal"></td>
+        </tr>
+
+        <tr>
+            <td>📍 Status Kapal</td>
+            <td id="haStatus"></td>
+        </tr>
+
+        <tr>
+            <td>🟢 Status Operasi</td>
+            <td id="haStatusOperasi"></td>
+        </tr>
+
+        <tr>
+            <td>🕒 Update Terakhir</td>
+            <td id="haUpdate"></td>
+        </tr>
+
+    </table>
+
+</div>
+
+
+<div class="card">
+
+<h3>🚢 Data Kapal</h3>
+
+<label>Nama Kapal</label>
+<input type="text" id="kapalNama">
+
+<label>Voyage</label>
+<input type="text" id="kapalVoyage">
+
+<label>Cargo OPC (Mt)</label>
+<input type="text" id="kapalOPC">
+
+<label>Cargo PCC (Mt)</label>
+<input type="text" id="kapalPCC">
+
+<label>Total Cargo (Mt)</label>
+<input type="text" id="kapalTotal">
+
+<label>Status Kapal</label>
+<input type="text" id="kapalStatus">
+
+<label>Status Operasi</label>
+<input type="text" id="kapalStatusOperasi">
+
+<label>Update Terakhir</label>
+<input type="text" id="kapalUpdate">
+
+</div>
 
 <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

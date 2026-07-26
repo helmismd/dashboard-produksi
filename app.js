@@ -689,7 +689,8 @@ async function publishDashboard() {
         );
 
         historyBaru.push(dataBaru);
-
+	
+	/*
         // =====================
         // Hitung Tahunan
         // =====================
@@ -708,6 +709,7 @@ async function publishDashboard() {
 
         console.log(JSON.stringify(hasilTahun, null, 2));
         console.log(JSON.stringify(historyBaru, null, 2));
+	*/
 
         // =====================
         // Baru upload
@@ -987,4 +989,267 @@ async function uploadGithub() {
 }
 
     
+function ambilNilai(teks, kataKunci){
 
+    teks = teks.replace(/\*/g,"");
+
+    const regex = new RegExp(kataKunci + "\\s*:\\s*(.+)", "i");
+
+    const hasil = teks.match(regex);
+
+    return hasil ? hasil[1].trim() : "";
+}
+
+function deteksiStatusOperasi(teks){
+
+    teks = teks.toLowerCase();
+
+    if(teks.includes("lanjut bongkar opc"))
+        return "🟢 Sedang Bongkar OPC";
+
+    if(teks.includes("start discharge type opc"))
+        return "🟢 Sedang Bongkar OPC";
+
+    if(teks.includes("lanjut bongkar pcc"))
+        return "🟢 Sedang Bongkar PCC";
+
+    if(teks.includes("start discharge type pcc"))
+        return "🟢 Sedang Bongkar PCC";
+
+    if(teks.includes("stop bongkar"))
+        return "⛔ Stop Bongkar";
+
+    if(teks.includes("sailing to samarinda"))
+        return "🚢 Dalam Pelayaran";
+
+    if(teks.includes("drop anchor"))
+        return "⚓ Sandar";
+
+    if(teks.includes("selesai bongkar"))
+        return "✅ Selesai Bongkar";
+
+    return "-";
+}
+
+
+
+
+function analisaWA(){
+
+    const teks = document.getElementById("waInput").value;
+
+    const kapal = {
+
+        nama : ambilNilai(teks,"Vessel"),
+
+        voyage : ambilNilai(teks,"Voyage"),
+
+        total : ambilNilai(teks,"Volume"),
+
+        pcc : ambilNilai(teks,"Type PCC"),
+
+        opc : ambilNilai(teks,"Type OPC"),
+
+        status : ambilNilai(teks,"Status Kapal")
+
+    };
+const events = ambilEventWA(teks);
+
+const terakhir = eventTerakhir(events);
+
+const statusOperasi =
+    terakhir ? terakhir.status : "-";
+
+console.table(events);
+
+dashboardData.kapal = {
+
+    nama: kapal.nama,
+
+    voyage: kapal.voyage,
+
+    opc: kapal.opc,
+
+    pcc: kapal.pcc,
+
+    total: kapal.total,
+
+    statusKapal: kapal.status,
+
+    statusOperasi: statusOperasi,
+
+    update: terakhir ? terakhir.datetime : "-"
+
+};
+
+console.log(dashboardData);
+    console.log(kapal);
+
+document.getElementById("kapalNama").value = kapal.nama;
+
+document.getElementById("kapalVoyage").value = kapal.voyage;
+
+document.getElementById("kapalOPC").value = kapal.opc;
+
+document.getElementById("kapalPCC").value = kapal.pcc;
+
+document.getElementById("kapalTotal").value = kapal.total;
+
+document.getElementById("kapalStatus").value = kapal.status;
+
+document.getElementById("kapalStatusOperasi").value = statusOperasi;
+
+document.getElementById("kapalUpdate").value =
+    terakhir ? terakhir.datetime : "";
+
+document.getElementById("hasilAnalisa").style.display = "block";
+
+document.getElementById("haNama").textContent = kapal.nama;
+
+document.getElementById("haVoyage").textContent = kapal.voyage;
+
+document.getElementById("haOPC").textContent = kapal.opc;
+
+document.getElementById("haPCC").textContent = kapal.pcc;
+
+document.getElementById("haTotal").textContent = kapal.total;
+
+document.getElementById("haStatus").textContent = kapal.status;
+
+document.getElementById("haStatusOperasi").textContent = statusOperasi;
+
+document.getElementById("haUpdate").textContent =
+    terakhir ? terakhir.datetime : "-";
+
+
+    alert(
+`HASIL PEMBACAAN
+
+Status Operasi :
+${statusOperasi}
+
+Update Terakhir :
+${terakhir ? terakhir.datetime : "-"}
+
+Kapal : ${kapal.nama}
+
+Voyage : ${kapal.voyage}
+
+OPC : ${kapal.opc}
+
+PCC : ${kapal.pcc}
+
+Total : ${kapal.total}
+
+Status :
+${kapal.status}`);
+}
+
+function ambilEventWA(teks){
+
+    const baris = teks.split(/\r?\n/);
+
+    let tanggalAktif = "";
+
+    const events = [];
+
+    for(const b of baris){
+
+        const barisTrim = b.replace(/\*/g,"").trim();
+
+function eventTerakhir(events){
+
+    if(events.length===0)
+        return null;
+
+    return [...events]
+        .sort((a,b)=>a.datetime.localeCompare(b.datetime))
+        .at(-1);
+
+}
+
+        // ==========================
+        // Deteksi tanggal
+        // ==========================
+        const tgl = barisTrim.match(
+    /(\d{1,2})\/(\d{1,2})\/'?(\d{2,4})/
+);
+if(tgl){
+
+    let tahun = tgl[3];
+
+    if(tahun.length===2)
+        tahun="20"+tahun;
+
+    tanggalAktif =
+        tahun+"-"+
+        tgl[2].padStart(2,"0")+"-"+
+        tgl[1].padStart(2,"0");
+
+}
+
+
+        // ==========================
+        // Deteksi jam
+        // ==========================
+
+        const jam = barisTrim.match(/(\d{2})\.(\d{2})/);
+
+        if(!jam) continue;
+
+        let status = "";
+
+        const lower = barisTrim.toLowerCase();
+
+        if(lower.includes("lanjut bongkar opc"))
+            status="Sedang Bongkar OPC";
+
+        else if(lower.includes("start discharge type opc"))
+            status="Sedang Bongkar OPC";
+
+        else if(lower.includes("lanjut bongkar pcc"))
+            status="Sedang Bongkar PCC";
+
+        else if(lower.includes("start discharge type pcc"))
+            status="Sedang Bongkar PCC";
+
+        else if(lower.includes("stop bongkar"))
+            status="Stop Bongkar";
+
+        else if(lower.includes("selesai bongkar"))
+            status="Selesai Bongkar";
+
+        else
+            continue;
+
+        events.push({
+
+            tanggal : tanggalAktif,
+
+            jam : jam[1]+":"+jam[2],
+
+            datetime :
+                tanggalAktif+" "+
+                jam[1]+":"+jam[2],
+
+            status : status,
+
+            teks : barisTrim
+
+        });
+
+    }
+
+    return events;
+
+}
+function eventTerakhir(events){
+
+    if(events.length===0)
+        return null;
+
+    return [...events]
+        .sort((a,b)=>a.datetime.localeCompare(b.datetime))
+        .at(-1);
+
+}
