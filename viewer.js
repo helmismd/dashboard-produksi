@@ -14,7 +14,7 @@ async function loadDashboard() {
         const response = await fetch("data.json");
 
         const data = await response.json();
-
+console.log(data.kapal);
 	console.log(data.stokSilo);
 
         document.getElementById("periode").textContent =
@@ -218,7 +218,6 @@ function updateJam(){
     document.getElementById("jamDigital").textContent = teks;
 }
 
-console.log(teks);
 
 updateJam();
 
