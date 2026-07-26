@@ -1,29 +1,29 @@
 {
-  "periode": "Jumat, 24 Juli 2026",
-  "lastUpdate": "Data terakhir diperbarui : Jumat, 24 Juli 2026",
-  "totalOPC": 308.89,
-  "totalPCC": 844.05,
-  "totalBag": 761.5,
-  "totalBulk": 391.44,
-  "grandTotal": 1152.94,
-  "bulanOPC": 16748.779999999995,
-  "bulanPCC": 14285.259999999998,
-  "bulanBag": 13793.8,
-  "bulanBulk": 17240.239999999998,
-  "bulanTotal": 31034.040000000005,
+  "periode": "Sabtu, 25 Juli 2026",
+  "lastUpdate": "Data terakhir diperbarui : Sabtu, 25 Juli 2026",
+  "totalOPC": 626.22,
+  "totalPCC": 773.15,
+  "totalBag": 773.15,
+  "totalBulk": 626.22,
+  "grandTotal": 1399.37,
+  "bulanOPC": 17374.999999999996,
+  "bulanPCC": 15058.409999999998,
+  "bulanBag": 14566.949999999999,
+  "bulanBulk": 17866.46,
+  "bulanTotal": 32433.410000000003,
   "labelTanggal": [
-    "24-07-26"
+    "25-07-26"
   ],
   "dataProduksi": [
-    1152.94
+    1399.37
   ],
   "stokSilo": {
-    "opc": 1289.807,
-    "pcc": 5479.816
+    "opc": 3462.917,
+    "pcc": 4693.261
   },
-  "tahunOPC": 92878.78999999994,
-  "tahunPCC": 117857.59999999999,
-  "tahunBag": 113426.95,
-  "tahunBulk": 97309.43999999993,
-  "tahunTotal": 210736.38999999993
+  "tahunOPC": 93505.00999999994,
+  "tahunPCC": 118630.74999999999,
+  "tahunBag": 114200.09999999999,
+  "tahunBulk": 97935.65999999993,
+  "tahunTotal": 212135.75999999992
 }
