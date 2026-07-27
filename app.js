@@ -542,7 +542,7 @@ document.getElementById("tahunBulkPersen").textContent =
 };
 
 
-        // ===========================
+      /*  // ===========================
         // Refresh Grafik
         // ===========================
 
@@ -623,7 +623,7 @@ datasets: [{
 
     reader.readAsArrayBuffer(file);
 
-}
+} *\
 
 // ======================================================
 // PUBLISH DASHBOARD
@@ -1061,6 +1061,8 @@ const statusOperasi =
     terakhir ? terakhir.status : "-";
 
 console.table(events);
+
+dashboardData = dashboardData || {};
 
 dashboardData.kapal = {
 
