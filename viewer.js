@@ -149,7 +149,7 @@ document.getElementById("tahunBulkPersen").textContent =
             chartProduksi.destroy();
         }
 
-        /*const ctx = document.getElementById("grafikProduksi");
+      //  const ctx = document.getElementById("grafikProduksi");
 
         chartProduksi = new Chart(ctx, {
 
@@ -172,7 +172,7 @@ document.getElementById("tahunBulkPersen").textContent =
 
                 }]
 
-            },
+            }, //
 
             options: {
 
@@ -184,7 +184,7 @@ document.getElementById("tahunBulkPersen").textContent =
 
         });
 
-    } *\
+    } 
 
     catch (err) {
 
