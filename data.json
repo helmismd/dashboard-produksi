@@ -1,39 +1,39 @@
 {
-  "periode": "Sabtu, 25 Juli 2026",
-  "lastUpdate": "Data terakhir diperbarui : Sabtu, 25 Juli 2026",
-  "totalOPC": 626.22,
-  "totalPCC": 773.15,
-  "totalBag": 773.15,
-  "totalBulk": 626.22,
-  "grandTotal": 1399.37,
-  "bulanOPC": 17374.999999999996,
-  "bulanPCC": 15058.409999999998,
-  "bulanBag": 14566.949999999999,
-  "bulanBulk": 17866.46,
-  "bulanTotal": 32433.410000000003,
+  "periode": "Minggu, 26 Juli 2026",
+  "lastUpdate": "Data terakhir diperbarui : Minggu, 26 Juli 2026",
+  "totalOPC": 374.89,
+  "totalPCC": 358,
+  "totalBag": 358,
+  "totalBulk": 374.89,
+  "grandTotal": 732.89,
+  "bulanOPC": 17749.889999999996,
+  "bulanPCC": 15416.409999999998,
+  "bulanBag": 14924.949999999999,
+  "bulanBulk": 18241.35,
+  "bulanTotal": 33166.3,
   "labelTanggal": [
-    "25-07-26"
+    "26-07-26"
   ],
   "dataProduksi": [
-    1399.37
+    732.89
   ],
   "stokSilo": {
-    "opc": 3462.917,
-    "pcc": 4693.261
+    "opc": 4542.926,
+    "pcc": 5800.731
   },
-  "tahunOPC": 93505.00999999994,
-  "tahunPCC": 118630.74999999999,
-  "tahunBag": 114200.09999999999,
-  "tahunBulk": 97935.65999999993,
-  "tahunTotal": 212135.75999999992,
+  "tahunOPC": 93879.89999999994,
+  "tahunPCC": 118988.74999999999,
+  "tahunBag": 114558.09999999999,
+  "tahunBulk": 98310.54999999993,
+  "tahunTotal": 212868.6499999999,
   "kapal": {
     "nama": "KM.TL-XVIII",
     "voyage": "016/07/2026",
     "opc": "5.061,991 Mts",
     "pcc": "3.076,846 Mts",
     "total": "8.138,837 mts",
-    "statusKapal": "Sandar kiri PP SAMARINDA Proses unloading.",
-    "statusOperasi": "Sedang Bongkar OPC",
-    "update": "2026-07-26 07:40"
+    "statusKapal": "Sandar kiri PP SAMARINDA.",
+    "statusOperasi": "Stop Bongkar",
+    "update": "2026-07-27 05:50"
   }
 }
