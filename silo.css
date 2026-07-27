@@ -200,3 +200,19 @@ h2{
     color: #003b7a;
     margin: 10px 0 10px 0;
 }
+
+.menu-dashboard{
+    text-align:center;
+    margin:25px 0;
+}
+
+.btn-menu{
+    display:inline-block;
+    padding:12px 24px;
+    background:#005baa;
+    color:#fff;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+    transition:0.3s;
+}
