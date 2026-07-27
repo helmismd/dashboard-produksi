@@ -623,7 +623,7 @@ datasets: [{
 
     reader.readAsArrayBuffer(file);
 
-} *\
+} */
 
 // ======================================================
 // PUBLISH DASHBOARD
