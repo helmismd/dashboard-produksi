@@ -142,12 +142,12 @@ document.getElementById("tahunBulkPersen").textContent =
 
 
 
-        document.getElementById("status").textContent =
+      //  document.getElementById("status").textContent =
          "ONLINE";
 
         if (chartProduksi) {
             chartProduksi.destroy();
-        }
+        } //
 
       //  const ctx = document.getElementById("grafikProduksi");
 
