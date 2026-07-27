@@ -12,7 +12,7 @@ async function loadDashboard() {
     try {
 
         const response = await fetch("data.json");
-
+const data = await response.json();
         console.log(data);
 console.log(data.kapal);
 	console.log(data.stokSilo);
