@@ -142,10 +142,10 @@ document.getElementById("tahunBulkPersen").textContent =
 
 
 
-      /*  document.getElementById("status").textContent =
+        document.getElementById("status").textContent =
          "ONLINE";
-
-        if (chartProduksi) {
+  /*  
+	if (chartProduksi) {
             chartProduksi.destroy();
         } //
 
@@ -172,7 +172,7 @@ document.getElementById("tahunBulkPersen").textContent =
 
                 }]
 
-            }, */
+            }, 
 
             options: {
 
@@ -183,6 +183,7 @@ document.getElementById("tahunBulkPersen").textContent =
             }
 
         });
+ */
 
     } 
 
