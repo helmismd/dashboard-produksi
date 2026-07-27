@@ -13,7 +13,7 @@ async function loadDashboard() {
 
         const response = await fetch("data.json");
 
-        const data = await response.json();
+        console.log(data);
 console.log(data.kapal);
 	console.log(data.stokSilo);
 
@@ -75,6 +75,14 @@ document.getElementById("tahunBulk").textContent =
 
 document.getElementById("tahunTotal").textContent =
     formatTon(data.tahunTotal);
+
+const RKAP = 659465;
+
+const persenRKAP =
+    (data.tahunTotal / RKAP) * 100;
+
+document.getElementById("tahunRKAP").textContent =
+    persenRKAP.toFixed(2) + " % RKAP";
 
 	document.getElementById("stokOPC").textContent =
   	  formatTon(data.stokSilo.opc);
