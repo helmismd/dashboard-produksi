@@ -26,6 +26,7 @@ document
     .getElementById("excelFile")
     .addEventListener("change", bacaExcel);
 
+
 function cariBaris(rows, teks) {
 
     for (let i = 0; i < rows.length; i++) {
@@ -632,7 +633,22 @@ datasets: [{
 document
     .getElementById("publishBtn")
     .addEventListener("click", publishDashboard);
+document.getElementById("resetExcelBtn").addEventListener("click", function(){
 
+    document.getElementById("excelFile").value = "";
+
+});
+document.getElementById("resetExcelBtn").addEventListener("click", function(){
+
+    document.getElementById("excelFile").value = "";
+
+});
+
+document.getElementById("resetWABtn").addEventListener("click", function(){
+
+    document.getElementById("waInput").value = "";
+
+});
 async function publishDashboard() {
 
     console.log("dashboardData =", dashboardData);
@@ -680,30 +696,6 @@ async function publishDashboard() {
 
         };
 
-async function downloadData(token) {
-
-    const url =
-        `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
-
-    const response = await fetch(url, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    });
-
-    if (!response.ok) {
-        return {};
-    }
-
-    const json = await response.json();
-
-    const text = decodeURIComponent(
-        escape(atob(json.content.replace(/\n/g, "")))
-    );
-
-    return JSON.parse(text);
-
-}
 
         // =====================
         // Update history
@@ -735,6 +727,7 @@ async function downloadData(token) {
         console.log(JSON.stringify(hasilTahun, null, 2));
         console.log(JSON.stringify(historyBaru, null, 2));
 	*/
+
 
         // =====================
         // Baru upload
@@ -806,6 +799,33 @@ saveBtn.addEventListener("click", () => {
     }
 
 });
+
+
+async function downloadData(token) {
+
+    const url =
+        `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
+
+    const response = await fetch(url, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) {
+        return {};
+    }
+
+    const json = await response.json();
+
+    const text = decodeURIComponent(
+        escape(atob(json.content.replace(/\n/g, "")))
+    );
+
+    return JSON.parse(text);
+
+}
+
 // ===========================
 // AMBIL SHA FILE GITHUB
 // ===========================
@@ -1204,7 +1224,7 @@ function ambilEventWA(teks){
 
         const barisTrim = b.replace(/\*/g,"").trim();
 
-function eventTerakhir(events){
+
 
     if(events.length===0)
         return null;
@@ -1235,6 +1255,31 @@ if(tgl){
 
 }
 
+const bulan = {
+    januari:"01",
+    februari:"02",
+    maret:"03",
+    april:"04",
+    mei:"05",
+    juni:"06",
+    juli:"07",
+    agustus:"08",
+    september:"09",
+    oktober:"10",
+    november:"11",
+    desember:"12"
+};
+
+const tgl2 = barisTrim.match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/i);
+
+if(tgl2){
+
+    tanggalAktif =
+        tgl2[3] + "-" +
+        bulan[tgl2[2].toLowerCase()] + "-" +
+        tgl2[1].padStart(2,"0");
+
+}
 
         // ==========================
         // Deteksi jam
@@ -1247,7 +1292,7 @@ if(tgl){
         let status = "";
 
         const lower = barisTrim.toLowerCase();
-
+console.log("BARIS:", barisTrim);
         if(
     lower.includes("lanjut bongkar") &&
     lower.includes("opc")
@@ -1259,7 +1304,11 @@ else if(
     lower.includes("opc")
 )
     status="Sedang Bongkar OPC";
-
+else if(
+    lower.includes("bongkaran masih berlanjut") &&
+    lower.includes("opc")
+)
+    status="Sedang Bongkar OPC";
 else if(
     lower.includes("lanjut bongkar") &&
     lower.includes("pcc")
@@ -1271,12 +1320,30 @@ else if(
     lower.includes("pcc")
 )
     status="Sedang Bongkar PCC";
+else if(
+    lower.includes("bongkaran masih berlanjut") &&
+    lower.includes("pcc")
+)
+    status="Sedang Bongkar PCC";
+        
+else if (lower.includes("selesai bongkar")) {
 
-        else
-            continue;
+    status = "Selesai Bongkar";
 
+}
+else
+    continue;
+
+dashboardData.kapal.statusOperasi = status;
+dashboardData.kapal.update = jam[0];
+          console.log(barisTrim);
+console.log(status);
+console.log(jam);
+  
+console.log("BARIS =", barisTrim);
+console.log("JAM =", jam);
+console.log("STATUS =", status);
         events.push({
-
             tanggal : tanggalAktif,
 
             jam : jam[1]+":"+jam[2],
@@ -1294,7 +1361,7 @@ else if(
     }
 
     return events;
-
+console.log(events);
 }
 function eventTerakhir(events){
 
@@ -1306,3 +1373,5 @@ function eventTerakhir(events){
         .at(-1);
 
 }
+
+
