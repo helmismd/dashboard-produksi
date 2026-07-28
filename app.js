@@ -542,7 +542,7 @@ document.getElementById("tahunBulkPersen").textContent =
 };
 
 
-      /*  // ===========================
+        // ===========================
         // Refresh Grafik
         // ===========================
 
@@ -623,7 +623,7 @@ datasets: [{
 
     reader.readAsArrayBuffer(file);
 
-} */
+}
 
 // ======================================================
 // PUBLISH DASHBOARD
@@ -679,6 +679,31 @@ async function publishDashboard() {
             grandTotal: dashboardData.grandTotal
 
         };
+
+async function downloadData(token) {
+
+    const url =
+        `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
+
+    const response = await fetch(url, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) {
+        return {};
+    }
+
+    const json = await response.json();
+
+    const text = decodeURIComponent(
+        escape(atob(json.content.replace(/\n/g, "")))
+    );
+
+    return JSON.parse(text);
+
+}
 
         // =====================
         // Update history
@@ -942,7 +967,15 @@ async function uploadGithub() {
     }
 
     const sha = await getGithubSHA(token);
-
+const dataLama = await downloadData(token);
+dashboardData = {
+    ...dataLama,
+    ...dashboardData,
+    kapal: {
+        ...dataLama.kapal,
+        ...dashboardData.kapal
+    }
+};
     const url =
         `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
 
@@ -950,6 +983,7 @@ async function uploadGithub() {
         btoa(unescape(encodeURIComponent(
             JSON.stringify(dashboardData, null, 2)
         )));
+
 
     const response = await fetch(url, {
 
@@ -1043,12 +1077,18 @@ function analisaWA(){
         nama : ambilNilai(teks,"Vessel"),
 
         voyage : ambilNilai(teks,"Voyage"),
-
+        
         total : ambilNilai(teks,"Volume"),
 
-        pcc : ambilNilai(teks,"Type PCC"),
+pcc : ambilNilai(teks,"Type PCC") ||
+      (ambilNilai(teks,"Type").toUpperCase()=="PCC"
+          ? ambilNilai(teks,"Volume")
+          : "0"),
 
-        opc : ambilNilai(teks,"Type OPC"),
+opc : ambilNilai(teks,"Type OPC") ||
+      (ambilNilai(teks,"Type").toUpperCase()=="OPC"
+          ? ambilNilai(teks,"Volume")
+          : "0"),
 
         status : ambilNilai(teks,"Status Kapal")
 
@@ -1064,26 +1104,31 @@ console.table(events);
 
 dashboardData = dashboardData || {};
 
-dashboardData.kapal = {
 
-    nama: kapal.nama,
 
-    voyage: kapal.voyage,
+dashboardData.kapal = dashboardData.kapal || {};
 
-    opc: kapal.opc,
+if (kapal.nama) dashboardData.kapal.nama = kapal.nama;
 
-    pcc: kapal.pcc,
+if (kapal.voyage) dashboardData.kapal.voyage = kapal.voyage;
 
-    total: kapal.total,
+if (kapal.opc && kapal.opc !== "0")
+    dashboardData.kapal.opc = kapal.opc;
 
-    statusKapal: kapal.status,
+if (kapal.pcc && kapal.pcc !== "0")
+    dashboardData.kapal.pcc = kapal.pcc;
 
-    statusOperasi: statusOperasi,
+if (kapal.total)
+    dashboardData.kapal.total = kapal.total;
 
-    update: terakhir ? terakhir.datetime : "-"
+if (kapal.status)
+    dashboardData.kapal.statusKapal = kapal.status;
 
-};
+// Selalu diperbarui
+dashboardData.kapal.statusOperasi = statusOperasi;
 
+dashboardData.kapal.update =
+    terakhir ? terakhir.datetime : dashboardData.kapal.update;
 console.log(dashboardData);
     console.log(kapal);
 
@@ -1203,23 +1248,29 @@ if(tgl){
 
         const lower = barisTrim.toLowerCase();
 
-        if(lower.includes("lanjut bongkar opc"))
-            status="Sedang Bongkar OPC";
+        if(
+    lower.includes("lanjut bongkar") &&
+    lower.includes("opc")
+)
+    status="Sedang Bongkar OPC";
 
-        else if(lower.includes("start discharge type opc"))
-            status="Sedang Bongkar OPC";
+else if(
+    lower.includes("start discharge") &&
+    lower.includes("opc")
+)
+    status="Sedang Bongkar OPC";
 
-        else if(lower.includes("lanjut bongkar pcc"))
-            status="Sedang Bongkar PCC";
+else if(
+    lower.includes("lanjut bongkar") &&
+    lower.includes("pcc")
+)
+    status="Sedang Bongkar PCC";
 
-        else if(lower.includes("start discharge type pcc"))
-            status="Sedang Bongkar PCC";
-
-        else if(lower.includes("stop bongkar"))
-            status="Stop Bongkar";
-
-        else if(lower.includes("selesai bongkar"))
-            status="Selesai Bongkar";
+else if(
+    lower.includes("start discharge") &&
+    lower.includes("pcc")
+)
+    status="Sedang Bongkar PCC";
 
         else
             continue;
