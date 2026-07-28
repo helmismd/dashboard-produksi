@@ -217,9 +217,24 @@ h2{
 }
 
 .laut{
-    position: relative;
-    height: 90px;
-    overflow: hidden;
+
+    position:relative;
+
+    width:100%;
+
+    height:90px;
+
+    overflow:hidden;
+
+    background:linear-gradient(
+        to bottom,
+        #bfe9ff 0%,
+        #5bbcff 45%,
+        #1976d2 100%
+    );
+
+    border-radius:10px;
+
 }
 
 .kapal{
@@ -228,23 +243,89 @@ h2{
 
     left:50%;
 
-    bottom:8px;
+    bottom:18px;
 
     transform:translateX(-50%);
 
-    font-size:42px;
+    font-size:46px;
 
-    z-index:10;
+    z-index:20;
 
-    animation:kapalNaikTurun 3s ease-in-out infinite;
+    animation:kapal 3s ease-in-out infinite;
 
 }
-@keyframes kapalNaikTurun{
+
+@keyframes kapal{
+
     0%,100%{
-        transform:translateX(-50%) translateY(0);
+
+        transform:
+        translateX(-50%)
+        translateY(0px)
+        rotate(-1deg);
+
     }
 
     50%{
-        transform:translateX(-50%) translateY(-5px);
+
+        transform:
+        translateX(-50%)
+        translateY(-4px)
+        rotate(1deg);
+
     }
+
+}
+
+.ombak{
+
+    position:absolute;
+
+    left:-50%;
+
+    bottom:0;
+
+    width:200%;
+
+    height:22px;
+
+    background:
+    repeating-radial-gradient(
+        circle at 25px -8px,
+        rgba(255,255,255,.9) 0 12px,
+        transparent 13px 28px
+    );
+
+    animation:ombak 6s linear infinite;
+
+    z-index:5;
+
+}
+
+.ombak2{
+
+    bottom:10px;
+
+    opacity:.4;
+
+    animation-duration:9s;
+
+    animation-direction:reverse;
+
+}
+
+@keyframes ombak{
+
+    from{
+
+        transform:translateX(0);
+
+    }
+
+    to{
+
+        transform:translateX(-120px);
+
+    }
+
 }
