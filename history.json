@@ -28,5 +28,14 @@
   },
   {
     "tahun": 2026
+  },
+  {
+    "tahun": 2026,
+    "periode": "Senin, 27 Juli 2026",
+    "totalOPC": 1281.58,
+    "totalPCC": 669,
+    "totalBag": 669,
+    "totalBulk": 1281.58,
+    "grandTotal": 1950.58
   }
 ]
