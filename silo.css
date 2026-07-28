@@ -10,10 +10,9 @@ body{
 }
 
 .container{
+    max-width:1200px;
     width:95%;
-    max-width:1400px;
     margin:auto;
-    padding:20px;
 }
 
 h1{
@@ -215,4 +214,43 @@ h2{
     border-radius:8px;
     font-weight:bold;
     transition:0.3s;
+}
+
+.laut{
+    position:relative;
+    width:100%;
+    height:90px;
+    overflow:hidden;
+    background:linear-gradient(#8fd3ff,#1e88e5);
+}
+
+.ombak{
+    position:absolute;
+    bottom:0;
+    width:200%;
+    height:80px;
+    background:
+    radial-gradient(circle at 25px 20px,#ffffff 18px,transparent 19px);
+    background-size:50px 40px;
+    animation:goyangAir 6s linear infinite;
+    opacity:.45;
+}
+
+.ombak2{
+    bottom:8px;
+    opacity:.25;
+    animation-duration:9s;
+    animation-direction:reverse;
+}
+
+@keyframes goyangAir{
+
+    from{
+        transform:translateX(0);
+    }
+
+    to{
+        transform:translateX(-50%);
+    }
+
 }
