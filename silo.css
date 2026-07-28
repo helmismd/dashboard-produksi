@@ -216,24 +216,13 @@ h2{
     transition:0.3s;
 }
 
-.laut{
+.banner{
 
+    height:260px;
+    overflow:hidden;
     position:relative;
 
-    width:100%;
-
-    height:90px;
-
-    overflow:hidden;
-
-    background:linear-gradient(
-        to bottom,
-        #bfe9ff 0%,
-        #5bbcff 45%,
-        #1976d2 100%
-    );
-
-    border-radius:10px;
+    background:#8fd3ff;
 
 }
 
@@ -241,28 +230,35 @@ h2{
 
     position:absolute;
 
+    width:700px;
+
     left:50%;
 
     bottom:18px;
 
     transform:translateX(-50%);
 
-    font-size:46px;
-
-    z-index:20;
-
-    animation:kapal 3s ease-in-out infinite;
+    animation:kapalGoyang 4s ease-in-out infinite;
 
 }
 
-@keyframes kapal{
+@keyframes kapalGoyang{
 
-    0%,100%{
+    0%{
 
         transform:
         translateX(-50%)
         translateY(0px)
-        rotate(-1deg);
+        rotate(0deg);
+
+    }
+
+    25%{
+
+        transform:
+        translateX(-50%)
+        translateY(-3px)
+        rotate(-0.5deg);
 
     }
 
@@ -270,61 +266,26 @@ h2{
 
         transform:
         translateX(-50%)
-        translateY(-4px)
-        rotate(1deg);
+        translateY(0px)
+        rotate(0deg);
 
     }
 
-}
+    75%{
 
-.ombak{
-
-    position:absolute;
-
-    left:-50%;
-
-    bottom:0;
-
-    width:200%;
-
-    height:22px;
-
-    background:
-    repeating-radial-gradient(
-        circle at 25px -8px,
-        rgba(255,255,255,.9) 0 12px,
-        transparent 13px 28px
-    );
-
-    animation:ombak 6s linear infinite;
-
-    z-index:5;
-
-}
-
-.ombak2{
-
-    bottom:10px;
-
-    opacity:.4;
-
-    animation-duration:9s;
-
-    animation-direction:reverse;
-
-}
-
-@keyframes ombak{
-
-    from{
-
-        transform:translateX(0);
+        transform:
+        translateX(-50%)
+        translateY(3px)
+        rotate(0.5deg);
 
     }
 
-    to{
+    100%{
 
-        transform:translateX(-120px);
+        transform:
+        translateX(-50%)
+        translateY(0px)
+        rotate(0deg);
 
     }
 
