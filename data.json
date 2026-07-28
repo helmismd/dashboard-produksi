@@ -1,6 +1,29 @@
 {
-  "kapal": {
-    "statusOperasi": "Sedang Bongkar PCC",
-    "update": "2026-07-28 08:45"
-  }
+  "periode": "Senin, 27 Juli 2026",
+  "lastUpdate": "Data terakhir diperbarui : Senin, 27 Juli 2026",
+  "totalOPC": 1281.58,
+  "totalPCC": 669,
+  "totalBag": 669,
+  "totalBulk": 1281.58,
+  "grandTotal": 1950.58,
+  "bulanOPC": 19031.469999999994,
+  "bulanPCC": 16085.409999999998,
+  "bulanBag": 15593.949999999999,
+  "bulanBulk": 19522.93,
+  "bulanTotal": 35116.880000000005,
+  "labelTanggal": [
+    "27-07-26"
+  ],
+  "dataProduksi": [
+    1950.58
+  ],
+  "stokSilo": {
+    "opc": 3541.463,
+    "pcc": 5171.487
+  },
+  "tahunOPC": 95161.47999999995,
+  "tahunPCC": 119657.74999999999,
+  "tahunBag": 115227.09999999999,
+  "tahunBulk": 99592.12999999995,
+  "tahunTotal": 214819.22999999992
 }
