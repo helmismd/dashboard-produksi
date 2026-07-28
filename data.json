@@ -27,13 +27,13 @@
   "tahunBulk": 99592.12999999995,
   "tahunTotal": 214819.22999999992,
   "kapal": {
-    "statusOperasi": "Sedang Bongkar PCC",
-    "update": "2026-07-28 08:45",
-    "nama": "KM.TL-XVIII",
-    "voyage": "016/07/2026",
-    "opc": "5.061,991 Mts",
+    "statusOperasi": "-",
+    "update": "2026-07-26 07:40",
+    "nama": "KM.Tonasa Lines XXV",
+    "voyage": "027/07-TL.XXV/2026",
+    "opc": "5.073,364 m/t",
     "pcc": "3.076,846 Mts",
-    "total": "8.138,837 mts",
+    "total": "5.073,364 m/t",
     "statusKapal": "Sandar kiri PP SAMARINDA."
   }
 }
