@@ -9,9 +9,6 @@
     "grandTotal": 1152.94
   },
   {
-    "tahun": 2026
-  },
-  {
     "tahun": 2026,
     "periode": "Sabtu, 25 Juli 2026",
     "totalOPC": 626.22,
@@ -28,5 +25,8 @@
     "totalBag": 358,
     "totalBulk": 374.89,
     "grandTotal": 732.89
+  },
+  {
+    "tahun": 2026
   }
 ]
