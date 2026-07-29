@@ -218,65 +218,56 @@ h2{
 
 .banner{
     position: relative;
-    height: 300px;      
+    height: 220px;
     overflow: hidden;
     border-radius: 10px;
-       
+    background: #fff;
 }
-
-.banner img{
-    width:100%;
-    height:300%;
-    object-fit:cover;
-    object-position:top;
-}
-
 
 .kapal{
-    position:absolute;
-    top:-35px;
-    width:900px;
-    max-width:none;
-    left:50%;
-    bottom:0;
-    transform:translateX(-50%);
-    animation:kapalGoyang 10s ease-in-out infinite;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    object-fit: cover;
+    object-position: center;
+    animation: kapalGoyang 10s ease-in-out infinite;
 }
-
 
 @keyframes kapalGoyang {
     0% {
         transform:
         translateX(-50%)
-        translateY(0px)       /* Posisi normal */
+        translateY(0px)      
         rotate(0deg);
     }
 
     25% {
         transform:
         translateX(-50%)
-        translateY(-12px)     /* DIUBAH: Naik lebih tinggi (dari -3px ke -12px) */
-        rotate(-2deg);        /* DIUBAH: Miring ke kiri lebih kelihatan (dari -0.5deg ke -2deg) */
+        translateY(-12px)   
+        rotate(-2deg);       
     }
 
     50% {
         transform:
         translateX(-50%)
-        translateY(0px)       /* Kembali normal */
+        translateY(0px)       
         rotate(0deg);
     }
 
     75% {
         transform:
         translateX(-50%)
-        translateY(12px)      /* DIUBAH: Turun lebih dalam (dari 3px ke 12px) */
-        rotate(2deg);         /* DIUBAH: Miring ke kanan lebih kelihatan (dari 0.5deg ke 2deg) */
-    }
+        translateY(12px)      
+        rotate(2deg);       
+        }
 
     100% {
         transform:
         translateX(-50%)
-        translateY(0px)       /* Selesai satu siklus animasi */
+        translateY(0px)       
         rotate(0deg);
     }
 }
