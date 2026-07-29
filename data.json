@@ -1,39 +1,38 @@
 {
-  "periode": "Senin, 27 Juli 2026",
-  "lastUpdate": "Data terakhir diperbarui : Senin, 27 Juli 2026",
-  "totalOPC": 1281.58,
-  "totalPCC": 669,
-  "totalBag": 669,
-  "totalBulk": 1281.58,
-  "grandTotal": 1950.58,
-  "bulanOPC": 19031.469999999994,
-  "bulanPCC": 16085.409999999998,
-  "bulanBag": 15593.949999999999,
-  "bulanBulk": 19522.93,
-  "bulanTotal": 35116.880000000005,
+  "periode": "Selasa, 28 Juli 2026",
+  "lastUpdate": "Data terakhir diperbarui : Selasa, 28 Juli 2026",
+  "totalOPC": 700.48,
+  "totalPCC": 881.22,
+  "totalBag": 854.5,
+  "totalBulk": 727.2,
+  "grandTotal": 1581.7,
+  "bulanOPC": 19731.949999999993,
+  "bulanPCC": 16966.629999999997,
+  "bulanBag": 16448.449999999997,
+  "bulanBulk": 20250.13,
+  "bulanTotal": 36698.58,
   "labelTanggal": [
-    "27-07-26"
+    "28-07-26"
   ],
   "dataProduksi": [
-    1950.58
+    1581.7
   ],
   "stokSilo": {
-    "opc": 3541.463,
-    "pcc": 5171.487
+    "opc": 2958.912,
+    "pcc": 5844.778
   },
-  "tahunOPC": 95161.47999999995,
-  "tahunPCC": 119657.74999999999,
-  "tahunBag": 115227.09999999999,
-  "tahunBulk": 99592.12999999995,
-  "tahunTotal": 214819.22999999992,
+  "tahunOPC": 95861.95999999995,
+  "tahunPCC": 120538.96999999999,
+  "tahunBag": 116081.59999999999,
+  "tahunBulk": 100319.32999999994,
+  "tahunTotal": 216400.92999999993,
   "kapal": {
-    "statusOperasi": "Selesai Bongkar",
-    "update": "2026-07-28 22:15",
-    "nama": "KM.TL-XVIII",
-    "voyage": "016/07/2026",
-    "opc": "5.061,991 Mts",
+    "statusOperasi": "-",
+    "nama": "KM.Tonasa Lines XXV",
+    "voyage": "027/07-TL.XXV/2026",
+    "opc": "5.073,364 m/t",
     "pcc": "3.076,846 Mts",
-    "total": "8.138,837 mts",
+    "total": "5.073,364 m/t",
     "statusKapal": "Sandar kiri PP SAMARINDA."
   }
 }
