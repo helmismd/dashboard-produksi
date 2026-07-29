@@ -37,5 +37,14 @@
     "totalBag": 669,
     "totalBulk": 1281.58,
     "grandTotal": 1950.58
+  },
+  {
+    "tahun": 2026,
+    "periode": "Selasa, 28 Juli 2026",
+    "totalOPC": 700.48,
+    "totalPCC": 881.22,
+    "totalBag": 854.5,
+    "totalBulk": 727.2,
+    "grandTotal": 1581.7
   }
 ]
