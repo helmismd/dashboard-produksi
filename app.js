@@ -988,27 +988,33 @@ async function uploadGithub() {
         return;
     }
 
-    const sha = await getGithubSHA(token);
-const dataLama = await downloadData(token);
+    const keyLama = `${dataLama.kapal?.nama || ""}|${dataLama.kapal?.voyage || ""}`.trim().toUpperCase();
+const keyBaru = `${dashboardData.kapal?.nama || ""}|${dashboardData.kapal?.voyage || ""}`.trim().toUpperCase();
 
-const keyLama =
-    `${dataLama.kapal?.nama || ""}|${dataLama.kapal?.voyage || ""}`;
-
-const keyBaru =
-    `${dashboardData.kapal?.nama || ""}|${dashboardData.kapal?.voyage || ""}`;
-
-dashboardData = {
-    ...dataLama,
-    ...dashboardData,
-    kapal: (keyLama === keyBaru)
-        ? {
-            ...dataLama.kapal,
-            ...dashboardData.kapal
+if (keyLama === keyBaru && dataLama.kapal) {
+    // JIKA KAPAL & VOYAGE SAMA: Amankan nilai kargo lama agar tidak tertimpa string kosong
+    dashboardData = {
+        ...dataLama,
+        ...dashboardData,
+        kapal: {
+            nama: dashboardData.kapal.nama || dataLama.kapal.nama,
+            voyage: dashboardData.kapal.voyage || dataLama.kapal.voyage,
+            opc: dashboardData.kapal.opc || dataLama.kapal.opc || "0",
+            pcc: dashboardData.kapal.pcc || dataLama.kapal.pcc || "0",
+            total: dashboardData.kapal.total || dataLama.kapal.total || "0",
+            statusKapal: dashboardData.kapal.statusKapal || dataLama.kapal.statusKapal || "-",
+            statusOperasi: dashboardData.kapal.statusOperasi || dataLama.kapal.statusOperasi || "-",
+            update: dashboardData.kapal.update || dataLama.kapal.update || ""
         }
-        : {
-            ...dashboardData.kapal
-        }
-};
+    };
+} else {
+    // JIKA KAPAL BEDA / VOYAGE BARU: Buat data bersih dari awal
+    dashboardData = {
+        ...dataLama,
+        ...dashboardData
+    };
+}
+
 
     const url =
         `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
