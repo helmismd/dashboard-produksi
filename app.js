@@ -1452,15 +1452,15 @@ const EVENT_POSISI = [
 const BANNER_KAPAL = [
   {
     cari: "TONASA LINES XVIII",
-    gambar: "img/kapal/tl-xviii.webp"
+    gambar: "img/tl-xviii.webp"
   },
   {
     cari: "TONASA LINES XIX",
-    gambar: "img/kapal/tl-xix.webp"
+    gambar: "img/tl-xix.webp"
   },
   {
     cari: "TONASA LINES XXV",
-    gambar: "img/kapal/tl-xxv.webp"
+    gambar: "img/tl-xxv.webp"
   }
 ];
 
