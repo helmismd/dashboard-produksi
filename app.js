@@ -990,18 +990,6 @@ async function uploadGithub() {
 const dataLama = await downloadData(token);
 
 const keyLama =
-    `${dataLama?.kapal?.nama || ""}|${dataLama?.kapal?.voyage || ""}`;
-
-const keyBaru =
-    `${dashboardData?.kapal?.nama || ""}|${dashboardData?.kapal?.voyage || ""}`;
-
-if (keyLama !== keyBaru) {
-    dashboardData.kapal = {
-        ...dashboardData.kapal
-    };
-}
-
-const keyLama =
     `${dataLama.kapal?.nama || ""}|${dataLama.kapal?.voyage || ""}`;
 
 const keyBaru =
@@ -1018,7 +1006,9 @@ dashboardData = {
         : {
             ...dashboardData.kapal
         }
-};    const url =
+};
+
+    const url =
         `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
 
     const content =
@@ -1146,12 +1136,7 @@ console.table(events);
 
 dashboardData = dashboardData || {};
 
-const keyBaru = `${kapal.nama}|${kapal.voyage}`;
-const keyLama = `${dashboardData.kapal?.nama || ""}|${dashboardData.kapal?.voyage || ""}`;
 
-if (keyBaru !== keyLama) {
-    dashboardData.kapal = {};
-}
 
 dashboardData.kapal = dashboardData.kapal || {};
 
