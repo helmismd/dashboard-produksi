@@ -1159,18 +1159,10 @@ if (kapal.nama) dashboardData.kapal.nama = kapal.nama;
 
 if (kapal.voyage) dashboardData.kapal.voyage = kapal.voyage;
 
-if (kapal.opc && kapal.opc !== "0")
-    dashboardData.kapal.opc = kapal.opc;
-
-if (kapal.pcc && kapal.pcc !== "0")
-    dashboardData.kapal.pcc = kapal.pcc;
-
-if (kapal.total)
-    dashboardData.kapal.total = kapal.total;
-
-if (kapal.status)
-    dashboardData.kapal.statusKapal = kapal.status;
-
+dashboardData.kapal.opc = kapal.opc || "";
+dashboardData.kapal.pcc = kapal.pcc || "";
+dashboardData.kapal.total = kapal.total || "";
+dashboardData.kapal.statusKapal = kapal.status || "";
 // Selalu diperbarui
 dashboardData.kapal.statusOperasi = statusOperasi;
 
