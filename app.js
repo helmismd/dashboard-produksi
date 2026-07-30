@@ -1125,12 +1125,23 @@ opc : ambilNilai(teks,"Type OPC") ||
         status : ambilNilai(teks,"Status Kapal")
 
     };
+
 const events = ambilEventWA(teks);
 
 const terakhir = eventTerakhir(events);
 
 const statusOperasi =
     terakhir ? terakhir.status : "-";
+
+const eventPosisi = ambilEventPosisi(teks);
+console.table(eventPosisi);
+const posisiTerakhir =
+    eventTerakhir(eventPosisi);
+
+const statusKapal =
+    posisiTerakhir
+        ? posisiTerakhir.status
+        : "-";
 
 console.table(events);
 
@@ -1147,7 +1158,8 @@ if (kapal.voyage) dashboardData.kapal.voyage = kapal.voyage;
 dashboardData.kapal.opc = kapal.opc || "";
 dashboardData.kapal.pcc = kapal.pcc || "";
 dashboardData.kapal.total = kapal.total || "";
-dashboardData.kapal.statusKapal = kapal.status || "";
+dashboardData.kapal.statusKapal =
+    kapal.status || statusKapal;
 // Selalu diperbarui
 dashboardData.kapal.statusOperasi = statusOperasi;
 
@@ -1155,6 +1167,8 @@ dashboardData.kapal.update =
     terakhir ? terakhir.datetime : dashboardData.kapal.update;
 console.log(dashboardData);
     console.log(kapal);
+console.log("Nama kapal =", kapal.nama);
+gantiBannerKapal(kapal.nama);
 
 document.getElementById("kapalNama").value = kapal.nama;
 
@@ -1166,7 +1180,8 @@ document.getElementById("kapalPCC").value = kapal.pcc;
 
 document.getElementById("kapalTotal").value = kapal.total;
 
-document.getElementById("kapalStatus").value = kapal.status;
+document.getElementById("kapalStatus").value =
+    kapal.status || statusKapal;
 
 document.getElementById("kapalStatusOperasi").value = statusOperasi;
 
@@ -1185,7 +1200,8 @@ document.getElementById("haPCC").textContent = kapal.pcc;
 
 document.getElementById("haTotal").textContent = kapal.total;
 
-document.getElementById("haStatus").textContent = kapal.status;
+document.getElementById("haStatus").textContent =
+    kapal.status || statusKapal;
 
 document.getElementById("haStatusOperasi").textContent = statusOperasi;
 
@@ -1213,7 +1229,8 @@ PCC : ${kapal.pcc}
 Total : ${kapal.total}
 
 Status :
-${kapal.status}`);
+${kapal.status || statusKapal}
+`);
 }
 
 function ambilEventWA(teks){
@@ -1370,4 +1387,192 @@ function eventTerakhir(events){
 
 }
 
+function deteksiStatusKapal(teks){
+
+    const t = teks.toLowerCase();
+
+    // ===== BERLAYAR =====
+    if(t.includes("at sea"))
+        return "🚢 BERLAYAR";
+
+    if(t.includes("berangkat tujuan"))
+        return "🚢 BERLAYAR";
+
+    if(t.includes("full away"))
+        return "🚢 BERLAYAR";
+
+    // ===== ETA =====
+    const eta = t.match(/eta.*?tgl\s*([0-9\/]+).*?jam\s*([0-9:.]+)/i);
+
+    if(eta){
+        return `🚢 BERLAYAR - ETA Samarinda ${eta[1]} ${eta[2]} LT`;
+    }
+
+    // ===== MENUJU DERMAGA =====
+    if(t.includes("bergerak menuju"))
+        return "🚢 MENUJU DERMAGA";
+if(t.includes("tug line on"))
+    return "🚢 APPROACH JETTY";
+
+    if(t.includes("tunggu info masuk alur"))
+        return "⏳ MENUNGGU MASUK ALUR";
+
+    // ===== BERLABUH =====
+    if(
+    t.includes("drop anchor") ||
+    t.includes("letgo") ||
+    t.includes("selesai berlabuh")
+)
+    return "⚓ BERLABUH";
+
+    // ===== SANDAR =====
+if(
+    t.includes("first line") ||
+    t.includes("inpost")
+)
+    return "🏗️ SANDAR DI JETTY PALARAN";
+
+    return "-";
+}
+
+const EVENT_POSISI = [
+  { cari: "AT SEA", status: "🚢 BERLAYAR" },
+  { cari: "BERANGKAT TUJUAN", status: "🚢 BERLAYAR" },
+  { cari: "FULL AWAY", status: "🚢 BERLAYAR" },
+  /*{ cari: "ETA", status: "🚢 MENUJU DERMAGA" },*/
+  { cari: "TUNGGU INFO MASUK ALUR", status: "⏳ MENUNGGU MASUK ALUR" },
+  { cari: "DROP ANCHOR", status: "⚓ BERLABUH" },
+  { cari: "LETGO", status: "⚓ BERLABUH" },
+  { cari: "SELESAI BERLABUH", status: "⚓ BERLABUH" },
+  { cari: "TUG LINE ON", status: "🚢 APPROACH JETTY" },
+  { cari: "FIRST LINE", status: "🏗️ SANDAR DI JETTY PALARAN" },
+  { cari: "INPOST", status: "🏗️ SANDAR DI JETTY PALARAN" }
+];
+
+const BANNER_KAPAL = [
+  {
+    cari: "TONASA LINES XVIII",
+    gambar: "img/kapal/tl-xviii.webp"
+  },
+  {
+    cari: "TONASA LINES XIX",
+    gambar: "img/kapal/tl-xix.webp"
+  },
+  {
+    cari: "TONASA LINES XXV",
+    gambar: "img/kapal/tl-xxv.webp"
+  }
+];
+
+function gantiBannerKapal(namaKapal) {
+
+    const img = document.getElementById("bannerKapal");
+    if (!img) return;
+
+    const nama = (namaKapal || "").toUpperCase();
+
+    const kapal = BANNER_KAPAL.find(k =>
+        nama.includes(k.cari)
+    );
+
+    img.src = kapal
+        ? kapal.gambar
+        : "img/kapal/default.webp";
+}
+
+
+
+function ambilEventPosisi(teks){
+
+    const baris = teks.split(/\r?\n/);
+
+    let tanggalAktif = "";
+
+    const hasil = [];
+
+    const bulan = {
+        januari:"01",
+        februari:"02",
+        maret:"03",
+        april:"04",
+        mei:"05",
+        juni:"06",
+        juli:"07",
+        agustus:"08",
+        september:"09",
+        oktober:"10",
+        november:"11",
+        desember:"12"
+    };
+
+    for(const b of baris){
+
+        const barisTrim = b.replace(/\*/g,"").trim();
+
+        // ===== Deteksi tanggal =====
+        const tgl = barisTrim.match(/(\d{1,2})\/(\d{1,2})\/'?(\d{2,4})/);
+
+        if(tgl){
+
+            let tahun = tgl[3];
+
+            if(tahun.length===2)
+                tahun = "20"+tahun;
+
+            tanggalAktif =
+                tahun+"-"+
+                tgl[2].padStart(2,"0")+"-"+
+                tgl[1].padStart(2,"0");
+
+        }
+
+        const tgl2 = barisTrim.match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/i);
+
+        if(tgl2){
+
+            tanggalAktif =
+                tgl2[3]+"-"+
+                bulan[tgl2[2].toLowerCase()]+"-"+
+                tgl2[1].padStart(2,"0");
+
+        }
+
+        // ===== Deteksi jam =====
+        const jam = barisTrim.match(/(\d{2})\.(\d{2})/);
+
+        if(!jam) continue;
+
+        const upper = barisTrim.toUpperCase();
+
+        EVENT_POSISI.forEach(e=>{
+
+            if(upper.includes(e.cari)){
+
+                hasil.push({
+
+                    tanggal : tanggalAktif,
+
+                    jam : jam[1]+":"+jam[2],
+
+                    datetime :
+                        tanggalAktif+" "+
+                        jam[1]+":"+jam[2],
+
+                    event : e.cari,
+
+                    status : e.status,
+
+                    teks : barisTrim
+
+                });
+
+            }
+
+        });
+
+    }
+
+    return hasil;
+
+}
 
