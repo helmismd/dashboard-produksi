@@ -1477,7 +1477,7 @@ function gantiBannerKapal(namaKapal) {
 
     img.src = kapal
         ? kapal.gambar
-        : "img/kapal/tl-xxv.webp";
+        : "img/tl-xxv.webp";
 }
 
 
