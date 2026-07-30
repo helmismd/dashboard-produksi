@@ -124,6 +124,36 @@
 
 <script src="silo.js"></script>
 
+
+<!-- File silo.js Anda yang asli tetap dibiarkan utuh di sini -->
+<script src="silo.js"></script>
+
+<!-- Tambahkan kode tambahan mandiri ini di bawahnya: -->
+
+<script>
+    setTimeout(() => {
+        const elemenNama = document.getElementById("shipName");
+        const img = document.getElementById("bannerKapal");
+        
+        if (elemenNama && img) {
+            const namaKapal = elemenNama.textContent.toUpperCase();
+            let gambarTerpilih = "IMG_KAPAL/tl-xviii.webp"; 
+
+            if (/XVIII/.test(namaKapal)) {
+                gambarTerpilih = "IMG_KAPAL/tl-xviii.webp";
+            } else if (/XIX/.test(namaKapal)) {
+                gambarTerpilih = "IMG_KAPAL/tl-xix.webp";
+            } else if (/XXV/.test(namaKapal)) {
+                gambarTerpilih = "IMG_KAPAL/tl-xxv.webp";
+            }
+
+            img.src = gambarTerpilih;
+            console.log("Banner otomatis diganti ke folder:", img.src);
+        }
+    }, 1000); 
+</script>
+<!-- Batas akhir kode baru -->
+
 </body>
 </html>
 
