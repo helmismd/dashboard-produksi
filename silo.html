@@ -30,12 +30,8 @@
 
 <div class="banner">
 
-  <img
-      id="bannerKapal"
-      src="IMG_KAPAL/tl-xviii.webp"
-      class="kapal"
-      width="800"
-      alt="Banner Kapal">
+ <img id="bannerKapal" src="tl-xviii.webp" class="kapal" width="800" alt="Banner Kapal">
+
 
 <div class="wave wave1"></div>
 <div class="wave wave2"></div>
@@ -137,25 +133,23 @@
         
         if (elemenNama && img) {
             const namaKapal = elemenNama.textContent.toUpperCase();
-            let gambarTerpilih = "IMG_KAPAL/tl-xviii.webp"; 
+            
+            // Mengunci ke nama file polos langsung tanpa folder
+            let gambarTerpilih = "tl-xviii.webp"; 
 
             if (/XVIII/.test(namaKapal)) {
-                gambarTerpilih = "IMG_KAPAL/tl-xviii.webp";
+                gambarTerpilih = "tl-xviii.webp";
             } else if (/XIX/.test(namaKapal)) {
-                gambarTerpilih = "IMG_KAPAL/tl-xix.webp";
+                gambarTerpilih = "tl-xix.webp";
             } else if (/XXV/.test(namaKapal)) {
-                gambarTerpilih = "IMG_KAPAL/tl-xxv.webp";
+                gambarTerpilih = "tl-xxv.webp";
             }
 
             img.src = gambarTerpilih;
-            console.log("Banner otomatis diganti ke folder:", img.src);
+            console.log("Banner otomatis diperbarui ke file polos:", img.src);
         }
     }, 1000); 
 </script>
-<!-- Batas akhir kode baru -->
 
 </body>
 </html>
-
-
-
