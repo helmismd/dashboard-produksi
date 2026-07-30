@@ -1451,20 +1451,21 @@ const EVENT_POSISI = [
 
 const BANNER_KAPAL = [
   {
-    cari: "TONASA LINES XVIII",
+    cari: "TL XVIII",
     gambar: "img/tl-xviii.webp"
   },
   {
-    cari: "TONASA LINES XIX",
+    cari: "TL XIX",
     gambar: "img/tl-xix.webp"
   },
   {
-    cari: "TONASA LINES XXV",
+    cari: "TL XXV",
     gambar: "img/tl-xxv.webp"
   }
 ];
 
 function gantiBannerKapal(namaKapal) {
+console.log("NAMA KAPAL =", namaKapal);
 
     const img = document.getElementById("bannerKapal");
     if (!img) return;
