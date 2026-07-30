@@ -1154,46 +1154,47 @@ const statusKapal =
 console.table(events);
 
 // === TEMPELKAN KODE BARU INI ===
+// =================================================================
+// ✔️ TEMPELKAN KODE BARU INI SEBAGAI PENGGANTINYA:
+// =================================================================
 dashboardData = dashboardData || {};
 dashboardData.kapal = dashboardData.kapal || {};
 
-// 1. Ambil data kapal lama yang saat ini sedang aktif di memori dashboard
-const namaLama = dashboardData.kapal.nama || "";
-const voyageLama = dashboardData.kapal.voyage || "";
-const cargoOpcLama = dashboardData.kapal.opc || "";
-const cargoPccLama = dashboardData.kapal.pcc || "";
-const cargoTotalLama = dashboardData.kapal.total || "";
-const statusKapalLama = dashboardData.kapal.statusKapal || "";
+const namaLama          = dashboardData.kapal.nama || "";
+const voyageLama        = dashboardData.kapal.voyage || "";
+const cargoOpcLama      = dashboardData.kapal.opc || "0";
+const cargoPccLama      = dashboardData.kapal.pcc || "0";
+const cargoTotalLama    = dashboardData.kapal.total || "0";
+const statusKapalLama   = dashboardData.kapal.statusKapal || "-";
 
-// 2. Deteksi input dari WA: jika WA pendek tidak ada nama kapal, anggap namanya masih sama
-const namaInputWA = kapal.nama || namaLama;
-const voyageInputWA = kapal.voyage || voyageLama;
+const namaDariWA   = (kapal.nama || "").trim();
+const voyageDariWA = (kapal.voyage || "").trim();
 
-// 3. CEK KONDISI: Apakah kapal & voyage masih sama dengan yang lama?
-if (namaLama.toUpperCase() === namaInputWA.toUpperCase() && voyageLama === voyageInputWA) {
-    
-    // JIKA SAMA (Kondisi WA Pendek untuk update status): Pertahankan kargo lama
-    dashboardData.kapal.nama = namaInputWA;
-    dashboardData.kapal.voyage = voyageInputWA;
-    dashboardData.kapal.opc = kapal.opc || cargoOpcLama || "0 Ton";
-    dashboardData.kapal.pcc = kapal.pcc || cargoPccLama || "0 Ton";
-    dashboardData.kapal.total = kapal.total || cargoTotalLama || "0 Ton";
-    dashboardData.kapal.statusKapal = kapal.status || statusKapal || statusKapalLama || "-";
-    
+// Logika pendeteksi: jika nama & voyage di WA kosong, otomatis anggap laporan aktivitas kapal yang sama
+const apakahKapalSama = (namaDariWA === "" && voyageDariWA === "") || 
+                        (namaLama.toUpperCase() === namaDariWA.toUpperCase() && voyageLama === voyageDariWA);
+
+if (apakahKapalSama) {
+    console.log("[INFO] Laporan aktivitas terdeteksi. Mengunci data lama.");
+    dashboardData.kapal.nama        = namaLama || "-";
+    dashboardData.kapal.voyage      = voyageLama || "-";
+    dashboardData.kapal.opc         = cargoOpcLama; 
+    dashboardData.kapal.pcc         = cargoPccLama; 
+    dashboardData.kapal.total       = cargoTotalLama;
+    dashboardData.kapal.statusKapal = kapal.status || statusKapal || statusKapalLama;
 } else {
-    
-    // JIKA BEDA (Kondisi Kapal Baru Masuk): Buat data baru, kosongkan kargo jika tidak ditulis di WA
-    dashboardData.kapal.nama = kapal.nama || "-";
-    dashboardData.kapal.voyage = kapal.voyage || "-";
-    dashboardData.kapal.opc = kapal.opc || "0 Ton";
-    dashboardData.kapal.pcc = kapal.pcc || "0 Ton";
-    dashboardData.kapal.total = kapal.total || "0 Ton";
+    console.log("[INFO] Kapal baru terdeteksi. Membuat data baru.");
+    dashboardData.kapal.nama        = kapal.nama || "-";
+    dashboardData.kapal.voyage      = kapal.voyage || "-";
+    dashboardData.kapal.opc         = kapal.opc || "0";
+    dashboardData.kapal.pcc         = kapal.pcc || "0";
+    dashboardData.kapal.total       = kapal.total || "0";
     dashboardData.kapal.statusKapal = kapal.status || statusKapal || "-";
 }
 
-// 4. Status operasi dan waktu update wajib selalu mengikuti teks WA yang paling baru
 dashboardData.kapal.statusOperasi = statusOperasi;
-dashboardData.kapal.update = terakhir ? terakhir.datetime : dashboardData.kapal.update;
+dashboardData.kapal.update        = terakhir ? terakhir.datetime : dashboardData.kapal.update;
+// =================================================================
 // === BATAS AKHIR KODE BARU ===
 
 console.log(dashboardData);
@@ -1604,3 +1605,23 @@ function ambilEventPosisi(teks){
 
 }
 
+// =================================================================
+// KODE MANDIRI: AMBIL DATA TERBARU DARI GITHUB SAAT HALAMAN DIBUKA
+// =================================================================
+window.addEventListener("DOMContentLoaded", async () => {
+    console.log("[INIT] Mengambil data terakhir dari GitHub...");
+    try {
+        const token = localStorage.getItem("github_token") || TOKEN;
+        if (token) {
+            // Mengunduh data asli dari GitHub dan memasukkannya ke memori dashboardData
+            const dataTerakhir = await downloadData(token);
+            if (dataTerakhir) {
+                dashboardData = dataTerakhir;
+                console.log("[INIT] Berhasil memuat data kapal aktif:", dashboardData.kapal);
+            }
+        }
+    } catch (error) {
+        console.error("[INIT] Gagal memuat data awal dari GitHub:", error);
+    }
+});
+// =================================================================
