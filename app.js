@@ -973,6 +973,8 @@ async function uploadHistory(token, history) {
 
 }
 
+
+
 // ===========================
 // UPLOAD DATA.JSON KE GITHUB
 // ===========================
@@ -1097,7 +1099,20 @@ function deteksiStatusOperasi(teks){
     return "-";
 }
 
-
+const BANNER_KAPAL = [
+  {
+    cari: "TL XVIII",
+    gambar: "img/tl-xviii.webp"
+  },
+  {
+    cari: "TL XIX",
+    gambar: "img/tl-xix.webp"
+  },
+  {
+    cari: "TL XXV",
+    gambar: "img/tl-xxv.webp"
+  }
+];
 
 
 function analisaWA(){
@@ -1168,6 +1183,7 @@ dashboardData.kapal.update =
 console.log(dashboardData);
     console.log(kapal);
 console.log("Nama kapal =", kapal.nama);
+
 gantiBannerKapal(kapal.nama);
 
 document.getElementById("kapalNama").value = kapal.nama;
@@ -1449,36 +1465,35 @@ const EVENT_POSISI = [
   { cari: "INPOST", status: "🏗️ SANDAR DI JETTY PALARAN" }
 ];
 
-const BANNER_KAPAL = [
-  {
-    cari: "TL XVIII",
-    gambar: "img/tl-xviii.webp"
-  },
-  {
-    cari: "TL XIX",
-    gambar: "img/tl-xix.webp"
-  },
-  {
-    cari: "TL XXV",
-    gambar: "img/tl-xxv.webp"
-  }
-];
+
 
 function gantiBannerKapal(namaKapal) {
-console.log("NAMA KAPAL =", namaKapal);
+    console.log("NAMA KAPAL DARI WA =", namaKapal);
 
     const img = document.getElementById("bannerKapal");
     if (!img) return;
 
-    const nama = (namaKapal || "").toUpperCase();
+    // 1. Bersihkan teks total: Hapus kata "KM", bintang (*), strip, titik, dan semua spasi
+    let namaBersih = (namaKapal || "").toUpperCase();
+    namaBersih = namaBersih.replace("KM", ""); // Menghapus tulisan KM
+    namaBersih = namaBersih.replace(/[^A-Z0-9]/g, ""); // Menghapus * , - . dan spasi (Hasilnya: "TLXVIII")
 
-    const kapal = BANNER_KAPAL.find(k =>
-        nama.includes(k.cari)
-    );
+    console.log("NAMA KAPAL SETELAH DI-FILTER =", namaBersih);
 
-    img.src = kapal
-        ? kapal.gambar
-        : "img/tl-xxv.webp";
+    // 2. Cari kecocokan di dalam BANNER_KAPAL
+    const kapalTerpilih = BANNER_KAPAL.find(k => {
+        // Bersihkan juga kata kunci di database ("TL XVIII" menjadi "TLXVIII")
+        const kataKunciBersih = k.cari.toUpperCase().replace(/[^A-Z0-9]/g, "");
+        
+        return namaBersih.includes(kataKunciBersih);
+    });
+
+    // 3. Eksekusi pergantian gambar banner
+    img.src = kapalTerpilih
+        ? kapalTerpilih.gambar
+        : "img/tl-xviii.webp"; // Fallback default jika tidak ketemu
+
+    console.log("GAMBAR BANNER YANG BERHASIL DIPASANG =", img.src);
 }
 
 
