@@ -1,39 +1,30 @@
 {
-  "periode": "Selasa, 28 Juli 2026",
-  "lastUpdate": "Data terakhir diperbarui : Selasa, 28 Juli 2026",
-  "totalOPC": 700.48,
-  "totalPCC": 881.22,
-  "totalBag": 854.5,
-  "totalBulk": 727.2,
-  "grandTotal": 1581.7,
-  "bulanOPC": 19731.949999999993,
-  "bulanPCC": 16966.629999999997,
-  "bulanBag": 16448.449999999997,
-  "bulanBulk": 20250.13,
-  "bulanTotal": 36698.58,
+  "periode": "Rabu, 29 Juli 2026",
+  "lastUpdate": "Data terakhir diperbarui : Rabu, 29 Juli 2026",
+  "totalOPC": 1060.17,
+  "totalPCC": 903.5,
+  "totalBag": 903.5,
+  "totalBulk": 1060.17,
+  "grandTotal": 1963.67,
+  "bulanOPC": 20792.119999999995,
+  "bulanPCC": 17870.129999999997,
+  "bulanBag": 17351.949999999997,
+  "bulanBulk": 21310.300000000003,
+  "bulanTotal": 38662.25,
   "labelTanggal": [
-    "28-07-26"
+    "29-07-26"
   ],
   "dataProduksi": [
-    1581.7
+    1963.67
   ],
   "stokSilo": {
-    "opc": 2958.912,
-    "pcc": 5844.778
+    "opc": 2029.449,
+    "pcc": 5127.44
   },
-  "tahunOPC": 95861.95999999995,
-  "tahunPCC": 120538.96999999999,
-  "tahunBag": 116081.59999999999,
-  "tahunBulk": 100319.32999999994,
-  "tahunTotal": 216400.92999999993,
-  "kapal": {
-    "nama": "KM.TL-XVIII",
-    "voyage": "016/07/2026",
-    "opc": "5.061,991 Mts",
-    "pcc": "3.076,846 Mts",
-    "total": "8.138,837 mts",
-    "statusKapal": "Berangkat Tujuan Biringkassi  ETA Tgl 30/07/2026 Jam 23.00 LT.",
-    "statusOperasi": "Selesai Bongkar",
-    "update": "2026-07-28 22:15"
-  }
+  "tahunOPC": 96922.12999999996,
+  "tahunPCC": 121442.46999999999,
+  "tahunBag": 116985.09999999999,
+  "tahunBulk": 101379.49999999996,
+  "tahunTotal": 218364.59999999995,
+  "kapal": {}
 }
