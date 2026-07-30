@@ -988,15 +988,37 @@ async function uploadGithub() {
 
     const sha = await getGithubSHA(token);
 const dataLama = await downloadData(token);
+
+const keyLama =
+    `${dataLama?.kapal?.nama || ""}|${dataLama?.kapal?.voyage || ""}`;
+
+const keyBaru =
+    `${dashboardData?.kapal?.nama || ""}|${dashboardData?.kapal?.voyage || ""}`;
+
+if (keyLama !== keyBaru) {
+    dashboardData.kapal = {
+        ...dashboardData.kapal
+    };
+}
+
+const keyLama =
+    `${dataLama.kapal?.nama || ""}|${dataLama.kapal?.voyage || ""}`;
+
+const keyBaru =
+    `${dashboardData.kapal?.nama || ""}|${dashboardData.kapal?.voyage || ""}`;
+
 dashboardData = {
     ...dataLama,
     ...dashboardData,
-    kapal: {
-        ...dataLama.kapal,
-        ...dashboardData.kapal
-    }
-};
-    const url =
+    kapal: (keyLama === keyBaru)
+        ? {
+            ...dataLama.kapal,
+            ...dashboardData.kapal
+        }
+        : {
+            ...dashboardData.kapal
+        }
+};    const url =
         `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
 
     const content =
@@ -1124,7 +1146,12 @@ console.table(events);
 
 dashboardData = dashboardData || {};
 
+const keyBaru = `${kapal.nama}|${kapal.voyage}`;
+const keyLama = `${dashboardData.kapal?.nama || ""}|${dashboardData.kapal?.voyage || ""}`;
 
+if (keyBaru !== keyLama) {
+    dashboardData.kapal = {};
+}
 
 dashboardData.kapal = dashboardData.kapal || {};
 
@@ -1226,14 +1253,7 @@ function ambilEventWA(teks){
 
 
 
-    if(events.length===0)
-        return null;
-
-    return [...events]
-        .sort((a,b)=>a.datetime.localeCompare(b.datetime))
-        .at(-1);
-
-}
+    
 
         // ==========================
         // Deteksi tanggal
@@ -1334,8 +1354,7 @@ else if (lower.includes("selesai bongkar")) {
 else
     continue;
 
-dashboardData.kapal.statusOperasi = status;
-dashboardData.kapal.update = jam[0];
+
           console.log(barisTrim);
 console.log(status);
 console.log(jam);
