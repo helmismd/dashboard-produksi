@@ -1099,20 +1099,7 @@ function deteksiStatusOperasi(teks){
     return "-";
 }
 
-const BANNER_KAPAL = [
-  {
-    cari: "TL XVIII",
-    gambar: "img/tl-xviii.webp"
-  },
-  {
-    cari: "TL XIX",
-    gambar: "img/tl-xix.webp"
-  },
-  {
-    cari: "TL XXV",
-    gambar: "img/tl-xxv.webp"
-  }
-];
+
 
 
 function analisaWA(){
@@ -1160,26 +1147,49 @@ const statusKapal =
 
 console.table(events);
 
+// === TEMPELKAN KODE BARU INI ===
 dashboardData = dashboardData || {};
-
-
-
 dashboardData.kapal = dashboardData.kapal || {};
 
-if (kapal.nama) dashboardData.kapal.nama = kapal.nama;
+// 1. Ambil data kapal lama yang saat ini sedang aktif di memori dashboard
+const namaLama = dashboardData.kapal.nama || "";
+const voyageLama = dashboardData.kapal.voyage || "";
+const cargoOpcLama = dashboardData.kapal.opc || "";
+const cargoPccLama = dashboardData.kapal.pcc || "";
+const cargoTotalLama = dashboardData.kapal.total || "";
+const statusKapalLama = dashboardData.kapal.statusKapal || "";
 
-if (kapal.voyage) dashboardData.kapal.voyage = kapal.voyage;
+// 2. Deteksi input dari WA: jika WA pendek tidak ada nama kapal, anggap namanya masih sama
+const namaInputWA = kapal.nama || namaLama;
+const voyageInputWA = kapal.voyage || voyageLama;
 
-dashboardData.kapal.opc = kapal.opc || "";
-dashboardData.kapal.pcc = kapal.pcc || "";
-dashboardData.kapal.total = kapal.total || "";
-dashboardData.kapal.statusKapal =
-    kapal.status || statusKapal;
-// Selalu diperbarui
+// 3. CEK KONDISI: Apakah kapal & voyage masih sama dengan yang lama?
+if (namaLama.toUpperCase() === namaInputWA.toUpperCase() && voyageLama === voyageInputWA) {
+    
+    // JIKA SAMA (Kondisi WA Pendek untuk update status): Pertahankan kargo lama
+    dashboardData.kapal.nama = namaInputWA;
+    dashboardData.kapal.voyage = voyageInputWA;
+    dashboardData.kapal.opc = kapal.opc || cargoOpcLama || "0 Ton";
+    dashboardData.kapal.pcc = kapal.pcc || cargoPccLama || "0 Ton";
+    dashboardData.kapal.total = kapal.total || cargoTotalLama || "0 Ton";
+    dashboardData.kapal.statusKapal = kapal.status || statusKapal || statusKapalLama || "-";
+    
+} else {
+    
+    // JIKA BEDA (Kondisi Kapal Baru Masuk): Buat data baru, kosongkan kargo jika tidak ditulis di WA
+    dashboardData.kapal.nama = kapal.nama || "-";
+    dashboardData.kapal.voyage = kapal.voyage || "-";
+    dashboardData.kapal.opc = kapal.opc || "0 Ton";
+    dashboardData.kapal.pcc = kapal.pcc || "0 Ton";
+    dashboardData.kapal.total = kapal.total || "0 Ton";
+    dashboardData.kapal.statusKapal = kapal.status || statusKapal || "-";
+}
+
+// 4. Status operasi dan waktu update wajib selalu mengikuti teks WA yang paling baru
 dashboardData.kapal.statusOperasi = statusOperasi;
+dashboardData.kapal.update = terakhir ? terakhir.datetime : dashboardData.kapal.update;
+// === BATAS AKHIR KODE BARU ===
 
-dashboardData.kapal.update =
-    terakhir ? terakhir.datetime : dashboardData.kapal.update;
 console.log(dashboardData);
     console.log(kapal);
 console.log("Nama kapal =", kapal.nama);
@@ -1468,34 +1478,30 @@ const EVENT_POSISI = [
 
 
 function gantiBannerKapal(namaKapal) {
-    console.log("NAMA KAPAL DARI WA =", namaKapal);
+    console.log("[DEBUG] Nama dari WA:", namaKapal);
 
     const img = document.getElementById("bannerKapal");
     if (!img) return;
 
-    // 1. Bersihkan teks total: Hapus kata "KM", bintang (*), strip, titik, dan semua spasi
-    let namaBersih = (namaKapal || "").toUpperCase();
-    namaBersih = namaBersih.replace("KM", ""); // Menghapus tulisan KM
-    namaBersih = namaBersih.replace(/[^A-Z0-9]/g, ""); // Menghapus * , - . dan spasi (Hasilnya: "TLXVIII")
+    // 1. Ubah teks input dari WA menjadi huruf besar semua agar mudah dideteksi
+    const namaTeks = (namaKapal || "").toUpperCase();
+    
+    // 2. Siapkan nama file gambar (wajib HURUF KECIL semua agar cocok dengan file di GitHub)
+    let gambarTerpilih = "tl-xviii.webp"; 
 
-    console.log("NAMA KAPAL SETELAH DI-FILTER =", namaBersih);
+    // 3. Deteksi nomor romawi kapal
+    if (/XVIII/.test(namaTeks)) {
+        gambarTerpilih = "tl-xviii.webp";
+    } else if (/XIX/.test(namaTeks)) {
+        gambarTerpilih = "tl-xix.webp";
+    } else if (/XXV/.test(namaTeks)) {
+        gambarTerpilih = "tl-xxv.webp";
+    }
 
-    // 2. Cari kecocokan di dalam BANNER_KAPAL
-    const kapalTerpilih = BANNER_KAPAL.find(k => {
-        // Bersihkan juga kata kunci di database ("TL XVIII" menjadi "TLXVIII")
-        const kataKunciBersih = k.cari.toUpperCase().replace(/[^A-Z0-9]/g, "");
-        
-        return namaBersih.includes(kataKunciBersih);
-    });
-
-    // 3. Eksekusi pergantian gambar banner
-    img.src = kapalTerpilih
-        ? kapalTerpilih.gambar
-        : "img/tl-xviii.webp"; // Fallback default jika tidak ketemu
-
-    console.log("GAMBAR BANNER YANG BERHASIL DIPASANG =", img.src);
+    // 4. Pasang nama file gambar secara polos ke HTML
+    img.src = gambarTerpilih;
+    console.log("[DEBUG] Berhasil memasang banner polos ke HTML:", img.src);
 }
-
 
 
 function ambilEventPosisi(teks){
