@@ -5,6 +5,7 @@
 
 let chartProduksi = null;
 let dashboardData = {};
+
 // ===========================
 // KONFIGURASI GITHUB
 // ===========================
@@ -989,6 +990,7 @@ async function uploadGithub() {
     }
 
     const keyLama = `${dataLama.kapal?.nama || ""}|${dataLama.kapal?.voyage || ""}`.trim().toUpperCase();
+
 const keyBaru = `${dashboardData.kapal?.nama || ""}|${dashboardData.kapal?.voyage || ""}`.trim().toUpperCase();
 
 if (keyLama === keyBaru && dataLama.kapal) {
@@ -999,9 +1001,17 @@ if (keyLama === keyBaru && dataLama.kapal) {
         kapal: {
             nama: dashboardData.kapal.nama || dataLama.kapal.nama,
             voyage: dashboardData.kapal.voyage || dataLama.kapal.voyage,
-            opc: dashboardData.kapal.opc || dataLama.kapal.opc || "0",
-            pcc: dashboardData.kapal.pcc || dataLama.kapal.pcc || "0",
-            total: dashboardData.kapal.total || dataLama.kapal.total || "0",
+            opc: dashboardData.kapal.opc === "0"
+        ? dataLama.kapal.opc
+        : dashboardData.kapal.opc,
+
+pcc: dashboardData.kapal.pcc === "0"
+        ? dataLama.kapal.pcc
+        : dashboardData.kapal.pcc,
+
+total: dashboardData.kapal.total === "0"
+        ? dataLama.kapal.total
+        : dashboardData.kapal.total,
             statusKapal: dashboardData.kapal.statusKapal || dataLama.kapal.statusKapal || "-",
             statusOperasi: dashboardData.kapal.statusOperasi || dataLama.kapal.statusOperasi || "-",
             update: dashboardData.kapal.update || dataLama.kapal.update || ""
@@ -1118,163 +1128,134 @@ function deteksiStatusOperasi(teks){
 
 
 
-function analisaWA(){
-
+async function analisaWA() {
     const teks = document.getElementById("waInput").value;
 
+    // 1. Ekstraksi data murni dari teks input WhatsApp Anda
     const kapal = {
-
-        nama : ambilNilai(teks,"Vessel"),
-
-        voyage : ambilNilai(teks,"Voyage"),
-        
-        total : ambilNilai(teks,"Volume"),
-
-pcc : ambilNilai(teks,"Type PCC") ||
-      (ambilNilai(teks,"Type").toUpperCase()=="PCC"
-          ? ambilNilai(teks,"Volume")
-          : ""),
-
-opc : ambilNilai(teks,"Type OPC") ||
-      (ambilNilai(teks,"Type").toUpperCase()=="OPC"
-          ? ambilNilai(teks,"Volume")
-          : ""),
-
-        status : ambilNilai(teks,"Status Kapal")
-
+        nama   : ambilNilai(teks, "Vessel"),
+        voyage : ambilNilai(teks, "Voyage"),
+        total  : ambilNilai(teks, "Volume"),
+        pcc    : ambilNilai(teks, "Type PCC") || 
+                 ((ambilNilai(teks, "Type") || "").toUpperCase() == "PCC" ? ambilNilai(teks, "Volume") : ""),
+        opc    : ambilNilai(teks, "Type OPC") || 
+                 ((ambilNilai(teks, "Type") || "").toUpperCase() == "OPC" ? ambilNilai(teks, "Volume") : ""),
+        status : ambilNilai(teks, "Status Kapal")
     };
 
-const events = ambilEventWA(teks);
+    const events = ambilEventWA(teks);
+    const terakhir = eventTerakhir(events);
+    const statusOperasi = terakhir ? terakhir.status : "-";
 
-const terakhir = eventTerakhir(events);
+    const eventPosisi = ambilEventPosisi(teks);
+    console.table(eventPosisi);
+    const posisiTerakhir = eventTerakhir(eventPosisi);
+    const statusKapal = posisiTerakhir ? posisiTerakhir.status : "-";
 
-const statusOperasi =
-    terakhir ? terakhir.status : "-";
+    console.table(events);
 
-const eventPosisi = ambilEventPosisi(teks);
-console.table(eventPosisi);
-const posisiTerakhir =
-    eventTerakhir(eventPosisi);
+    // ====================================================================
+    // 🟢 SISTEM PENGUNCI MEMORI BROWSER (MENGGANTIKAN KODE TRY-CATCH KEMARIN)
+    // ====================================================================
+    console.log("[DEBUG] Mengambil data cadangan dari memori browser...");
+    let dataMemoriLokal = { kapal: {} };
+    try {
+        const jsonLokal = localStorage.getItem("backup_data_kapal");
+        if (jsonLokal) {
+            dataMemoriLokal.kapal = JSON.parse(jsonLokal);
+            console.log("[DEBUG] Berhasil memuat cadangan memori:", dataMemoriLokal.kapal);
+        }
+    } catch (e) {
+        console.error("Gagal membaca localStorage", e);
+    }
 
-const statusKapal =
-    posisiTerakhir
-        ? posisiTerakhir.status
-        : "-";
+    dashboardData = dashboardData || {};
+    dashboardData.kapal = dashboardData.kapal || {};
 
-console.table(events);
+    const namaLama        = dashboardData.kapal.nama || dataMemoriLokal.kapal.nama || "";
+    const voyageLama      = dashboardData.kapal.voyage || dataMemoriLokal.kapal.voyage || "";
+    const cargoOpcLama    = dashboardData.kapal.opc || dataMemoriLokal.kapal.opc || "0 Ton";
+    const cargoPccLama    = dashboardData.kapal.pcc || dataMemoriLokal.kapal.pcc || "0 Ton";
+    const cargoTotalLama  = dashboardData.kapal.total || dataMemoriLokal.kapal.total || "0 Ton";
+    const statusKapalLama = dashboardData.kapal.statusKapal || dataMemoriLokal.kapal.statusKapal || "-";
 
-// === TEMPELKAN KODE BARU INI ===
-// =================================================================
-// ✔️ TEMPELKAN KODE BARU INI SEBAGAI PENGGANTINYA:
-// =================================================================
-dashboardData = dashboardData || {};
-dashboardData.kapal = dashboardData.kapal || {};
+    const namaDariWA   = (kapal.nama || "").trim();
+    const voyageDariWA = (kapal.voyage || "").trim();
 
-const namaLama          = dashboardData.kapal.nama || "";
-const voyageLama        = dashboardData.kapal.voyage || "";
-const cargoOpcLama      = dashboardData.kapal.opc || "0";
-const cargoPccLama      = dashboardData.kapal.pcc || "0";
-const cargoTotalLama    = dashboardData.kapal.total || "0";
-const statusKapalLama   = dashboardData.kapal.statusKapal || "-";
+    // Logika pendeteksi laporan aktivitas pendek (jika nama & voyage di WA kosong)
+    const apakahKapalSama = (namaDariWA === "" && voyageDariWA === "") || 
+                            (namaLama.toUpperCase() === namaDariWA.toUpperCase() && voyageLama === voyageDariWA);
 
-const namaDariWA   = (kapal.nama || "").trim();
-const voyageDariWA = (kapal.voyage || "").trim();
+    if (apakahKapalSama) {
+        console.log("[INFO] Laporan aktivitas terdeteksi. Mengunci data kargo lama.");
+        dashboardData.kapal.nama        = namaLama || "-";
+        dashboardData.kapal.voyage      = voyageLama || "-";
+        dashboardData.kapal.opc         = cargoOpcLama; 
+        dashboardData.kapal.pcc         = cargoPccLama; 
+        dashboardData.kapal.total       = cargoTotalLama;
+        dashboardData.kapal.statusKapal = kapal.status || statusKapal || statusKapalLama;
+    } else {
+        console.log("[INFO] Kapal baru terdeteksi. Membuat data baru dari awal.");
+        dashboardData.kapal.nama        = kapal.nama || "-";
+        dashboardData.kapal.voyage      = kapal.voyage || "-";
+        dashboardData.kapal.opc         = kapal.opc || "0 Ton";
+        dashboardData.kapal.pcc         = kapal.pcc || "0 Ton";
+        dashboardData.kapal.total       = kapal.total || "0 Ton";
+        dashboardData.kapal.statusKapal = kapal.status || statusKapal || "-";
+    }
 
-// Logika pendeteksi: jika nama & voyage di WA kosong, otomatis anggap laporan aktivitas kapal yang sama
-const apakahKapalSama = (namaDariWA === "" && voyageDariWA === "") || 
-                        (namaLama.toUpperCase() === namaDariWA.toUpperCase() && voyageLama === voyageDariWA);
+    // Jika data kargo sukses terisi dari laporan lengkap, otomatis rekam ke memori browser
+    if (dashboardData.kapal.opc && dashboardData.kapal.opc !== "0 Ton" && dashboardData.kapal.opc !== "0") {
+        localStorage.setItem("backup_data_kapal", JSON.stringify(dashboardData.kapal));
+    }
+    // ====================================================================
 
-if (apakahKapalSama) {
-    console.log("[INFO] Laporan aktivitas terdeteksi. Mengunci data lama.");
-    dashboardData.kapal.nama        = namaLama || "-";
-    dashboardData.kapal.voyage      = voyageLama || "-";
-    dashboardData.kapal.opc         = cargoOpcLama; 
-    dashboardData.kapal.pcc         = cargoPccLama; 
-    dashboardData.kapal.total       = cargoTotalLama;
-    dashboardData.kapal.statusKapal = kapal.status || statusKapal || statusKapalLama;
-} else {
-    console.log("[INFO] Kapal baru terdeteksi. Membuat data baru.");
-    dashboardData.kapal.nama        = kapal.nama || "-";
-    dashboardData.kapal.voyage      = kapal.voyage || "-";
-    dashboardData.kapal.opc         = kapal.opc || "0";
-    dashboardData.kapal.pcc         = kapal.pcc || "0";
-    dashboardData.kapal.total       = kapal.total || "0";
-    dashboardData.kapal.statusKapal = kapal.status || statusKapal || "-";
-}
+    dashboardData.kapal.statusOperasi = statusOperasi;
+    dashboardData.kapal.update        = terakhir ? terakhir.datetime : dashboardData.kapal.update;
 
-dashboardData.kapal.statusOperasi = statusOperasi;
-dashboardData.kapal.update        = terakhir ? terakhir.datetime : dashboardData.kapal.update;
-// =================================================================
-// === BATAS AKHIR KODE BARU ===
+    console.log(dashboardData);
+    console.log("Nama kapal aktif =", dashboardData.kapal.nama);
 
-console.log(dashboardData);
-    console.log(kapal);
-console.log("Nama kapal =", kapal.nama);
+    // Ganti banner otomatis menggunakan nama yang diselamatkan
+    if (typeof gantiBannerKapal === "function") {
+        gantiBannerKapal(dashboardData.kapal.nama);
+    }
 
-gantiBannerKapal(kapal.nama);
+    // --- MEMASUKKAN VARIABEL AMAN KE ELEMEN FORM INPUT DI LAYAR ---
+    document.getElementById("kapalNama").value   = dashboardData.kapal.nama;
+    document.getElementById("kapalVoyage").value = dashboardData.kapal.voyage;
+    document.getElementById("kapalOPC").value    = dashboardData.kapal.opc;
+    document.getElementById("kapalPCC").value    = dashboardData.kapal.pcc;
+    document.getElementById("kapalTotal").value  = dashboardData.kapal.total;
+    document.getElementById("kapalStatus").value = dashboardData.kapal.statusKapal;
+    document.getElementById("kapalStatusOperasi").value = dashboardData.kapal.statusOperasi;
+    document.getElementById("kapalUpdate").value = terakhir ? terakhir.datetime : "";
 
-document.getElementById("kapalNama").value = dashboardData.kapal.nama;
+    // --- MEMASUKKAN VARIABEL AMAN KE KOTAK PREVIEW HIJAU DI BAWAH LAYAR ---
+    document.getElementById("hasilAnalisa").style.display = "block";
+    document.getElementById("haNama").textContent   = dashboardData.kapal.nama;
+    document.getElementById("haVoyage").textContent = dashboardData.kapal.voyage;
+    document.getElementById("haOPC").textContent    = dashboardData.kapal.opc;
+    document.getElementById("haPCC").textContent    = dashboardData.kapal.pcc;
+    document.getElementById("haTotal").textContent  = dashboardData.kapal.total;
+    document.getElementById("haStatus").textContent = dashboardData.kapal.statusKapal;
+    document.getElementById("haStatusOperasi").textContent = dashboardData.kapal.statusOperasi;
+    document.getElementById("haUpdate").textContent  = terakhir ? quarterfinals : "-";
 
-document.getElementById("kapalVoyage").value = dashboardData.kapal.voyage;
+    alert(`HASIL PEMBACAAN AMAN
 
-document.getElementById("kapalOPC").value = dashboardData.kapal.opc;
+Status Operasi : ${dashboardData.kapal.statusOperasi}
+Update Terakhir : ${terakhir ? terakhir.datetime : "-"}
 
-document.getElementById("kapalPCC").value = dashboardData.kapal.pcc;
-
-document.getElementById("kapalTotal").value = dashboardData.kapal.total;
-
-document.getElementById("kapalStatus").value =
-    dashboardData.kapal.statusKapal;
-
-document.getElementById("kapalStatusOperasi").value =
-    dashboardData.kapal.statusOperasi;
-
-document.getElementById("kapalUpdate").value =
-    dashboardData.kapal.update || "";
-document.getElementById("hasilAnalisa").style.display = "block";
-
-document.getElementById("haNama").textContent = kapal.nama;
-
-document.getElementById("haVoyage").textContent = kapal.voyage;
-
-document.getElementById("haOPC").textContent = kapal.opc;
-
-document.getElementById("haPCC").textContent = kapal.pcc;
-
-document.getElementById("haTotal").textContent = kapal.total;
-
-document.getElementById("haStatus").textContent =
-    kapal.status || statusKapal;
-
-document.getElementById("haStatusOperasi").textContent = statusOperasi;
-
-document.getElementById("haUpdate").textContent =
-    terakhir ? terakhir.datetime : "-";
-
-
-    alert(
-`HASIL PEMBACAAN
-
-Status Operasi :
-${statusOperasi}
-
-Update Terakhir :
-${terakhir ? terakhir.datetime : "-"}
-
-Kapal : ${kapal.nama}
-
-Voyage : ${kapal.voyage}
-
-OPC : ${kapal.opc}
-
-PCC : ${kapal.pcc}
-
-Total : ${kapal.total}
-
-Status :
-${kapal.status || statusKapal}
+Kapal : ${dashboardData.kapal.nama}
+Voyage : ${dashboardData.kapal.voyage}
+OPC : ${dashboardData.kapal.opc}
+PCC : ${dashboardData.kapal.pcc}
+Total : ${dashboardData.kapal.total}
+Status : ${dashboardData.kapal.statusKapal}
 `);
 }
+
 
 function ambilEventWA(teks){
 
