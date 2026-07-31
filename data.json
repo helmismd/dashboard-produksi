@@ -1,38 +1,30 @@
 {
-  "periode": "Rabu, 29 Juli 2026",
-  "lastUpdate": "Data terakhir diperbarui : Rabu, 29 Juli 2026",
-  "totalOPC": 1060.17,
-  "totalPCC": 903.5,
-  "totalBag": 903.5,
-  "totalBulk": 1060.17,
-  "grandTotal": 1963.67,
-  "bulanOPC": 20792.119999999995,
-  "bulanPCC": 17870.129999999997,
-  "bulanBag": 17351.949999999997,
-  "bulanBulk": 21310.300000000003,
-  "bulanTotal": 38662.25,
+  "periode": "Kamis, 30 Juli 2026",
+  "lastUpdate": "Data terakhir diperbarui : Kamis, 30 Juli 2026",
+  "totalOPC": 918.9,
+  "totalPCC": 780.07,
+  "totalBag": 729,
+  "totalBulk": 969.97,
+  "grandTotal": 1698.97,
+  "bulanOPC": 21711.019999999997,
+  "bulanPCC": 18650.199999999997,
+  "bulanBag": 18080.949999999997,
+  "bulanBulk": 22280.270000000004,
+  "bulanTotal": 40361.22,
   "labelTanggal": [
-    "29-07-26"
+    "30-07-26"
   ],
   "dataProduksi": [
-    1963.67
+    1698.97
   ],
   "stokSilo": {
-    "opc": 2029.449,
-    "pcc": 5127.44
+    "opc": 2258.542,
+    "pcc": 4523.365
   },
-  "tahunOPC": 96922.12999999996,
-  "tahunPCC": 121442.46999999999,
-  "tahunBag": 116985.09999999999,
-  "tahunBulk": 101379.49999999996,
-  "tahunTotal": 218364.59999999995,
-  "kapal": {
-    "nama": "KM.Tonasa Lines XXV",
-    "voyage": "027/07-TL.XXV/2026",
-    "opc": "0",
-    "pcc": "0",
-    "total": "5.073,364 m/t",
-    "statusKapal": "-",
-    "statusOperasi": "-"
-  }
+  "tahunOPC": 97841.02999999997,
+  "tahunPCC": 122222.54,
+  "tahunBag": 117714.09999999999,
+  "tahunBulk": 102349.46999999997,
+  "tahunTotal": 220063.56999999995,
+  "kapal": {}
 }
