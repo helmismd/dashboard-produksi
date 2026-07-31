@@ -1001,7 +1001,7 @@ if (keyLama === keyBaru && dataLama.kapal) {
         kapal: {
             nama: dashboardData.kapal.nama || dataLama.kapal.nama,
             voyage: dashboardData.kapal.voyage || dataLama.kapal.voyage,
-            opc: dashboardData.kapal.opc === "0"
+opc: dashboardData.kapal.opc === "0"
         ? dataLama.kapal.opc
         : dashboardData.kapal.opc,
 
