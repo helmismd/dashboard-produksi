@@ -1006,7 +1006,17 @@ if (keyLama === keyBaru && dataLama.kapal) {
             statusOperasi: dashboardData.kapal.statusOperasi || dataLama.kapal.statusOperasi || "-",
             update: dashboardData.kapal.update || dataLama.kapal.update || ""
         }
+
+console.log("SEBELUM UPLOAD");
+console.log(dashboardData.kapal);
+
+
+
     };
+
+
+
+
 } else {
     // JIKA KAPAL BEDA / VOYAGE BARU: Buat data bersih dari awal
     dashboardData = {
@@ -1123,12 +1133,12 @@ function analisaWA(){
 pcc : ambilNilai(teks,"Type PCC") ||
       (ambilNilai(teks,"Type").toUpperCase()=="PCC"
           ? ambilNilai(teks,"Volume")
-          : "0"),
+          : ""),
 
 opc : ambilNilai(teks,"Type OPC") ||
       (ambilNilai(teks,"Type").toUpperCase()=="OPC"
           ? ambilNilai(teks,"Volume")
-          : "0"),
+          : ""),
 
         status : ambilNilai(teks,"Status Kapal")
 
@@ -1203,24 +1213,24 @@ console.log("Nama kapal =", kapal.nama);
 
 gantiBannerKapal(kapal.nama);
 
-document.getElementById("kapalNama").value = kapal.nama;
+document.getElementById("kapalNama").value = dashboardData.kapal.nama;
 
-document.getElementById("kapalVoyage").value = kapal.voyage;
+document.getElementById("kapalVoyage").value = dashboardData.kapal.voyage;
 
-document.getElementById("kapalOPC").value = kapal.opc;
+document.getElementById("kapalOPC").value = dashboardData.kapal.opc;
 
-document.getElementById("kapalPCC").value = kapal.pcc;
+document.getElementById("kapalPCC").value = dashboardData.kapal.pcc;
 
-document.getElementById("kapalTotal").value = kapal.total;
+document.getElementById("kapalTotal").value = dashboardData.kapal.total;
 
 document.getElementById("kapalStatus").value =
-    kapal.status || statusKapal;
+    dashboardData.kapal.statusKapal;
 
-document.getElementById("kapalStatusOperasi").value = statusOperasi;
+document.getElementById("kapalStatusOperasi").value =
+    dashboardData.kapal.statusOperasi;
 
 document.getElementById("kapalUpdate").value =
-    terakhir ? terakhir.datetime : "";
-
+    dashboardData.kapal.update || "";
 document.getElementById("hasilAnalisa").style.display = "block";
 
 document.getElementById("haNama").textContent = kapal.nama;
@@ -1605,23 +1615,3 @@ function ambilEventPosisi(teks){
 
 }
 
-// =================================================================
-// KODE MANDIRI: AMBIL DATA TERBARU DARI GITHUB SAAT HALAMAN DIBUKA
-// =================================================================
-window.addEventListener("DOMContentLoaded", async () => {
-    console.log("[INIT] Mengambil data terakhir dari GitHub...");
-    try {
-        const token = localStorage.getItem("github_token") || TOKEN;
-        if (token) {
-            // Mengunduh data asli dari GitHub dan memasukkannya ke memori dashboardData
-            const dataTerakhir = await downloadData(token);
-            if (dataTerakhir) {
-                dashboardData = dataTerakhir;
-                console.log("[INIT] Berhasil memuat data kapal aktif:", dashboardData.kapal);
-            }
-        }
-    } catch (error) {
-        console.error("[INIT] Gagal memuat data awal dari GitHub:", error);
-    }
-});
-// =================================================================
