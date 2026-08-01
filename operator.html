@@ -195,7 +195,7 @@
                     message: `Update Fisik Silo oleh Operator - ${dataFisikBaru.tanggal}`,
                     content: btoa(unescape(encodeURIComponent(JSON.stringify(dataFinalUpdate, null, 2)))),
                     sha: shaLama
-                })
+             
             });
 
             if (resPut.ok) {
@@ -206,11 +206,19 @@
             } else {
                 throw new Error("Gagal mengunggah data ke server.");
             }
+                // ====================================================================
+        // 🟢 POTONGAN KODE DETEKTIF: PAKSA BROWSER MEMBOCORKAN EROR ASLINYA
+        // ====================================================================
         } catch (error) {
             console.error(error);
-            alert(`PENGIRIMAN GAGAL!\n\nSebab: ${error.message}`);
+            
+            // Ambil pesan eror murni dari sistem browser laptop/HP
+            let pesanErorAsli = error.message || "Koneksi Terblokir";
+            
+            alert(`PENGIRIMAN GAGAL!\n\nAlasan Asli: ${pesanErorAsli}\n\nSaran: Ketuk judul atas untuk pastikan token baru Anda sudah benar.`);
         }
-    }
+    } // Penutup fungsi kirimDataSilo
+
 
 </script>
 </body>
