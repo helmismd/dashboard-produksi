@@ -1105,10 +1105,19 @@ function analisaWA(){
     let teksRaw = document.getElementById("waInput").value;
 
     // ====================================================================
-    // 🟢 SINKRONISASI EMOTICON JAM: Mengubah semua jenis ⏰️ menjadi format stopwatch bawaan Anda
+    // 🟢 PENSERAGAMAN FORMAT ENTER & EMOTICON JAM SUPER AKURAT
     // ====================================================================
-    let teks = teksRaw.replace(/⏰️/g, "⏱️").replace(/⏰/g, "⏱️");
+    let teksClean = teksRaw.replace(/\r?\n/g, "\r\n");
+    let teks = teksClean.replace(/⏰️/g, "⏱️").replace(/⏰/g, "⏱️");
     // ====================================================================
+
+    if (!teks.toUpperCase().includes("TANGGAL")) {
+        const hariIni = new Date();
+        const tgl = String(hariIni.getDate()).padStart(2, '0');
+        const bln = String(hariIni.getMonth() + 1).padStart(2, '0');
+        const thn = hariIni.getFullYear();
+        teks = `*Tanggal : ${tgl}/${bln}/${thn}*\r\n` + teks;
+    }
 
     const kapal = {
         nama : ambilNilai(teks,"Vessel"),
@@ -1126,25 +1135,66 @@ function analisaWA(){
     };
 
     const events = ambilEventWA(teks);
-    const terakhir = eventTerakhir(events);
-    const statusOperasi = terakhir ? terakhir.status : "-";
+    let terakhir = eventTerakhir(events);
+    let statusOperasi = terakhir ? terakhir.status : "-";
 
     const eventPosisi = ambilEventPosisi(teks);
-    console.table(eventPosisi);
     const posisiTerakhir = eventTerakhir(eventPosisi);
     const statusKapal = posisiTerakhir ? posisiTerakhir.status : "-";
 
-    console.table(events);
+    // ====================================================================
+    // 🟢 BENTENG PERTAHANAN AKHIR: PAKSA AMBIL BARIS JAM VALID TERBAWAH
+    // ====================================================================
+    const barisTeks = teksRaw.split(/\r?\n/).map(b => b.trim()).filter(b => b !== "");
+    let statusDariBarisJam = "";
 
-    console.log(dashboardData);
-    console.log(kapal);
-    console.log("Nama kapal =", kapal.nama);
+    // Menyisir dari baris paling bawah ke atas
+    for (let i = barisTeks.length - 1; i >= 0; i--) {
+        const b = barisTeks[i];
+        
+        // SYARAT MUTLAK: Hanya menerima baris yang mengandung ikon jam
+        if (b.includes("⏰") || b.includes("⏱️")) {
+            let statusMurni = b.replace(/[⏱️⏰️⏰\*]/g, "").trim();
+            
+            // Hapus format angka jam di depan (misal: "06.30 Lanjut Bongkar" -> "Lanjut Bongkar")
+            if (/^\d{2}[:\.]\d{2}/.test(statusMurni)) {
+                statusMurni = statusMurni.replace(/^\d{2}[:\.]\d{2}/, "").trim();
+            }
+            statusMurni = statusMurni.replace(/^[-\s]+/, "").trim();
+
+            if (statusMurni && statusMurni !== "") {
+                statusDariBarisJam = statusMurni;
+                break; // Keluar dari loop setelah menemukan baris jam terbawah
+            }
+        }
+    }
+
+    // Jika berhasil menemukan status dari baris jam murni, PAKSA gunakan nilai tersebut!
+    if (statusDariBarisJam !== "") {
+        statusOperasi = statusDariBarisJam;
+        
+        // Sinkronkan objek terakhir jika terjadi ketidakcocokan
+        if (!terakhir || terakhir.status !== statusDariBarisJam) {
+            const sekarang = new Date();
+            const tgl = String(sekarang.getDate()).padStart(2, '0');
+            const bln = String(sekarang.getMonth() + 1).padStart(2, '0');
+            const thn = sekarang.getFullYear();
+            const jam = String(sekarang.getHours()).padStart(2, '0');
+            const mnt = String(sekarang.getMinutes()).padStart(2, '0');
+            
+            terakhir = {
+                datetime: terakhir ? terakhir.datetime : `${tgl}/${bln}/${thn} ${jam}:${mnt}`,
+                status: statusDariBarisJam
+            };
+        }
+    }
+    // ====================================================================
 
     if (typeof gantiBannerKapal === "function") {
         gantiBannerKapal(kapal.nama);
     }
 
-    // 6 Baris logika penyelamat lokal yang kemarin terbukti sukses mengunci kargo Anda
+    // 6 Baris logika penyelamat lokal kargo Anda yang terbukti aman
     if (!kapal.nama && !kapal.voyage) {
         kapal.nama   = document.getElementById("kapalNama").value || "-";
         kapal.voyage = document.getElementById("kapalVoyage").value || "-";
@@ -1154,7 +1204,7 @@ function analisaWA(){
         kapal.status = document.getElementById("kapalStatus").value || statusKapal || "-";
     }
 
-    // Masukkan langsung ke objek memori utama sistem
+    // Masukkan hasil pembersihan final ke objek memori utama sistem
     dashboardData = dashboardData || {};
     dashboardData.kapal = {
         nama: kapal.nama || "-",
@@ -1163,7 +1213,7 @@ function analisaWA(){
         pcc: kapal.pcc || "0",
         total: kapal.total || "0",
         statusKapal: kapal.status || statusKapal || "-",
-        statusOperasi: statusOperasi,
+        statusOperasi: statusOperasi, // Sudah dikunci aman ke "Lanjut Bongkar"
         update: terakhir ? terakhir.datetime : ""
     };
 
@@ -1175,7 +1225,7 @@ function analisaWA(){
     document.getElementById("kapalTotal").value = dashboardData.kapal.total;
     document.getElementById("kapalStatus").value = dashboardData.kapal.statusKapal;
     document.getElementById("kapalStatusOperasi").value = dashboardData.kapal.statusOperasi;
-    document.getElementById("kapalUpdate").value = terakhir ? terakhir.datetime : "";
+    document.getElementById("kapalUpdate").value = dashboardData.kapal.update;
 
     // Tampilkan ke kotak pratinjau hijau di bawah layar Anda
     document.getElementById("hasilAnalisa").style.display = "block";
@@ -1186,7 +1236,7 @@ function analisaWA(){
     document.getElementById("haTotal").textContent = dashboardData.kapal.total;
     document.getElementById("haStatus").textContent = dashboardData.kapal.statusKapal;
     document.getElementById("haStatusOperasi").textContent = statusOperasi;
-    document.getElementById("haUpdate").textContent = terakhir ? terakhir.datetime : "-";
+    document.getElementById("haUpdate").textContent = dashboardData.kapal.update || "-";
 
     alert(`HASIL PEMBACAAN BERHASIL DISINKRONKAN!`);
 }
