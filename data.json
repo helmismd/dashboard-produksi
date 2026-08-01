@@ -32,7 +32,7 @@
     "opc": "5.073,364 m/t",
     "pcc": "0",
     "total": "5.073,364 m/t",
-    "statusKapal": "Ã°ÂÂÂÃ¯Â¸Â SANDAR DI JETTY PALARAN",
+    "statusKapal": "ÃÂ°ÃÂÃÂÃÂÃÂ¯ÃÂ¸ÃÂ SANDAR DI JETTY PALARAN",
     "statusOperasi": "Lanjut Bongkar",
     "update": "2026-08-01 03:00"
   },
@@ -41,22 +41,22 @@
     "tanggal": "02-Agt-26",
     "silo1_opc": {
       "mentah": {
-        "l1": 23,
-        "l2": 24,
-        "l3": 23
+        "l1": 2,
+        "l2": 2,
+        "l3": 2
       },
-      "rata": 22.47,
-      "tonase": 2251.997
+      "rata": 1.13,
+      "tonase": 6441.125
     },
     "silo2_pcc": {
       "mentah": {
-        "l1": 23,
-        "l2": 23,
-        "l3": 23
+        "l1": 2,
+        "l2": 2,
+        "l3": 2
       },
-      "rata": 22,
-      "tonase": 2534.954
+      "rata": 1,
+      "tonase": 6499.192
     },
-    "updateTime": "2/8/2026, 00.57.44"
+    "updateTime": "2/8/2026, 03.47.38"
   }
 }
