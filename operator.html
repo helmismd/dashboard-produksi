@@ -95,6 +95,7 @@
 
 <!-- 🚀 PANGGIL FILE RUMUS EKSTERNAL SEBELUM DIHITUNG -->
 <script src="opc.js"></script>
+<script src="pcc.js"></script>
 
 <script>
     window.onload = function() {
@@ -123,7 +124,7 @@
     }
 
     // FUNGSI LOGIKA PEMBAGI 2 BARIS INFO KOTAK KUNING
-    function hitungRataRataLive() {
+        function hitungRataRataLive() {
         const s1_l1 = parseFloat(document.getElementById("opS1_L1").value) || 0;
         const s1_l2 = parseFloat(document.getElementById("opS1_L2").value) || 0;
         const s1_l3 = parseFloat(document.getElementById("opS1_L3").value) || 0;
@@ -132,27 +133,33 @@
         const s2_l2 = parseFloat(document.getElementById("opS2_L2").value) || 0;
         const s2_l3 = parseFloat(document.getElementById("opS2_L3").value) || 0;
 
+        // Hitung rata-rata fisik murni OPC
         const s1_fix_L1 = s1_l1 > 0 ? (s1_l1 - 1) : 0;
         const s1_fix_L2 = s1_l2 > 0 ? (s1_l2 - 0.8) : 0;
         const s1_fix_L3 = s1_l3 > 0 ? (s1_l3 - 0.8) : 0;
         const rataSilo1 = (s1_fix_L1 + s1_fix_L2 + s1_fix_L3) / 3;
 
-        // Ambil data konversi volume Tonase dari file opc.js
-        let hasilOPC = { tonase: 0 };
-        if (typeof hitungVolumeSilo1 === "function") {
-            hasilOPC = hitungVolumeSilo1(rataSilo1);
-        }
+        // Hitung rata-rata fisik murni PCC
+        const s2_fix_L1 = s2_l1 > 0 ? (s2_l1 - 1) : 0;
+        const s2_fix_L2 = s2_l2 > 0 ? (s2_l2 - 1.2) : 0;
+        const s2_fix_L3 = s2_l3 > 0 ? (s2_l3 - 0.8) : 0;
+        const rataSilo2 = (s2_fix_L1 + s2_fix_L2 + s2_fix_L3) / 3;
 
-        // Tembakkan ke BARIS 1 (Meter)
+        // 🚀 PANGGIL FUNGSI DARI OPC.JS DAN PCC.JS
+        const hasilOPC = typeof hitungVolumeSilo1 === "function" ? hitungVolumeSilo1(rataSilo1) : { tonase: 0 };
+        const hasilPCC = typeof hitungVolumeSilo2 === "function" ? hitungVolumeSilo2(rataSilo2) : { tonase: 0 };
+
+        // Tampilkan meteran ke baris 1 kotak kuning
         document.getElementById("liveRataSilo1").textContent = rataSilo1.toFixed(2) + " m";
-        document.getElementById("liveRataSilo2").textContent = "0.00 m";
+        document.getElementById("liveRataSilo2").textContent = rataSilo2.toFixed(2) + " m";
 
-        // Tembakkan ke BARIS 2 (Tonase Volume)
+        // Tampilkan tonase ke baris 2 kotak kuning
         document.getElementById("liveTonaseSilo1").textContent = hasilOPC.tonase.toFixed(3) + " Ton";
-        document.getElementById("liveTonaseSilo2").textContent = "0.000 Ton";
+        document.getElementById("liveTonaseSilo2").textContent = hasilPCC.tonase.toFixed(3) + " Ton";
 
-        return { rataSilo1, s1_l1, s1_l2, s1_l3, s2_l1, s2_l2, s2_l3, hasilOPC };
+        return { rataSilo1, rataSilo2, s1_l1, s1_l2, s1_l3, s2_l1, s2_l2, s2_l3, hasilOPC, hasilPCC };
     }
+
 
     async function kirimDataSilo() {
         let token = localStorage.getItem("github_token"); 
