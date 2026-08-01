@@ -16,14 +16,15 @@
         input:focus { border-color: #007bff; box-shadow: 0 0 5px rgba(0,123,255,0.2); }
         .section-title { background: #e9ecef; padding: 8px; font-weight: bold; text-align: center; border-radius: 6px; margin: 20px 0 10px 0; color: #495057; font-size: 14px; letter-spacing: 0.5px; }
         
-        /* 🟡 MENGUNCI DESAIN KOTAK KUNING PILIHAN ANDA */
-        .box-pratinjau { background-color: #fff9db; border: 1px dashed #fcc419; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 20px; }
+        /* 🟡 KOTAK KUNING ESTETIS ANDA */
+        .box-pratinjau { background-color: #fff9db; border: 1px dashed #fcc419; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 15px; }
         .title-pratinjau { font-size: 13px; color: #f59f00; letter-spacing: 0.5px; margin-bottom: 8px; border-bottom: 1px solid #ffe3e3; padding-bottom: 4px; }
         .col-rata { display: flex; justify-content: space-around; font-size: 14px; color: #495057; }
         .angka-merah { color: #e03131; font-size: 16px; display: block; margin-top: 4px; }
 
-        button { width: 100%; padding: 14px; background: #28a745; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 6px rgba(40,167,69,0.3); transition: 0.2s; }
-        button:hover { background: #218838; }
+        /* TOMBOL-TOMBOL EKSEKUSI */
+        .btn-hitung { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 6px rgba(0,123,255,0.2); }
+        .btn-kirim { width: 100%; padding: 14px; background: #28a745; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 6px rgba(40,167,69,0.3); }
         button:active { transform: scale(0.98); }
     </style>
 </head>
@@ -35,31 +36,34 @@
     <div class="row">
         <div class="group">
             <label>Hari</label>
-            <input type="text" id="opHari" readonly style="background-color: #f1f3f5; color: #495057; font-weight: bold;">
+            <input type="text" id="opHari" value="Sabtu" style="background-color: #f1f3f5; color: #495057; font-weight: bold;">
         </div>
         <div class="group">
             <label>Tanggal</label>
-            <input type="text" id="opTgl" readonly style="background-color: #f1f3f5; color: #495057; font-weight: bold;">
+            <input type="text" id="opTgl" value="01-Agt-26" style="background-color: #f1f3f5; color: #495057; font-weight: bold;">
         </div>
     </div>
 
     <!-- BLOK SILO 1 -->
     <div class="section-title">SILO 1 (OPC) - METER MURNI</div>
     <div class="row">
-        <div class="group"><label>Lubang 1</label><input type="number" step="0.01" id="opS1_L1" placeholder="0.00" oninput="hitungRataRataLive()"></div>
-        <div class="group"><label>Lubang 2</label><input type="number" step="0.01" id="opS1_L2" placeholder="0.00" oninput="hitungRataRataLive()"></div>
-        <div class="group"><label>Lubang 3</label><input type="number" step="0.01" id="opS1_L3" placeholder="0.00" oninput="hitungRataRataLive()"></div>
+        <div class="group"><label>Lubang 1</label><input type="number" step="0.01" id="opS1_L1" placeholder="0.00"></div>
+        <div class="group"><label>Lubang 2</label><input type="number" step="0.01" id="opS1_L2" placeholder="0.00"></div>
+        <div class="group"><label>Lubang 3</label><input type="number" step="0.01" id="opS1_L3" placeholder="0.00"></div>
     </div>
 
     <!-- BLOK SILO 2 -->
     <div class="section-title">SILO 2 (PCC) - METER MURNI</div>
     <div class="row">
-        <div class="group"><label>Lubang 1</label><input type="number" step="0.01" id="opS2_L1" placeholder="0.00" oninput="hitungRataRataLive()"></div>
-        <div class="group"><label>Lubang 2</label><input type="number" step="0.01" id="opS2_L2" placeholder="0.00" oninput="hitungRataRataLive()"></div>
-        <div class="group"><label>Lubang 3</label><input type="number" step="0.01" id="opS2_L3" placeholder="0.00" oninput="hitungRataRataLive()"></div>
+        <div class="group"><label>Lubang 1</label><input type="number" step="0.01" id="opS2_L1" placeholder="0.00"></div>
+        <div class="group"><label>Lubang 2</label><input type="number" step="0.01" id="opS2_L2" placeholder="0.00"></div>
+        <div class="group"><label>Lubang 3</label><input type="number" step="0.01" id="opS2_L3" placeholder="0.00"></div>
     </div>
 
-    <!-- 🟡 KOTAK KUNING CANTIK ANDA -->
+    <!-- 🔵 TOMBOL HITUNG MANUAL SEBELUM DIKIRIM (PERMINTAAN ANDA) -->
+    <button onclick="hitungRataRataMurni()" class="btn-hitung">HITUNG RATA-RATA EXCEL</button>
+
+    <!-- 🟡 KOTAK PREVIEW KUNING JADI SINKRON SAMA TOMBOL -->
     <div class="box-pratinjau">
         <div class="title-pratinjau">PRATINJAU HASIL RATA-RATA EXCEL</div>
         <div class="col-rata">
@@ -74,23 +78,21 @@
         </div>
     </div>
 
-    <button onclick="kirimDataSilo()">KIRIM DATA SILO</button>
+    <button onclick="kirimDataSilo()" class="btn-kirim">KIRIM DATA SILO</button>
 </div>
 
 <script>
-    // Memaksa tanggal otomatis muncul saat halaman dibuka
-    document.addEventListener("DOMContentLoaded", function() {
+    // Memaksa pengisian tanggal cadangan langsung nempel di value HTML
+    window.onload = function() {
         const hariIndo = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
         const bulanIndo = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agt", "Sep", "Okt", "Nov", "Des"];
         const skrg = new Date();
-        
         document.getElementById("opHari").value = hariIndo[skrg.getDay()];
-        
         const tgl = String(skrg.getDate()).padStart(2, '0');
         const bln = bulanIndo[skrg.getMonth()];
         const thn = String(skrg.getFullYear()).substring(2); 
         document.getElementById("opTgl").value = `${tgl}-${bln}-${thn}`;
-    });
+    };
 
     function mintaTokenManual() {
         const tokenLama = localStorage.getItem("github_token") || "";
@@ -106,8 +108,10 @@
         }
     }
 
-    // Fungsi hitung live saat operator mengetik angka
-    function hitungRataRataLive() {
+    // ====================================================================
+    // 🟢 FUNGSI UTAMA TOMBOL HITUNG MANUAL (RUMUS EXCEL FIX)
+    // ====================================================================
+    function hitungRataRataMurni() {
         const s1_l1 = parseFloat(document.getElementById("opS1_L1").value) || 0;
         const s1_l2 = parseFloat(document.getElementById("opS1_L2").value) || 0;
         const s1_l3 = parseFloat(document.getElementById("opS1_L3").value) || 0;
@@ -128,6 +132,7 @@
         const rataSilo1 = (s1_fix_L1 + s1_fix_L2 + s1_fix_L3) / 3;
         const rataSilo2 = (s2_fix_L1 + s2_fix_L2 + s2_fix_L3) / 3;
 
+        // Ubah teks angka merah di dalam kotak kuning secara manual saat tombol diklik
         document.getElementById("liveRataSilo1").textContent = rataSilo1.toFixed(2) + " m";
         document.getElementById("liveRataSilo2").textContent = rataSilo2.toFixed(2) + " m";
 
@@ -136,17 +141,14 @@
 
     async function kirimDataSilo() {
         let token = localStorage.getItem("github_token"); 
-        
         if (!token || token.trim() === "") {
             token = prompt("Silakan masukkan Token GitHub Terlebih Dahulu:");
-            if (!token || token.trim() === "") {
-                alert("Pengiriman dibatalkan. Token GitHub wajib diisi!");
-                return;
-            }
+            if (!token || token.trim() === "") return;
             localStorage.setItem("github_token", token.trim());
         }
 
-        const kalkulasi = hitungRataRataLive();
+        // Jalankan hitungan otomatis saat tombol kirim diklik untuk memastikan data valid
+        const kalkulasi = hitungRataRataMurni();
 
         if (kalkulasi.s1_l1 === 0 && kalkulasi.s2_l1 === 0) {
             alert("Mohon isi angka pengukuran lubang silo terlebih dahulu!");
@@ -156,14 +158,8 @@
         const dataFisikBaru = {
             hari: document.getElementById("opHari").value || "-",
             tanggal: document.getElementById("opTgl").value || "-",
-            silo1_opc: { 
-                mentah: { l1: kalkulasi.s1_l1, l2: kalkulasi.s1_l2, l3: kalkulasi.s1_l3 }, 
-                rata: parseFloat(kalkulasi.rataSilo1.toFixed(2)) 
-            },
-            silo2_pcc: { 
-                mentah: { l1: kalkulasi.s2_l1, l2: kalkulasi.s2_l2, l3: kalkulasi.s2_l3 }, 
-                rata: parseFloat(kalkulasi.rataSilo2.toFixed(2)) 
-            },
+            silo1_opc: { mentah: { l1: kalkulasi.s1_l1, l2: kalkulasi.s1_l2, l3: kalkulasi.s1_l3 }, rata: parseFloat(kalkulasi.rataSilo1.toFixed(2)) },
+            silo2_pcc: { mentah: { l1: kalkulasi.s2_l1, l2: kalkulasi.s2_l2, l3: kalkulasi.s2_l3 }, rata: parseFloat(kalkulasi.rataSilo2.toFixed(2)) },
             updateTime: new Date().toLocaleString("id-ID")
         };
 
@@ -173,23 +169,13 @@
         const url = `https://github.com{USER}/${REPO}/contents/${FILE_PATH}`;
 
         try {
-            // Menggunakan header Bearer terstandar
-            const resGet = await fetch(url, { 
-                headers: { 
-                    "Authorization": `Bearer ${token}`,
-                    "Accept": "application/vnd.github+json"
-                } 
-            });
-            
+            const resGet = await fetch(url, { headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github+json" } });
             if (resGet.status === 401 || resGet.status === 403) {
                 localStorage.removeItem("github_token");
-                alert("❌ TOKEN GITHUB SALAH ATAU KEDALUWARSA!\n\nSilakan masukkan kembali Token GitHub yang valid.");
-                const tokenBaru = prompt("Silakan masukkan Token GitHub baru yang valid:");
-                if (tokenBaru && tokenBaru.trim() !== "") {
-                    localStorage.setItem("github_token", tokenBaru.trim());
-                    alert("Token baru disimpan! Silakan klik tombol KIRIM DATA SILO kembali.");
-                }
+                alert("❌ TOKEN GITHUB SALAH ATAU KEDALUWARSA!");
                 return;
             }
-
             if (!resGet.ok) throw new Error("Gagal terhubung ke database server GitHub.");
+            const fileData = await resGet.json();
+            const shaLama = fileData.sha;
+            const dataLamaJSON = JSON.parse(atob(fileData.content));
