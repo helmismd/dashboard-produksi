@@ -16,12 +16,11 @@
         input:focus { border-color: #007bff; box-shadow: 0 0 5px rgba(0,123,255,0.2); }
         .section-title { background: #e9ecef; padding: 8px; font-weight: bold; text-align: center; border-radius: 6px; margin: 20px 0 10px 0; color: #495057; font-size: 14px; letter-spacing: 0.5px; }
         
-        /* Gaya Tampilan Kotak Hasil Rata-Rata */
-        .preview-box { background: #fff3cd; border: 2px dashed #ffc107; padding: 12px; border-radius: 8px; margin-top: 20px; text-align: center; }
-        .preview-title { font-weight: bold; color: #856404; margin-bottom: 8px; font-size: 14px; border-bottom: 1px solid #ffeeba; padding-bottom: 4px; }
-        .preview-grid { display: flex; gap: 10px; justify-content: space-around; }
-        .preview-item { font-size: 16px; color: #333; }
-        .preview-value { font-weight: bold; color: #dc3545; font-size: 18px; display: block; margin-top: 2px; }
+        /* 🟡 MENGIKUTI DESAIN KOTAK KUNING ESTETIS MILIK ANDA */
+        .box-pratinjau { background-color: #fff9db; border: 1px dashed #fcc419; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 20px; }
+        .title-pratinjau { font-size: 13px; color: #f59f00; letter-spacing: 0.5px; margin-bottom: 8px; border-bottom: 1px solid #ffe3e3; padding-bottom: 4px; }
+        .col-rata { display: flex; justify-content: space-around; font-size: 14px; color: #495057; }
+        .angka-merah { color: #e03131; font-size: 16px; display: block; margin-top: 4px; }
 
         button { width: 100%; padding: 14px; background: #28a745; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 6px rgba(40,167,69,0.3); transition: 0.2s; }
         button:hover { background: #218838; }
@@ -36,17 +35,20 @@
     <div class="row">
         <div class="group">
             <label>Hari</label>
-            <input type="text" id="opHari" readonly style="background-color: #eee;">
+            <!-- DIKUNCI READONLY AGAR OPERATOR TIDAK SALAH KETIK HARI -->
+            <input type="text" id="opHari" readonly style="background-color: #f1f3f5; color: #495057; font-weight: bold;">
         </div>
         <div class="group">
             <label>Tanggal</label>
-            <input type="text" id="opTgl" readonly style="background-color: #eee;">
+            <!-- DIKUNCI READONLY AGAR OPERATOR TIDAK SALAH KETIK TANGGAL -->
+            <input type="text" id="opTgl" readonly style="background-color: #f1f3f5; color: #495057; font-weight: bold;">
         </div>
     </div>
 
     <!-- BLOK SILO 1 -->
     <div class="section-title">SILO 1 (OPC) - METER MURNI</div>
     <div class="row">
+        <!-- ONINPUT LANGSUNG MEMICU HITUNGAN LIVE TIAP DIKETIK -->
         <div class="group"><label>Lubang 1</label><input type="number" step="0.01" id="opS1_L1" placeholder="0.00" oninput="hitungRataRataLive()"></div>
         <div class="group"><label>Lubang 2</label><input type="number" step="0.01" id="opS1_L2" placeholder="0.00" oninput="hitungRataRataLive()"></div>
         <div class="group"><label>Lubang 3</label><input type="number" step="0.01" id="opS1_L3" placeholder="0.00" oninput="hitungRataRataLive()"></div>
@@ -55,17 +57,24 @@
     <!-- BLOK SILO 2 -->
     <div class="section-title">SILO 2 (PCC) - METER MURNI</div>
     <div class="row">
+        <!-- ONINPUT LANGSUNG MEMICU HITUNGAN LIVE TIAP DIKETIK -->
         <div class="group"><label>Lubang 1</label><input type="number" step="0.01" id="opS2_L1" placeholder="0.00" oninput="hitungRataRataLive()"></div>
         <div class="group"><label>Lubang 2</label><input type="number" step="0.01" id="opS2_L2" placeholder="0.00" oninput="hitungRataRataLive()"></div>
         <div class="group"><label>Lubang 3</label><input type="number" step="0.01" id="opS2_L3" placeholder="0.00" oninput="hitungRataRataLive()"></div>
     </div>
 
-    <!-- 🟢 KOTAK HASIL PRATINJAU RATA-RATA (LIVE) -->
-    <div class="preview-box">
-        <div class="preview-title">PRATINJAU HASIL RATA-RATA EXCEL</div>
-        <div class="preview-grid">
-            <div class="preview-item">Rata Silo 1 (OPC)<span id="liveRataSilo1" class="preview-value">0.00 m</span></div>
-            <div class="preview-item">Rata Silo 2 (PCC)<span id="liveRataSilo2" class="preview-value">0.00 m</span></div>
+    <!-- 🟡 WADAH KOTAK KUNING PILIHAN ANDA (SINKRON LIVE) -->
+    <div class="box-pratinjau">
+        <div class="title-pratinjau">PRATINJAU HASIL RATA-RATA EXCEL</div>
+        <div class="col-rata">
+            <div>
+                Rata Silo 1 (OPC)
+                <span id="liveRataSilo1" class="angka-merah">0.00 m</span>
+            </div>
+            <div>
+                Rata Silo 2 (PCC)
+                <span id="liveRataSilo2" class="angka-merah">0.00 m</span>
+            </div>
         </div>
     </div>
 
@@ -73,41 +82,20 @@
 </div>
 
 <script>
-    window.onload = function() {
+    // 🟢 PEMBENAHAN UTAMA: MEMAKSA TANGGAL & HARI MUNCUL SAAT HALAMAN DIBUKA
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("[SYSTEM] Memuat penanggalan otomatis...");
         const hariIndo = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
         const bulanIndo = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agt", "Sep", "Okt", "Nov", "Des"];
         const skrg = new Date();
+        
         document.getElementById("opHari").value = hariIndo[skrg.getDay()];
+        
         const tgl = String(skrg.getDate()).padStart(2, '0');
         const bln = bulanIndo[skrg.getMonth()];
         const thn = String(skrg.getFullYear()).substring(2); 
         document.getElementById("opTgl").value = `${tgl}-${bln}-${thn}`;
-    };
-
-    // 🟢 FUNGSI BARU: HITUNG RATA-RATA LIVE SAAT DIKETIK
-    function hitungRataRataLive() {
-        const s1_l1 = parseFloat(document.getElementById("opS1_L1").value) || 0;
-        const s1_l2 = parseFloat(document.getElementById("opS1_L2").value) || 0;
-        const s1_l3 = parseFloat(document.getElementById("opS1_L3").value) || 0;
-        const s2_l1 = parseFloat(document.getElementById("opS2_L1").value) || 0;
-        const s2_l2 = parseFloat(document.getElementById("opS2_L2").value) || 0;
-        const s2_l3 = parseFloat(document.getElementById("opS2_L3").value) || 0;
-
-        const s1_fix_L1 = s1_l1 > 0 ? (s1_l1 - 1) : 0;
-        const s1_fix_L2 = s1_l2 > 0 ? (s1_l2 - 0.8) : 0;
-        const s1_fix_L3 = s1_l3 > 0 ? (s1_l3 - 0.8) : 0;
-        const s2_fix_L1 = s2_l1 > 0 ? (s2_l1 - 1) : 0;
-        const s2_fix_L2 = s2_l2 > 0 ? (s2_l2 - 1.2) : 0;
-        const s2_fix_L3 = s2_l3 > 0 ? (s2_l3 - 0.8) : 0;
-
-        const rataSilo1 = (s1_fix_L1 + s1_fix_L2 + s1_fix_L3) / 3;
-        const rataSilo2 = (s2_fix_L1 + s2_fix_L2 + s2_fix_L3) / 3;
-
-        document.getElementById("liveRataSilo1").textContent = rataSilo1.toFixed(2) + " m";
-        document.getElementById("liveRataSilo2").textContent = rataSilo2.toFixed(2) + " m";
-        
-        return { rataSilo1, rataSilo2, s1_l1, s1_l2, s1_l3, s2_l1, s2_l2, s2_l3 };
-    }
+    });
 
     function mintaTokenManual() {
         const tokenLama = localStorage.getItem("github_token") || "";
@@ -123,6 +111,37 @@
         }
     }
 
+    // ====================================================================
+    // 🟢 RUMUS LIVE: OTOMATIS MENGUBAH ANGKA MERAH DI KOTAK KUNING ANDA
+    // ====================================================================
+    function hitungRataRataLive() {
+        const s1_l1 = parseFloat(document.getElementById("opS1_L1").value) || 0;
+        const s1_l2 = parseFloat(document.getElementById("opS1_L2").value) || 0;
+        const s1_l3 = parseFloat(document.getElementById("opS1_L3").value) || 0;
+
+        const s2_l1 = parseFloat(document.getElementById("opS2_L1").value) || 0;
+        const s2_l2 = parseFloat(document.getElementById("opS2_L2").value) || 0;
+        const s2_l3 = parseFloat(document.getElementById("opS2_L3").value) || 0;
+
+        // Eksekusi Rumus Pengurang Excel Asli Anda
+        const s1_fix_L1 = s1_l1 > 0 ? (s1_l1 - 1) : 0;
+        const s1_fix_L2 = s1_l2 > 0 ? (s1_l2 - 0.8) : 0;
+        const s1_fix_L3 = s1_l3 > 0 ? (s1_l3 - 0.8) : 0;
+
+        const s2_fix_L1 = s2_l1 > 0 ? (s2_l1 - 1) : 0;
+        const s2_fix_L2 = s2_l2 > 0 ? (s2_l2 - 1.2) : 0;
+        const s2_fix_L3 = s2_l3 > 0 ? (s2_l3 - 0.8) : 0;
+
+        const rataSilo1 = (s1_fix_L1 + s1_fix_L2 + s1_fix_L3) / 3;
+        const rataSilo2 = (s2_fix_L1 + s2_fix_L2 + s2_fix_L3) / 3;
+
+        // Tembakkan hasilnya langsung ke dalam teks angka merah kotak kuning Anda
+        document.getElementById("liveRataSilo1").textContent = rataSilo1.toFixed(2) + " m";
+        document.getElementById("liveRataSilo2").textContent = rataSilo2.toFixed(2) + " m";
+
+        return { rataSilo1, rataSilo2, s1_l1, s1_l2, s1_l3, s2_l1, s2_l2, s2_l3 };
+    }
+
     async function kirimDataSilo() {
         let token = localStorage.getItem("github_token"); 
         
@@ -135,10 +154,9 @@
             localStorage.setItem("github_token", token.trim());
         }
 
-        // Panggil fungsi hitung live untuk mengambil nilai ter-update
-        const hasil = hitungRataRataLive();
+        const kalkulasi = hitungRataRataLive();
 
-        if (hasil.s1_l1 === 0 && hasil.s2_l1 === 0) {
+        if (kalkulasi.s1_l1 === 0 && kalkulasi.s2_l1 === 0) {
             alert("Mohon isi angka pengukuran lubang silo terlebih dahulu!");
             return;
         }
@@ -146,8 +164,14 @@
         const dataFisikBaru = {
             hari: document.getElementById("opHari").value || "-",
             tanggal: document.getElementById("opTgl").value || "-",
-            silo1_opc: { mentah: { l1: hasil.s1_l1, l2: hasil.s1_l2, l3: hasil.s1_l3 }, rata: parseFloat(hasil.rataSilo1.toFixed(2)) },
-            silo2_pcc: { mentah: { l1: hasil.s2_l1, l2: hasil.s2_l2, l3: hasil.s2_l3 }, rata: parseFloat(hasil.rataSilo2.toFixed(2)) },
+            silo1_opc: { 
+                mentah: { l1: kalkulasi.s1_l1, l2: kalkulasi.s1_l2, l3: kalkulasi.s1_l3 }, 
+                rata: parseFloat(kalkulasi.rataSilo1.toFixed(2)) 
+            },
+            silo2_pcc: { 
+                mentah: { l1: kalkulasi.s2_l1, l2: kalkulasi.s2_l2, l3: kalkulasi.s2_l3 }, 
+                rata: parseFloat(kalkulasi.rataSilo2.toFixed(2)) 
+            },
             updateTime: new Date().toLocaleString("id-ID")
         };
 
@@ -165,23 +189,3 @@
             });
             
             if (resGet.status === 401 || resGet.status === 403) {
-                localStorage.removeItem("github_token");
-                alert("❌ TOKEN GITHUB SALAH ATAU KEDALUWARSA!\n\nSilakan masukkan kembali Token GitHub yang valid.");
-                const tokenBaru = prompt("Silakan masukkan Token GitHub baru yang valid:");
-                if (tokenBaru && tokenBaru.trim() !== "") {
-                    localStorage.setItem("github_token", tokenBaru.trim());
-                    alert("Token baru disimpan! Silakan klik tombol KIRIM DATA SILO kembali.");
-                }
-                return;
-            }
-
-            if (!resGet.ok) throw new Error("Gagal terhubung ke database server GitHub.");
-            
-            const fileData = await resGet.json();
-            const shaLama = fileData.sha;
-            const dataLamaJSON = JSON.parse(atob(fileData.content));
-            const dataFinalUpdate = { ...dataLamaJSON, fisikSilo: dataFisikBaru };
-
-            const resPut = await fetch(url, {
-                method: "PUT",
-                headers: { 
