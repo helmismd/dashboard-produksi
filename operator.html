@@ -1,11 +1,11 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Form Pengukuran Silo - Operator</title>
     <style>
-        * { box-sizing: border-box; } /* KUNCI UTAMA: Memaksa semua kotak tunduk pada lebar layar HP */
+        * { box-sizing: border-box; }
         body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 10px; }
         .container { max-width: 450px; margin: 0 auto; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid #ddd; width: 100%; }
         h2 { text-align: center; color: #007bff; margin-top: 0; font-size: 20px; border-bottom: 2px solid #007bff; padding-bottom: 8px; }
@@ -23,7 +23,7 @@
 <body>
 
 <div class="container">
-    <h2>INPUT UKUR SILO</h2>
+    <h2 onclick="mintaTokenManual()" style="cursor: pointer; user-select: none;" title="Ketuk untuk ganti token">INPUT UKUR SILO</h2>
     
     <div class="row">
         <div class="group">
@@ -67,15 +67,32 @@
         document.getElementById("opTgl").value = `${tgl}-${bln}-${thn}`;
     };
 
-    async function kirimDataSilo() {
-        const token = localStorage.getItem("github_token"); 
-        if (!token) {
-            const inputToken = prompt("Silakan masukkan Token GitHub Terlebih Dahulu:");
-            if (inputToken) {
+    // Fungsi pembantu memunculkan dialog input token secara paksa
+    function mintaTokenManual() {
+        const tokenLama = localStorage.getItem("github_token") || "";
+        const inputToken = prompt("PENGATURAN TOKEN GITHUB\n\nSilakan masukkan Token GitHub Anda:", tokenLama);
+        if (inputToken !== null) {
+            if (inputToken.trim() === "") {
+                localStorage.removeItem("github_token");
+                alert("Token berhasil dihapus dari memori!");
+            } else {
                 localStorage.setItem("github_token", inputToken.trim());
-                alert("Token Berhasil Disimpan! Silakan klik tombol Kirim kembali.");
+                alert("Token berhasil disimpan!");
             }
-            return;
+        }
+    }
+
+    async function kirimDataSilo() {
+        let token = localStorage.getItem("github_token"); 
+        
+        // JIKA MEMORI HP MASIH KOSONG, PAKSA MINTA TOKEN DI AWAL
+        if (!token || token.trim() === "") {
+            token = prompt("Silakan masukkan Token GitHub Terlebih Dahulu:");
+            if (!token || token.trim() === "") {
+                alert("Pengiriman dibatalkan. Token GitHub wajib diisi!");
+                return;
+            }
+            localStorage.setItem("github_token", token.trim());
         }
 
         const s1_l1 = parseFloat(document.getElementById("opS1_L1").value) || 0;
@@ -117,11 +134,26 @@
 
         try {
             const resGet = await fetch(url, { headers: { Authorization: `token ${token}` } });
-            if (!resGet.ok) throw new Error("Gagal membaca database server. Token salah atau mati.");
+            
+            // 🛑 SISTEM DETEKSI TOKEN SALAH (PROSES PENCEGATAN UTAMA)
+            if (resGet.status === 401 || resGet.status === 403) {
+                localStorage.removeItem("github_token"); // Hapus token salah dari memori HP agar tidak macet lagi
+                alert("❌ TOKEN GITHUB SALAH ATAU KEDALUWARSA!\n\nSistem otomatis menghapus token eror ini. Silakan masukkan kembali Token GitHub yang valid dan aktif.");
+                
+                // Langsung pancing kotak baru agar operator bisa langsung paste token yang benar
+                const tokenBaru = prompt("Silakan masukkan Token GitHub baru yang valid:");
+                if (tokenBaru && tokenBaru.trim() !== "") {
+                    localStorage.setItem("github_token", tokenBaru.trim());
+                    alert("Token baru disimpan! Silakan klik tombol KIRIM DATA SILO kembali.");
+                }
+                return;
+            }
+
+            if (!resGet.ok) throw new Error("Gagal terhubung ke database server GitHub.");
+            
             const fileData = await resGet.json();
             const shaLama = fileData.sha;
             const dataLamaJSON = JSON.parse(atob(fileData.content));
-
             const dataFinalUpdate = { ...dataLamaJSON, fisikSilo: dataFisikBaru };
 
             const resPut = await fetch(url, {
@@ -139,14 +171,13 @@
                 document.getElementById("opS1_L1").value = ""; document.getElementById("opS1_L2").value = ""; document.getElementById("opS1_L3").value = "";
                 document.getElementById("opS2_L1").value = ""; document.getElementById("opS2_L2").value = ""; document.getElementById("opS2_L3").value = "";
             } else {
-                throw new Error("Gagal mengunggah pembaruan ke server.");
+                throw new Error("Gagal mengunggah data ke server.");
             }
         } catch (error) {
             console.error(error);
-            alert(`PENGIRIMAN GAGAL!\n\nSebab: ${error.message}`);
+            alert(`PENGIRIMAN GAGAL!\n\nSebab: ${error.message}\n\nPastikan koneksi internet aktif dan stabil.`);
         }
     }
 </script>
 </body>
 </html>
-
