@@ -124,7 +124,10 @@
     }
 
     // FUNGSI LOGIKA PEMBAGI 2 BARIS INFO KOTAK KUNING
-        function hitungRataRataLive() {
+            // ====================================================================
+    // 🟢 FIX CODE: FUNGSI HITUNG GABUNGAN SILO 1 & SILO 2 YANG BENAR MURNI
+    // ====================================================================
+    function hitungRataRataLive() {
         const s1_l1 = parseFloat(document.getElementById("opS1_L1").value) || 0;
         const s1_l2 = parseFloat(document.getElementById("opS1_L2").value) || 0;
         const s1_l3 = parseFloat(document.getElementById("opS1_L3").value) || 0;
@@ -133,32 +136,35 @@
         const s2_l2 = parseFloat(document.getElementById("opS2_L2").value) || 0;
         const s2_l3 = parseFloat(document.getElementById("opS2_L3").value) || 0;
 
-        // Hitung rata-rata fisik murni OPC
+        // 1. Hitung Rata-Rata Fisik OPC (Silo 1)
         const s1_fix_L1 = s1_l1 > 0 ? (s1_l1 - 1) : 0;
         const s1_fix_L2 = s1_l2 > 0 ? (s1_l2 - 0.8) : 0;
         const s1_fix_L3 = s1_l3 > 0 ? (s1_l3 - 0.8) : 0;
         const rataSilo1 = (s1_fix_L1 + s1_fix_L2 + s1_fix_L3) / 3;
 
-        // Hitung rata-rata fisik murni PCC
+        // 2. Hitung Rata-Rata Fisik PCC (Silo 2)
         const s2_fix_L1 = s2_l1 > 0 ? (s2_l1 - 1) : 0;
         const s2_fix_L2 = s2_l2 > 0 ? (s2_l2 - 1.2) : 0;
         const s2_fix_L3 = s2_l3 > 0 ? (s2_l3 - 0.8) : 0;
         const rataSilo2 = (s2_fix_L1 + s2_fix_L2 + s2_fix_L3) / 3;
 
-        // 🚀 PANGGIL FUNGSI DARI OPC.JS DAN PCC.JS
+        // 3. Panggil Fungsi Eksternal dari opc.js dan pcc.js
         const hasilOPC = typeof hitungVolumeSilo1 === "function" ? hitungVolumeSilo1(rataSilo1) : { tonase: 0 };
         const hasilPCC = typeof hitungVolumeSilo2 === "function" ? hitungVolumeSilo2(rataSilo2) : { tonase: 0 };
 
-        // Tampilkan meteran ke baris 1 kotak kuning
+        // 4. Tembakkan Hasil ke Baris 1 Kotak Kuning (Meter)
         document.getElementById("liveRataSilo1").textContent = rataSilo1.toFixed(2) + " m";
         document.getElementById("liveRataSilo2").textContent = rataSilo2.toFixed(2) + " m";
 
-        // Tampilkan tonase ke baris 2 kotak kuning
+        // 5. Tembakkan Hasil ke Baris 2 Kotak Kuning (Tonase Hijau)
         document.getElementById("liveTonaseSilo1").textContent = hasilOPC.tonase.toFixed(3) + " Ton";
         document.getElementById("liveTonaseSilo2").textContent = hasilPCC.tonase.toFixed(3) + " Ton";
 
+        // Mengembalikan objek data murni yang dieja secara benar (kalkulasi)
         return { rataSilo1, rataSilo2, s1_l1, s1_l2, s1_l3, s2_l1, s2_l2, s2_l3, hasilOPC, hasilPCC };
     }
+    // ====================================================================
+
 
 
     async function kirimDataSilo() {
@@ -184,9 +190,13 @@
                 rata: parseFloat(kalkulasi.rataSilo1.toFixed(2)),
                 tonase: parseFloat(kalkulasi.hasilOPC.tonase.toFixed(3))
             },
-            silo2_pcc: { mentah: { l1: kalkulasi.s2_l1, l2: kalkulasi.s2_l2, l3: kalkulasi.s2_l3 }, rata: 0, tonase: 0 },
-            updateTime: new Date().toLocaleString("id-ID")
-        };
+            // ✔️ KODE BARU YANG AKURAT MEMBACA HASIL DARI PCC.JS:
+silo2_pcc: { 
+    mentah: { l1: kalkulasi.s2_l1, l2: kalkulasi.s2_l2, l3: kalkulasi.s2_l3 }, 
+    rata: parseFloat(kalkulasi.rataSilo2.toFixed(2)),
+    tonase: parseFloat(kalkulasi.hasilPCC.tonase.toFixed(3))
+},
+
 
                 const REPO = "dashboard-produksi"; 
         const USER = "helmismd"; 
