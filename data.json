@@ -1,38 +1,37 @@
 {
-  "periode": "Kamis, 30 Juli 2026",
-  "lastUpdate": "Data terakhir diperbarui : Kamis, 30 Juli 2026",
-  "totalOPC": 918.9,
-  "totalPCC": 780.07,
-  "totalBag": 729,
-  "totalBulk": 969.97,
-  "grandTotal": 1698.97,
-  "bulanOPC": 21711.019999999997,
-  "bulanPCC": 18650.199999999997,
-  "bulanBag": 18080.949999999997,
-  "bulanBulk": 22280.270000000004,
-  "bulanTotal": 40361.22,
+  "periode": "Jumat, 31 Juli 2026",
+  "lastUpdate": "Data terakhir diperbarui : Jumat, 31 Juli 2026",
+  "totalOPC": 764.72,
+  "totalPCC": 882,
+  "totalBag": 882,
+  "totalBulk": 764.72,
+  "grandTotal": 1646.72,
+  "bulanOPC": 22475.739999999998,
+  "bulanPCC": 19532.199999999997,
+  "bulanBag": 18962.949999999997,
+  "bulanBulk": 23044.990000000005,
+  "bulanTotal": 42007.94,
   "labelTanggal": [
-    "30-07-26"
+    "31-07-26"
   ],
   "dataProduksi": [
-    1698.97
+    1646.72
   ],
   "stokSilo": {
-    "opc": 2258.542,
-    "pcc": 4523.365
+    "opc": 3102.913,
+    "pcc": 3730.518
   },
-  "tahunOPC": 97841.02999999997,
-  "tahunPCC": 122222.54,
-  "tahunBag": 117714.09999999999,
-  "tahunBulk": 102349.46999999997,
-  "tahunTotal": 220063.56999999995,
+  "tahunOPC": 98605.74999999997,
+  "tahunPCC": 123104.54,
+  "tahunBag": 118596.09999999999,
+  "tahunBulk": 103114.18999999997,
+  "tahunTotal": 221710.28999999998,
   "kapal": {
-    "nama": "KM.Tonasa Lines XXV",
-    "voyage": "027/07-TL.XXV/2026",
-    "opc": "5.073,364 m/t",
+    "opc": "0",
     "pcc": "0",
     "total": "5.073,364 m/t",
-    "statusKapal": "🏗️ SANDAR DI JETTY PALARAN",
-    "statusOperasi": "-"
+    "statusKapal": "-",
+    "statusOperasi": "Selesai Bongkar",
+    "update": "2026-08-01 03:00"
   }
 }
