@@ -973,8 +973,6 @@ async function uploadHistory(token, history) {
 
 }
 
-
-
 // ===========================
 // UPLOAD DATA.JSON KE GITHUB
 // ===========================
@@ -988,43 +986,27 @@ async function uploadGithub() {
         return;
     }
 
-    const keyLama = `${dataLama.kapal?.nama || ""}|${dataLama.kapal?.voyage || ""}`.trim().toUpperCase();
-const keyBaru = `${dashboardData.kapal?.nama || ""}|${dashboardData.kapal?.voyage || ""}`.trim().toUpperCase();
+    const sha = await getGithubSHA(token);
+const dataLama = await downloadData(token);
 
-if (keyLama === keyBaru && dataLama.kapal) {
-    // JIKA KAPAL & VOYAGE SAMA: Amankan nilai kargo lama agar tidak tertimpa string kosong
-    dashboardData = {
-        ...dataLama,
-        ...dashboardData,
-        kapal: {
-            nama: dashboardData.kapal.nama || dataLama.kapal.nama,
-            voyage: dashboardData.kapal.voyage || dataLama.kapal.voyage,
-            opc: dashboardData.kapal.opc || dataLama.kapal.opc || "0",
-            pcc: dashboardData.kapal.pcc || dataLama.kapal.pcc || "0",
-            total: dashboardData.kapal.total || dataLama.kapal.total || "0",
-            statusKapal: dashboardData.kapal.statusKapal || dataLama.kapal.statusKapal || "-",
-            statusOperasi: dashboardData.kapal.statusOperasi || dataLama.kapal.statusOperasi || "-",
-            update: dashboardData.kapal.update || dataLama.kapal.update || ""
+const keyLama =
+    `${dataLama.kapal?.nama || ""}|${dataLama.kapal?.voyage || ""}`;
+
+const keyBaru =
+    `${dashboardData.kapal?.nama || ""}|${dashboardData.kapal?.voyage || ""}`;
+
+dashboardData = {
+    ...dataLama,
+    ...dashboardData,
+    kapal: (keyLama === keyBaru)
+        ? {
+            ...dataLama.kapal,
+            ...dashboardData.kapal
         }
-
-console.log("SEBELUM UPLOAD");
-console.log(dashboardData.kapal);
-
-
-
-    };
-
-
-
-
-} else {
-    // JIKA KAPAL BEDA / VOYAGE BARU: Buat data bersih dari awal
-    dashboardData = {
-        ...dataLama,
-        ...dashboardData
-    };
-}
-
+        : {
+            ...dashboardData.kapal
+        }
+};
 
     const url =
         `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
@@ -1163,74 +1145,58 @@ const statusKapal =
 
 console.table(events);
 
-// === TEMPELKAN KODE BARU INI ===
-// =================================================================
-// ✔️ TEMPELKAN KODE BARU INI SEBAGAI PENGGANTINYA:
-// =================================================================
 dashboardData = dashboardData || {};
+
 dashboardData.kapal = dashboardData.kapal || {};
 
-const namaLama          = dashboardData.kapal.nama || "";
-const voyageLama        = dashboardData.kapal.voyage || "";
-const cargoOpcLama      = dashboardData.kapal.opc || "0";
-const cargoPccLama      = dashboardData.kapal.pcc || "0";
-const cargoTotalLama    = dashboardData.kapal.total || "0";
-const statusKapalLama   = dashboardData.kapal.statusKapal || "-";
+if (kapal.nama) dashboardData.kapal.nama = kapal.nama;
 
-const namaDariWA   = (kapal.nama || "").trim();
-const voyageDariWA = (kapal.voyage || "").trim();
+if (kapal.voyage) dashboardData.kapal.voyage = kapal.voyage;
 
-// Logika pendeteksi: jika nama & voyage di WA kosong, otomatis anggap laporan aktivitas kapal yang sama
-const apakahKapalSama = (namaDariWA === "" && voyageDariWA === "") || 
-                        (namaLama.toUpperCase() === namaDariWA.toUpperCase() && voyageLama === voyageDariWA);
-
-if (apakahKapalSama) {
-    console.log("[INFO] Laporan aktivitas terdeteksi. Mengunci data lama.");
-    dashboardData.kapal.nama        = namaLama || "-";
-    dashboardData.kapal.voyage      = voyageLama || "-";
-    dashboardData.kapal.opc         = cargoOpcLama; 
-    dashboardData.kapal.pcc         = cargoPccLama; 
-    dashboardData.kapal.total       = cargoTotalLama;
-    dashboardData.kapal.statusKapal = kapal.status || statusKapal || statusKapalLama;
-} else {
-    console.log("[INFO] Kapal baru terdeteksi. Membuat data baru.");
-    dashboardData.kapal.nama        = kapal.nama || "-";
-    dashboardData.kapal.voyage      = kapal.voyage || "-";
-    dashboardData.kapal.opc         = kapal.opc || "0";
-    dashboardData.kapal.pcc         = kapal.pcc || "0";
-    dashboardData.kapal.total       = kapal.total || "0";
-    dashboardData.kapal.statusKapal = kapal.status || statusKapal || "-";
+if (kapal.opc !== "" && kapal.opc !== "0") {
+    dashboardData.kapal.opc = kapal.opc;
 }
 
-dashboardData.kapal.statusOperasi = statusOperasi;
-dashboardData.kapal.update        = terakhir ? terakhir.datetime : dashboardData.kapal.update;
-// =================================================================
-// === BATAS AKHIR KODE BARU ===
+if (kapal.pcc !== "" && kapal.pcc !== "0") {
+    dashboardData.kapal.pcc = kapal.pcc;
+}
 
+if (kapal.total !== "") {
+    dashboardData.kapal.total = kapal.total;
+}
+dashboardData.kapal.pcc = kapal.pcc || "";
+dashboardData.kapal.total = kapal.total || "";
+dashboardData.kapal.statusKapal =
+    kapal.status || statusKapal;
+// Selalu diperbarui
+dashboardData.kapal.statusOperasi = statusOperasi;
+
+dashboardData.kapal.update =
+    terakhir ? terakhir.datetime : dashboardData.kapal.update;
 console.log(dashboardData);
     console.log(kapal);
 console.log("Nama kapal =", kapal.nama);
 
 gantiBannerKapal(kapal.nama);
 
-document.getElementById("kapalNama").value = dashboardData.kapal.nama;
+document.getElementById("kapalNama").value = kapal.nama;
 
-document.getElementById("kapalVoyage").value = dashboardData.kapal.voyage;
+document.getElementById("kapalVoyage").value = kapal.voyage;
 
-document.getElementById("kapalOPC").value = dashboardData.kapal.opc;
+document.getElementById("kapalOPC").value = kapal.opc;
 
-document.getElementById("kapalPCC").value = dashboardData.kapal.pcc;
+document.getElementById("kapalPCC").value = kapal.pcc;
 
-document.getElementById("kapalTotal").value = dashboardData.kapal.total;
+document.getElementById("kapalTotal").value = kapal.total;
 
 document.getElementById("kapalStatus").value =
-    dashboardData.kapal.statusKapal;
+    kapal.status || statusKapal;
 
-document.getElementById("kapalStatusOperasi").value =
-    dashboardData.kapal.statusOperasi;
+document.getElementById("kapalStatusOperasi").value = statusOperasi;
 
 document.getElementById("kapalUpdate").value =
-    dashboardData.kapal.update || "";
+    terakhir ? terakhir.datetime : "";
+
 document.getElementById("hasilAnalisa").style.display = "block";
 
 document.getElementById("haNama").textContent = kapal.nama;
@@ -1492,33 +1458,53 @@ const EVENT_POSISI = [
   { cari: "INPOST", status: "🏗️ SANDAR DI JETTY PALARAN" }
 ];
 
-
+const BANNER_KAPAL = [
+  {
+    cari: "TL XVIII",
+    gambar: "img/tl-xviii.webp"
+  },
+  {
+    cari: "TL XIX",
+    gambar: "img/tl-xix.webp"
+  },
+  {
+    cari: "TL XXV",
+    gambar: "img/tl-xxv.webp"
+  }
+];
 
 function gantiBannerKapal(namaKapal) {
-    console.log("[DEBUG] Nama dari WA:", namaKapal);
+    console.log("NAMA KAPAL DARI WA =", namaKapal);
 
     const img = document.getElementById("bannerKapal");
-    if (!img) return;
-
-    // 1. Ubah teks input dari WA menjadi huruf besar semua agar mudah dideteksi
-    const namaTeks = (namaKapal || "").toUpperCase();
-    
-    // 2. Siapkan nama file gambar (wajib HURUF KECIL semua agar cocok dengan file di GitHub)
-    let gambarTerpilih = "tl-xviii.webp"; 
-
-    // 3. Deteksi nomor romawi kapal
-    if (/XVIII/.test(namaTeks)) {
-        gambarTerpilih = "tl-xviii.webp";
-    } else if (/XIX/.test(namaTeks)) {
-        gambarTerpilih = "tl-xix.webp";
-    } else if (/XXV/.test(namaTeks)) {
-        gambarTerpilih = "tl-xxv.webp";
+    if (!img) {
+        console.error("Elemen #bannerKapal tidak ditemukan di HTML!");
+        return;
     }
 
-    // 4. Pasang nama file gambar secara polos ke HTML
-    img.src = gambarTerpilih;
-    console.log("[DEBUG] Berhasil memasang banner polos ke HTML:", img.src);
+    // 1. Bersihkan nama kapal input: Hapus "KM.", ubah ke huruf besar, hapus spasi, strip, titik, dll.
+    let namaBersih = (namaKapal || "").toUpperCase();
+    namaBersih = namaBersih.replace("KM.", ""); // Hapus tulisan KM. jika ada
+    namaBersih = namaBersih.replace(/[^A-Z0-9]/g, ""); // Hanya sisakan huruf dan angka (menjadi "TLXVIII")
+
+    console.log("NAMA KAPAL SETELAH DI-FILTER =", namaBersih);
+
+    // 2. Cari di BANNER_KAPAL dengan membersihkan kata kuncinya juga
+    const kapal = BANNER_KAPAL.find(k => {
+        const kataKunciBersih = k.cari.toUpperCase().replace(/[^A-Z0-9]/g, ""); // "TL XVIII" menjadi "TLXVIII"
+        
+        // Periksa apakah kata kunci ada di dalam nama kapal yang diinput
+        return namaBersih.includes(kataKunciBersih);
+    });
+
+    // 3. Set gambar ke element
+    img.src = kapal
+        ? kapal.gambar
+        : "img/tl-xviii.webp";
+
+    console.log("GAMBAR BANNER YANG DIPASANG =", img.src);
 }
+
 
 
 function ambilEventPosisi(teks){
