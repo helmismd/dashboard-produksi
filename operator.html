@@ -158,19 +158,27 @@
             updateTime: new Date().toLocaleString("id-ID")
         };
 
-        const REPO = "dashboard-produksi"; 
+                const REPO = "dashboard-produksi"; 
         const USER = "helmismd"; 
         const FILE_PATH = "data.json";
         const url = `https://github.com{USER}/${REPO}/contents/${FILE_PATH}`;
 
         try {
-            const resGet = await fetch(url, { headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github+json" } });
+            const resGet = await fetch(url, { 
+                headers: { 
+                    "Authorization": `Bearer ${token}`,
+                    "Accept": "application/vnd.github+json"
+                } 
+            });
+            
             if (resGet.status === 401 || resGet.status === 403) {
                 localStorage.removeItem("github_token");
-                alert("❌ TOKEN GITHUB SALAH ATAU KEDALUWARSA!");
+                alert("❌ TOKEN GITHUB SALAH ATAU KEDALUWARSA!\n\nSilakan ketuk judul atas kembali untuk memasukkan token baru.");
                 return;
             }
-            if (!resGet.ok) throw new Error("Gagal terhubung ke database server GitHub.");
+
+            if (!resGet.ok) throw new Error("Gagal membaca database server GitHub.");
+            
             const fileData = await resGet.json();
             const shaLama = fileData.sha;
             const dataLamaJSON = JSON.parse(atob(fileData.content));
@@ -178,7 +186,11 @@
 
             const resPut = await fetch(url, {
                 method: "PUT",
-                headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json", "Accept": "application/vnd.github+json" },
+                headers: { 
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                    "Accept": "application/vnd.github+json"
+                },
                 body: JSON.stringify({
                     message: `Update Fisik Silo oleh Operator - ${dataFisikBaru.tanggal}`,
                     content: btoa(unescape(encodeURIComponent(JSON.stringify(dataFinalUpdate, null, 2)))),
@@ -195,9 +207,11 @@
                 throw new Error("Gagal mengunggah data ke server.");
             }
         } catch (error) {
+            console.error(error);
             alert(`PENGIRIMAN GAGAL!\n\nSebab: ${error.message}`);
         }
     }
+
 </script>
 </body>
 </html>
