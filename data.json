@@ -27,12 +27,13 @@
   "tahunBulk": 103114.18999999997,
   "tahunTotal": 221710.28999999998,
   "kapal": {
-    "opc": "5.073,364 m/t",
-    "pcc": "0",
-    "total": "5.073,364 m/t",
-    "statusKapal": "🏗️ SANDAR DI JETTY PALARAN",
-    "statusOperasi": "-",
-    "nama": "KM.Tonasa Lines XXV",
-    "voyage": "027/07-TL.XXV/2026"
+    "nama": "KM.TL-XVIII",
+    "voyage": "016/07/2026",
+    "opc": "5.061,991 Mts",
+    "pcc": "3.076,846 Mts",
+    "total": "8.138,837 mts",
+    "statusKapal": "Berangkat Tujuan Biringkassi  ETA Tgl 30/07/2026 Jam 23.00 LT.",
+    "statusOperasi": "Selesai Bongkar",
+    "update": "2026-07-28 22:15"
   }
 }
