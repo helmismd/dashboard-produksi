@@ -94,6 +94,51 @@
 </div>
 
 <script>
+// ===== MEMBACA KODE DARI QR =====
+
+const params = new URLSearchParams(window.location.search);
+const kode = params.get("kode");
+
+if (kode) {
+
+    fetch("token.json")
+        .then(res => res.json())
+        .then(data => {
+
+            if (data[kode]) {
+
+                localStorage.setItem(
+                    "github_token",
+                    data[kode]
+                );
+
+                alert("Token berhasil dimuat");
+
+                history.replaceState(
+                    {},
+                    "",
+                    "operator.html"
+                );
+
+            } else {
+
+                alert("Kode Operator tidak ditemukan");
+
+            }
+
+        })
+        .catch(err => {
+
+            alert("Gagal membaca token.json");
+
+        });
+
+}
+
+// ===== AKHIR PEMBACA QR =====
+
+
+
     // Memaksa penanggalan otomatis terisi sejak awal halaman dibuka
     document.addEventListener("DOMContentLoaded", function() {
         const hariIndo = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
@@ -208,7 +253,7 @@
             },
             updateTime: new Date().toLocaleString("id-ID")
         };
-
+alert("Sebelum REPO");
         const REPO = "dashboard-produksi"; 
         const USER = "helmismd"; 
         const FILE_PATH = "data.json";
