@@ -161,7 +161,7 @@
                 const REPO = "dashboard-produksi"; 
         const USER = "helmismd"; 
         const FILE_PATH = "data.json";
-        const url = `https://github.com{USER}/${REPO}/contents/${FILE_PATH}`;
+        const url = `https://api.github.com/repos/${USER}/${REPO}/contents/${FILE_PATH}`;
 
         try {
             const resGet = await fetch(url, { 
