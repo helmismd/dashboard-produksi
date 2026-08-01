@@ -108,8 +108,7 @@
         }
     }
 
-    // RUMUS HITUNG MANUAL KOTAK KUNING
-    function hitungRataRataMurni() {
+       function hitungRataRataLive() {
         const s1_l1 = parseFloat(document.getElementById("opS1_L1").value) || 0;
         const s1_l2 = parseFloat(document.getElementById("opS1_L2").value) || 0;
         const s1_l3 = parseFloat(document.getElementById("opS1_L3").value) || 0;
@@ -118,22 +117,22 @@
         const s2_l2 = parseFloat(document.getElementById("opS2_L2").value) || 0;
         const s2_l3 = parseFloat(document.getElementById("opS2_L3").value) || 0;
 
+        // JALANKAN RUMUS FISIK PENGURANG UNTUK MENCARI RATA-RATA METERAN SEBELUM MASUK KE VOLUME
         const s1_fix_L1 = s1_l1 > 0 ? (s1_l1 - 1) : 0;
         const s1_fix_L2 = s1_l2 > 0 ? (s1_l2 - 0.8) : 0;
         const s1_fix_L3 = s1_l3 > 0 ? (s1_l3 - 0.8) : 0;
-
-        const s2_fix_L1 = s2_l1 > 0 ? (s2_l1 - 1) : 0;
-        const s2_fix_L2 = s2_l2 > 0 ? (s2_l2 - 1.2) : 0;
-        const s2_fix_L3 = s2_l3 > 0 ? (s2_l3 - 0.8) : 0;
-
         const rataSilo1 = (s1_fix_L1 + s1_fix_L2 + s1_fix_L3) / 3;
-        const rataSilo2 = (s2_fix_L1 + s2_fix_L2 + s2_fix_L3) / 3;
 
-        document.getElementById("liveRataSilo1").textContent = rataSilo1.toFixed(2) + " m";
-        document.getElementById("liveRataSilo2").textContent = rataSilo2.toFixed(2) + " m";
+        // 🚀 PANGGIL MESIN HITUNG VOLUME DARI FILE OPC.JS YANG BARU KITA BUAT
+        const hasilOPC = hitungVolumeSilo1(rataSilo1);
 
-        return { rataSilo1, rataSilo2, s1_l1, s1_l2, s1_l3, s2_l1, s2_l2, s2_l3 };
+        // Tampilkan hasil tonase bersihnya langsung ke kotak kuning pratinjau Anda!
+        document.getElementById("liveRataSilo1").textContent = hasilOPC.tonase.toFixed(3) + " Ton";
+        document.getElementById("liveRataSilo2").textContent = "0.000 Ton"; // (Silo 2 menyusul setelah ini)
+
+        return { rataSilo1, s1_l1, s1_l2, s1_l3, s2_l1, s2_l2, s2_l3 };
     }
+
 
     async function kirimDataSilo() {
         let token = localStorage.getItem("github_token"); 
@@ -218,6 +217,16 @@
             alert(`PENGIRIMAN GAGAL!\n\nAlasan Asli: ${pesanErorAsli}\n\nSaran: Ketuk judul atas untuk pastikan token baru Anda sudah benar.`);
         }
     } // Penutup fungsi kirimDataSilo murni tunggal
+    <!-- 🟡 SELIPKAN BARIS INI TEPAT DI ATAS TAG SCRIPT UTAMA: -->
+    <script src="opc.js"></script>
+
+    <script>
+        // ... (Ini adalah script bawaan fungsi kirimDataSilo Anda yang kemarin) ...
+    </script>
+</body>
+
+
+
 </script>
 </body>
 </html>
