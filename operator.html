@@ -225,7 +225,7 @@ if (kode) {
 
     async function kirimDataSilo() {
         const token = localStorage.getItem("github_token");
-alert("Token = " + token);
+
 
 if (!token || token.trim() === "") {
     alert("Token GitHub belum disimpan.\n\nSilakan buka ukursilo.html terlebih dahulu.");
@@ -254,7 +254,7 @@ if (!token || token.trim() === "") {
             },
             updateTime: new Date().toLocaleString("id-ID")
         };
-alert("Sebelum REPO");
+
         const REPO = "dashboard-produksi"; 
         const USER = "helmismd"; 
         const FILE_PATH = "data.json";
