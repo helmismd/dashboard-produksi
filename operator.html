@@ -184,45 +184,44 @@
             const dataLamaJSON = JSON.parse(atob(fileData.content));
             const dataFinalUpdate = { ...dataLamaJSON, fisikSilo: dataFisikBaru };
 
-            const resPut = await fetch(url, {
+                        const resPut = await fetch(url, {
                 method: "PUT",
                 headers: { 
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                    "Accept": "application/vnd.github+json"
+                    "Authorization": `Bearer ${token}`, 
+                    "Content-Type": "application/json", 
+                    "Accept": "application/vnd.github+json" 
                 },
                 body: JSON.stringify({
                     message: `Update Fisik Silo oleh Operator - ${dataFisikBaru.tanggal}`,
                     content: btoa(unescape(encodeURIComponent(JSON.stringify(dataFinalUpdate, null, 2)))),
                     sha: shaLama
-             
+                })
             });
 
             if (resPut.ok) {
                 alert(`ALHAMDULILLAH SUKSES!\n\nData fisik berhasil terkirim ke dashboard.`);
-                document.getElementById("opS1_L1").value = ""; document.getElementById("opS1_L2").value = ""; document.getElementById("opS1_L3").value = "";
-                document.getElementById("opS2_L1").value = ""; document.getElementById("opS2_L2").value = ""; document.getElementById("opS2_L3").value = "";
-                document.getElementById("liveRataSilo1").textContent = "0.00 m"; document.getElementById("liveRataSilo2").textContent = "0.00 m";
+                document.getElementById("opS1_L1").value = ""; 
+                document.getElementById("opS1_L2").value = ""; 
+                document.getElementById("opS1_L3").value = "";
+                document.getElementById("opS2_L1").value = ""; 
+                document.getElementById("opS2_L2").value = ""; 
+                document.getElementById("opS2_L3").value = "";
+                document.getElementById("liveRataSilo1").textContent = "0.00 m"; 
+                document.getElementById("liveRataSilo2").textContent = "0.00 m";
             } else {
                 throw new Error("Gagal mengunggah data ke server.");
             }
-                // ====================================================================
-        // 🟢 POTONGAN KODE DETEKTIF: PAKSA BROWSER MEMBOCORKAN EROR ASLINYA
-        // ====================================================================
+
         } catch (error) {
             console.error(error);
-            
-            // Ambil pesan eror murni dari sistem browser laptop/HP
             let pesanErorAsli = error.message || "Koneksi Terblokir";
-            
             alert(`PENGIRIMAN GAGAL!\n\nAlasan Asli: ${pesanErorAsli}\n\nSaran: Ketuk judul atas untuk pastikan token baru Anda sudah benar.`);
         }
-    } // Penutup fungsi kirimDataSilo
-
-
+    } // Penutup fungsi kirimDataSilo murni tunggal
 </script>
 </body>
 </html>
+
 
 
 
