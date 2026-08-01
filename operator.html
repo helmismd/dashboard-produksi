@@ -30,7 +30,7 @@
 <body>
 
 <div class="container">
-    <h2 onclick="mintaTokenManual()" style="cursor: pointer; user-select: none;" title="Ketuk untuk ganti token">INPUT UKUR SILO</h2>
+    <!-- <h2 onclick="mintaTokenManual()" style="cursor: pointer; user-select: none;" title="Ketuk untuk ganti token">INPUT UKUR SILO</h2> --->
     
     <div class="row">
         <div class="group">
@@ -102,6 +102,7 @@ const kode = params.get("kode");
 if (kode) {
 
     fetch("token.json")
+.catch(err => alert(err));
         .then(res => res.json())
         .then(data => {
 
@@ -253,7 +254,7 @@ if (kode) {
             },
             updateTime: new Date().toLocaleString("id-ID")
         };
-alert("Sebelum REPO");
+
         const REPO = "dashboard-produksi"; 
         const USER = "helmismd"; 
         const FILE_PATH = "data.json";
