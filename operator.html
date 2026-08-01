@@ -30,7 +30,7 @@
 <body>
 
 <div class="container">
-    <h2 onclick="mintaTokenManual()" style="cursor: pointer; user-select: none;" title="Ketuk untuk ganti token">INPUT UKUR SILO</h2>
+    <h2>INPUT UKUR SILO</h2>
     
     <div class="row">
         <div class="group">
@@ -224,12 +224,13 @@ if (kode) {
     }
 
     async function kirimDataSilo() {
-        let token = localStorage.getItem("github_token"); 
-        if (!token || token.trim() === "") {
-            token = prompt("Silakan masukkan Token GitHub Terlebih Dahulu:");
-            if (!token || token.trim() === "") return;
-            localStorage.setItem("github_token", token.trim());
-        }
+        const token = localStorage.getItem("github_token");
+alert("Token = " + token);
+
+if (!token || token.trim() === "") {
+    alert("Token GitHub belum disimpan.\n\nSilakan buka ukursilo.html terlebih dahulu.");
+    return;
+}
 
         const kalkulasi = hitungRataRataLive();
 
