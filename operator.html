@@ -1,0 +1,109 @@
+    // ====================================================================
+    // 🟢 SKRIP SINKRONISASI DATALAMA GITHUB & PENGIRIMAN DATA SILO OPERATOR
+    // ====================================================================
+    async function kirimDataSilo() {
+        const token = localStorage.getItem("github_token"); 
+        
+        if (!token) {
+            // Jika token belum di-input di HP operator, munculkan kolom rahasia
+            const inputToken = prompt("Silakan masukkan Token GitHub Terlebih Dahulu:");
+            if (inputToken) {
+                localStorage.setItem("github_token", inputToken.trim());
+                alert("Token Berhasil Disimpan di HP Anda! Silakan klik Kirim kembali.");
+            }
+            return;
+        }
+
+        const s1_l1 = parseFloat(document.getElementById("opS1_L1").value) || 0;
+        const s1_l2 = parseFloat(document.getElementById("opS1_L2").value) || 0;
+        const s1_l3 = parseFloat(document.getElementById("opS1_L3").value) || 0;
+
+        const s2_l1 = parseFloat(document.getElementById("opS2_L1").value) || 0;
+        const s2_l2 = parseFloat(document.getElementById("opS2_L2").value) || 0;
+        const s2_l3 = parseFloat(document.getElementById("opS2_L3").value) || 0;
+
+        if (s1_l1 === 0 && s2_l1 === 0) {
+            alert("Mohon isi angka pengukuran terlebih dahulu!");
+            return;
+        }
+
+        // RUMUS PENGURANG EXCEL ASLI ANDA
+        const s1_fix_L1 = s1_l1 > 0 ? (s1_l1 - 1) : 0;
+        const s1_fix_L2 = s1_l2 > 0 ? (s1_l2 - 0.8) : 0;
+        const s1_fix_L3 = s1_l3 > 0 ? (s1_l3 - 0.8) : 0;
+
+        const s2_fix_L1 = s2_l1 > 0 ? (s2_l1 - 1) : 0;
+        const s2_fix_L2 = s2_l2 > 0 ? (s2_l2 - 1.2) : 0;
+        const s2_fix_L3 = s2_l3 > 0 ? (s2_l3 - 0.8) : 0;
+
+        const totalSilo1 = s1_fix_L1 + s1_fix_L2 + s1_fix_L3;
+        const rataSilo1  = totalSilo1 / 3;
+
+        const totalSilo2 = s2_fix_L1 + s2_fix_L2 + s2_fix_L3;
+        const rataSilo2  = totalSilo2 / 3;
+
+        // Siapkan struktur data objek Silo baru
+        const dataFisikBaru = {
+            hari: document.getElementById("opHari").value || "-",
+            tanggal: document.getElementById("opTgl").value || "-",
+            silo1_opc: {
+                mentah: { l1: s1_l1, l2: s1_l2, l3: s1_l3 },
+                rata: parseFloat(rataSilo1.toFixed(2))
+            },
+            silo2_pcc: {
+                mentah: { l1: s2_l1, l2: s2_l2, l3: s2_l3 },
+                rata: parseFloat(rataSilo2.toFixed(2))
+            },
+            updateTime: new Date().toLocaleString("id-ID")
+        };
+
+        console.log("[PROSES] Menghubungkan ke GitHub...");
+
+        // PROSES TEMBAK API GITHUB UNTUK MERGE (GABUNG) DATA TANPA MENGHAPUS DATA KAPAL
+        const REPO = "dashboard-produksi"; 
+        const USER = "helmismd"; 
+        const FILE_PATH = "data.json";
+        const url = `https://github.com{USER}/${REPO}/contents/${FILE_PATH}`;
+
+        try {
+            // 1. Ambil SHA dan Data Lama di Server Online
+            const resGet = await fetch(url, { headers: { Authorization: `token ${token}` } });
+            if (!resGet.ok) throw new Error("Gagal mengambil SHA data online. Periksa token Anda.");
+            const fileData = await resGet.json();
+            const shaLama = fileData.sha;
+            const dataLamaJSON = JSON.parse(atob(fileData.content));
+
+            // 2. LOGIKA MERGE: Satukan data lama (kapal, grafik, dll) dengan data fisik silo baru dari operator
+            const dataFinalUpdate = {
+                ...dataLamaJSON,
+                fisikSilo: dataFisikBaru
+            };
+
+            // 3. Upload kembali ke GitHub
+            const resPut = await fetch(url, {
+                method: "PUT",
+                headers: {
+                    Authorization: `token ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: `Update Fisik Silo oleh Operator - ${dataFisikBaru.tanggal}`,
+                    content: btoa(unescape(encodeURIComponent(JSON.stringify(dataFinalUpdate, null, 2)))),
+                    sha: shaLama
+                })
+            });
+
+            if (resPut.ok) {
+                alert(`ALHAMDULILLAH SUKSES!\n\nData Silo Berhasil Dikirim Ke Dashboard Utama.\n\nRata OPC: ${rataSilo1.toFixed(2)} m\nRata PCC: ${rataSilo2.toFixed(2)} m`);
+                // Bersihkan form setelah sukses agar tidak terkirim ganda
+                document.getElementById("opS1_L1").value = ""; document.getElementById("opS1_L2").value = ""; document.getElementById("opS1_L3").value = "";
+                document.getElementById("opS2_L1").value = ""; document.getElementById("opS2_L2").value = ""; document.getElementById("opS2_L3").value = "";
+            } else {
+                throw new Error("Gagal Upload data ke GitHub Server.");
+            }
+
+        } catch (error) {
+            console.error(error);
+            alert(`PENGIRIMAN GAGAL!\n\nSebab: ${error.message}\n\nSolusi: Coba periksa apakah Token Akses Anda sudah benar atau jaringan HP terputus.`);
+        }
+    }
