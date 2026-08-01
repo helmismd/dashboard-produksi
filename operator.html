@@ -16,13 +16,12 @@
         input:focus { border-color: #007bff; box-shadow: 0 0 5px rgba(0,123,255,0.2); }
         .section-title { background: #e9ecef; padding: 8px; font-weight: bold; text-align: center; border-radius: 6px; margin: 20px 0 10px 0; color: #495057; font-size: 14px; letter-spacing: 0.5px; }
         
-        /* 🟡 KOTAK PREVIEW KUNING ESTETIS ANDA */
+        /* 🟡 KOTAK KUNING ESTETIS 2 BARIS INFO */
         .box-pratinjau { background-color: #fff9db; border: 1px dashed #fcc419; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 15px; }
         .title-pratinjau { font-size: 13px; color: #f59f00; letter-spacing: 0.5px; margin-bottom: 8px; border-bottom: 1px solid #ffe3e3; padding-bottom: 4px; }
         .col-rata { display: flex; justify-content: space-around; font-size: 14px; color: #495057; }
         .angka-merah { color: #e03131; font-size: 16px; display: block; margin-top: 4px; }
 
-        /* GAYA TOMBOL BARU */
         .btn-hitung { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 6px rgba(0,123,255,0.2); }
         .btn-kirim { width: 100%; padding: 14px; background: #28a745; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 6px rgba(40,167,69,0.3); }
         button:active { transform: scale(0.98); }
@@ -60,13 +59,14 @@
         <div class="group"><label>Lubang 3</label><input type="number" step="0.01" id="opS2_L3" placeholder="0.00"></div>
     </div>
 
-    <!-- 🔵 TOMBOL HITUNG MANUAL FISIK -->
-    <button onclick="hitungRataRataMurni()" class="btn-hitung">HITUNG RATA-RATA EXCEL</button>
+    <button onclick="hitungRataRataLive()" class="btn-hitung">HITUNG REKAP EXCEL</button>
 
-    <!-- 🟡 KOTAK PREVIEW KUNING SINKRON -->
+    <!-- 🟡 KOTAK KUNING ESTETIS 2 BARIS DATA UTUH -->
     <div class="box-pratinjau">
-        <div class="title-pratinjau">PRATINJAU HASIL RATA-RATA EXCEL</div>
-        <div class="col-rata">
+        <div class="title-pratinjau">PRATINJAU HASIL PERHITUNGAN EXCEL</div>
+        
+        <!-- BARIS 1: METER -->
+        <div class="col-rata" style="margin-bottom: 12px; border-bottom: 1px dashed #ffe3e3; padding-bottom: 8px;">
             <div>
                 Rata Silo 1 (OPC)
                 <span id="liveRataSilo1" class="angka-merah">0.00 m</span>
@@ -76,13 +76,27 @@
                 <span id="liveRataSilo2" class="angka-merah">0.00 m</span>
             </div>
         </div>
+
+        <!-- BARIS 2: TONASE VOLUME -->
+        <div class="col-rata">
+            <div>
+                Isi Silo 1 (OPC)
+                <span id="liveTonaseSilo1" class="angka-merah" style="color: #2b8a3e;">0.000 Ton</span>
+            </div>
+            <div>
+                Isi Silo 2 (PCC)
+                <span id="liveTonaseSilo2" class="angka-merah" style="color: #2b8a3e;">0.000 Ton</span>
+            </div>
+        </div>
     </div>
 
     <button onclick="kirimDataSilo()" class="btn-kirim">KIRIM DATA SILO</button>
 </div>
 
+<!-- 🚀 PANGGIL FILE RUMUS EKSTERNAL SEBELUM DIHITUNG -->
+<script src="opc.js"></script>
+
 <script>
-    // Memaksa penanggalan otomatis nempel di browser mobile/desktop
     window.onload = function() {
         const hariIndo = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
         const bulanIndo = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agt", "Sep", "Okt", "Nov", "Des"];
@@ -108,7 +122,8 @@
         }
     }
 
-       function hitungRataRataLive() {
+    // FUNGSI LOGIKA PEMBAGI 2 BARIS INFO KOTAK KUNING
+    function hitungRataRataLive() {
         const s1_l1 = parseFloat(document.getElementById("opS1_L1").value) || 0;
         const s1_l2 = parseFloat(document.getElementById("opS1_L2").value) || 0;
         const s1_l3 = parseFloat(document.getElementById("opS1_L3").value) || 0;
@@ -117,22 +132,27 @@
         const s2_l2 = parseFloat(document.getElementById("opS2_L2").value) || 0;
         const s2_l3 = parseFloat(document.getElementById("opS2_L3").value) || 0;
 
-        // JALANKAN RUMUS FISIK PENGURANG UNTUK MENCARI RATA-RATA METERAN SEBELUM MASUK KE VOLUME
         const s1_fix_L1 = s1_l1 > 0 ? (s1_l1 - 1) : 0;
         const s1_fix_L2 = s1_l2 > 0 ? (s1_l2 - 0.8) : 0;
         const s1_fix_L3 = s1_l3 > 0 ? (s1_l3 - 0.8) : 0;
         const rataSilo1 = (s1_fix_L1 + s1_fix_L2 + s1_fix_L3) / 3;
 
-        // 🚀 PANGGIL MESIN HITUNG VOLUME DARI FILE OPC.JS YANG BARU KITA BUAT
-        const hasilOPC = hitungVolumeSilo1(rataSilo1);
+        // Ambil data konversi volume Tonase dari file opc.js
+        let hasilOPC = { tonase: 0 };
+        if (typeof hitungVolumeSilo1 === "function") {
+            hasilOPC = hitungVolumeSilo1(rataSilo1);
+        }
 
-        // Tampilkan hasil tonase bersihnya langsung ke kotak kuning pratinjau Anda!
-        document.getElementById("liveRataSilo1").textContent = hasilOPC.tonase.toFixed(3) + " Ton";
-        document.getElementById("liveRataSilo2").textContent = "0.000 Ton"; // (Silo 2 menyusul setelah ini)
+        // Tembakkan ke BARIS 1 (Meter)
+        document.getElementById("liveRataSilo1").textContent = rataSilo1.toFixed(2) + " m";
+        document.getElementById("liveRataSilo2").textContent = "0.00 m";
 
-        return { rataSilo1, s1_l1, s1_l2, s1_l3, s2_l1, s2_l2, s2_l3 };
+        // Tembakkan ke BARIS 2 (Tonase Volume)
+        document.getElementById("liveTonaseSilo1").textContent = hasilOPC.tonase.toFixed(3) + " Ton";
+        document.getElementById("liveTonaseSilo2").textContent = "0.000 Ton";
+
+        return { rataSilo1, s1_l1, s1_l2, s1_l3, s2_l1, s2_l2, s2_l3, hasilOPC };
     }
-
 
     async function kirimDataSilo() {
         let token = localStorage.getItem("github_token"); 
@@ -142,7 +162,7 @@
             localStorage.setItem("github_token", token.trim());
         }
 
-        const kalkulasi = hitungRataRataMurni();
+        const kalkulasi = hitungRataRataLive();
 
         if (kalkulasi.s1_l1 === 0 && kalkulasi.s2_l1 === 0) {
             alert("Mohon isi angka pengukuran lubang silo terlebih dahulu!");
@@ -152,91 +172,21 @@
         const dataFisikBaru = {
             hari: document.getElementById("opHari").value || "-",
             tanggal: document.getElementById("opTgl").value || "-",
-            silo1_opc: { mentah: { l1: kalkulasi.s1_l1, l2: kalkulasi.s1_l2, l3: kalkulasi.s1_l3 }, rata: parseFloat(kalkulasi.rataSilo1.toFixed(2)) },
-            silo2_pcc: { mentah: { l1: kalkulasi.s2_l1, l2: kalkulasi.s2_l2, l3: kalkulasi.s2_l3 }, rata: parseFloat(kalkulasi.rataSilo2.toFixed(2)) },
+            silo1_opc: { 
+                mentah: { l1: kalkulasi.s1_l1, l2: kalkulasi.s1_l2, l3: kalkulasi.s1_l3 }, 
+                rata: parseFloat(kalkulasi.rataSilo1.toFixed(2)),
+                tonase: parseFloat(kalkulasi.hasilOPC.tonase.toFixed(3))
+            },
+            silo2_pcc: { mentah: { l1: kalkulasi.s2_l1, l2: kalkulasi.s2_l2, l3: kalkulasi.s2_l3 }, rata: 0, tonase: 0 },
             updateTime: new Date().toLocaleString("id-ID")
         };
 
-                const REPO = "dashboard-produksi"; 
+        const REPO = "dashboard-produksi"; 
         const USER = "helmismd"; 
         const FILE_PATH = "data.json";
-        const url = `https://api.github.com/repos/${USER}/${REPO}/contents/${FILE_PATH}`;
+        const url = `https://github.com{USER}/${REPO}/contents/${FILE_PATH}`;
 
         try {
-            const resGet = await fetch(url, { 
-                headers: { 
-                    "Authorization": `Bearer ${token}`,
-                    "Accept": "application/vnd.github+json"
-                } 
-            });
-            
+            const resGet = await fetch(url, { headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github+json" } });
             if (resGet.status === 401 || resGet.status === 403) {
                 localStorage.removeItem("github_token");
-                alert("❌ TOKEN GITHUB SALAH ATAU KEDALUWARSA!\n\nSilakan ketuk judul atas kembali untuk memasukkan token baru.");
-                return;
-            }
-
-            if (!resGet.ok) throw new Error("Gagal membaca database server GitHub.");
-            
-            const fileData = await resGet.json();
-            const shaLama = fileData.sha;
-            const dataLamaJSON = JSON.parse(atob(fileData.content));
-            const dataFinalUpdate = { ...dataLamaJSON, fisikSilo: dataFisikBaru };
-
-                        const resPut = await fetch(url, {
-                method: "PUT",
-                headers: { 
-                    "Authorization": `Bearer ${token}`, 
-                    "Content-Type": "application/json", 
-                    "Accept": "application/vnd.github+json" 
-                },
-                body: JSON.stringify({
-                    message: `Update Fisik Silo oleh Operator - ${dataFisikBaru.tanggal}`,
-                    content: btoa(unescape(encodeURIComponent(JSON.stringify(dataFinalUpdate, null, 2)))),
-                    sha: shaLama
-                })
-            });
-
-            if (resPut.ok) {
-                alert(`ALHAMDULILLAH SUKSES!\n\nData fisik berhasil terkirim ke dashboard.`);
-                document.getElementById("opS1_L1").value = ""; 
-                document.getElementById("opS1_L2").value = ""; 
-                document.getElementById("opS1_L3").value = "";
-                document.getElementById("opS2_L1").value = ""; 
-                document.getElementById("opS2_L2").value = ""; 
-                document.getElementById("opS2_L3").value = "";
-                document.getElementById("liveRataSilo1").textContent = "0.00 m"; 
-                document.getElementById("liveRataSilo2").textContent = "0.00 m";
-            } else {
-                throw new Error("Gagal mengunggah data ke server.");
-            }
-
-        } catch (error) {
-            console.error(error);
-            let pesanErorAsli = error.message || "Koneksi Terblokir";
-            alert(`PENGIRIMAN GAGAL!\n\nAlasan Asli: ${pesanErorAsli}\n\nSaran: Ketuk judul atas untuk pastikan token baru Anda sudah benar.`);
-        }
-    } // Penutup fungsi kirimDataSilo murni tunggal
-    <!-- 🟡 SELIPKAN BARIS INI TEPAT DI ATAS TAG SCRIPT UTAMA: -->
-    <script src="opc.js"></script>
-
-    <script>
-        // ... (Ini adalah script bawaan fungsi kirimDataSilo Anda yang kemarin) ...
-    </script>
-</body>
-
-
-
-</script>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
