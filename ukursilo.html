@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin GitHub</title>
+
+<style>
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f5f5;
+    margin:0;
+}
+
+.box{
+    max-width:420px;
+    margin:40px auto;
+    background:#fff;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+
+h2{
+    text-align:center;
+    color:#0066cc;
+}
+
+label{
+    font-weight:bold;
+}
+
+input[type=password],
+input[type=text]{
+    width:100%;
+    padding:10px;
+    margin-top:8px;
+    margin-bottom:15px;
+    box-sizing:border-box;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.simpan{
+    background:#28a745;
+    color:white;
+}
+
+.hapus{
+    background:#dc3545;
+    color:white;
+}
+
+#status{
+    margin-top:15px;
+    text-align:center;
+    font-weight:bold;
+    color:#0066cc;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>⚙️ PENGATURAN TOKEN GITHUB</h2>
+
+<label>Token GitHub</label>
+
+<div style="display:flex;gap:8px;">
+
+<input
+type="password"
+id="githubToken"
+placeholder="Masukkan Token GitHub"
+style="flex:1;">
+
+<button
+type="button"
+onclick="lihatToken()"
+style="width:55px;">
+👁
+</button>
+
+</div>
+
+<button class="simpan" onclick="simpanToken()">
+💾 SIMPAN TOKEN
+</button>
+
+<button class="hapus" onclick="hapusToken()">
+🗑 HAPUS TOKEN
+</button>
+
+<div id="status"></div>
+
+</div>
+
+<script>
+
+cekStatus();
+
+function lihatToken(){
+
+    const x=document.getElementById("githubToken");
+
+    if(x.type==="password"){
+
+        x.type="text";
+
+    }else{
+
+        x.type="password";
+
+    }
+
+}
+
+function simpanToken(){
+
+    const token=document.getElementById("githubToken").value.trim();
+
+    if(token==""){
+        alert("Token masih kosong.");
+        return;
+    }
+
+    localStorage.setItem("github_token",token);
+
+    alert("Token berhasil disimpan.");
+
+    document.getElementById("githubToken").value="";
+
+    cekStatus();
+
+}
+
+function cekStatus(){
+
+    const token=localStorage.getItem("github_token");
+
+    if(token){
+
+        document.getElementById("githubToken").value=token;
+
+        document.getElementById("status").innerHTML="🟢 Token tersimpan";
+
+    }else{
+
+        document.getElementById("githubToken").value="";
+
+        document.getElementById("status").innerHTML="🔴 Token belum ada";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
