@@ -26,7 +26,16 @@
   "tahunBag": 119499.59999999999,
   "tahunBulk": 104106.34999999998,
   "tahunTotal": 223605.94999999995,
-  "kapal": {},
+  "kapal": {
+    "nama": "KM.TL-XVIII",
+    "voyage": "017/08/2026",
+    "opc": "4.173,306 Mts",
+    "pcc": "4.024,697 Mts",
+    "total": "8.198,003 mts",
+    "statusKapal": "Berangkat Tujuan Samarinda ETA Muara Pegah Tgl 03/08/2026 Jam 23.00 LT.",
+    "statusOperasi": "Full Away/B.O.S.V",
+    "update": "03/08/2026 20:01"
+  },
   "fisikSilo": {
     "hari": "Minggu",
     "tanggal": "02-Agt-26",
