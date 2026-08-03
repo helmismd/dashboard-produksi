@@ -28,8 +28,8 @@
   "tahunTotal": 223605.94999999995,
   "kapal": {},
   "fisikSilo": {
-    "hari": "Senin",
-    "tanggal": "03-Agt-26",
+    "hari": "Minggu",
+    "tanggal": "02-Agt-26",
     "silo1_opc": {
       "mentah": {
         "l1": 13.2,
@@ -48,6 +48,6 @@
       "rata": 20.77,
       "tonase": 2767.775
     },
-    "updateTime": "3/8/2026, 07.52.49"
+    "updateTime": "3/8/2026, 18.49.43"
   }
 }
