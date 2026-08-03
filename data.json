@@ -1,32 +1,41 @@
 {
-  "periode": "Minggu, 02 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Minggu, 02 Agustus 2026",
-  "totalOPC": 449.52,
-  "totalPCC": 453,
-  "totalBag": 453,
-  "totalBulk": 449.52,
-  "grandTotal": 902.52,
-  "bulanOPC": 936.63,
-  "bulanPCC": 959.03,
-  "bulanBag": 903.5,
-  "bulanBulk": 992.16,
-  "bulanTotal": 1895.6599999999999,
+  "periode": "Jumat, 31 Juli 2026",
+  "lastUpdate": "Data terakhir diperbarui : Jumat, 31 Juli 2026",
+  "totalOPC": 764.72,
+  "totalPCC": 882,
+  "totalBag": 882,
+  "totalBulk": 764.72,
+  "grandTotal": 1646.72,
+  "bulanOPC": 22475.739999999998,
+  "bulanPCC": 19532.199999999997,
+  "bulanBag": 18962.949999999997,
+  "bulanBulk": 23044.990000000005,
+  "bulanTotal": 42007.94,
   "labelTanggal": [
-    "02-08-26"
+    "31-07-26"
   ],
   "dataProduksi": [
-    902.52
+    1646.72
   ],
   "stokSilo": {
-    "opc": 4065.104,
-    "pcc": 2767.775
+    "opc": 3102.913,
+    "pcc": 3730.518
   },
-  "tahunOPC": 99542.37999999998,
-  "tahunPCC": 124063.56999999999,
-  "tahunBag": 119499.59999999999,
-  "tahunBulk": 104106.34999999998,
-  "tahunTotal": 223605.94999999995,
-  "kapal": {},
+  "tahunOPC": 98605.74999999997,
+  "tahunPCC": 123104.54,
+  "tahunBag": 118596.09999999999,
+  "tahunBulk": 103114.18999999997,
+  "tahunTotal": 221710.28999999998,
+  "kapal": {
+    "nama": "KM.TL-XVIII",
+    "voyage": "017/08/2026",
+    "opc": "4.173,306 Mts",
+    "pcc": "4.024,697 Mts",
+    "total": "8.198,003 mts",
+    "statusKapal": "Berangkat Tujuan Samarinda ETA Muara Pegah Tgl 03/08/2026 Jam 23.00 LT.",
+    "statusOperasi": "Full Away/B.O.S.V",
+    "update": "03/08/2026 19:50"
+  },
   "fisikSilo": {
     "hari": "Minggu",
     "tanggal": "02-Agt-26",
