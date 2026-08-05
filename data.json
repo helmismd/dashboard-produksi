@@ -26,7 +26,16 @@
   "tahunBag": 120952.09999999999,
   "tahunBulk": 105907.96999999996,
   "tahunTotal": 226860.06999999995,
-  "kapal": {},
+  "kapal": {
+    "nama": "KM.TL-XVIII",
+    "voyage": "017/08/2026",
+    "opc": "4.173,306 Mts",
+    "pcc": "4.024,697 Mts",
+    "total": "8.198,003 mts",
+    "statusKapal": "🏗️ SANDAR DI JETTY PALARAN",
+    "statusOperasi": "F.W.E/PilotOff/TugOff.",
+    "update": "05/08/2026 18:15"
+  },
   "fisikSilo": {
     "hari": "Minggu",
     "tanggal": "02-Agt-26",
