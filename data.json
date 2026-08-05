@@ -1,40 +1,40 @@
 {
-  "periode": "Minggu, 02 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Minggu, 02 Agustus 2026",
-  "totalOPC": 449.52,
-  "totalPCC": 453,
-  "totalBag": 453,
-  "totalBulk": 449.52,
-  "grandTotal": 902.52,
-  "bulanOPC": 936.63,
-  "bulanPCC": 959.03,
-  "bulanBag": 903.5,
-  "bulanBulk": 992.16,
-  "bulanTotal": 1895.6599999999999,
+  "periode": "Selasa, 04 Agustus 2026",
+  "lastUpdate": "Data terakhir diperbarui : Selasa, 04 Agustus 2026",
+  "totalOPC": 736.5799999999999,
+  "totalPCC": 787.6,
+  "totalBag": 760,
+  "totalBulk": 764.18,
+  "grandTotal": 1524.1799999999998,
+  "bulanOPC": 2710.65,
+  "bulanPCC": 2439.13,
+  "bulanBag": 2356,
+  "bulanBulk": 2793.7799999999997,
+  "bulanTotal": 5149.78,
   "labelTanggal": [
-    "02-08-26"
+    "04-08-26"
   ],
   "dataProduksi": [
-    902.52
+    1524.1799999999998
   ],
   "stokSilo": {
-    "opc": 4065.104,
-    "pcc": 2767.775
+    "opc": 2539.999,
+    "pcc": 4076.602
   },
-  "tahunOPC": 99542.37999999998,
-  "tahunPCC": 124063.56999999999,
-  "tahunBag": 119499.59999999999,
-  "tahunBulk": 104106.34999999998,
-  "tahunTotal": 223605.94999999995,
+  "tahunOPC": 101316.39999999997,
+  "tahunPCC": 125543.67,
+  "tahunBag": 120952.09999999999,
+  "tahunBulk": 105907.96999999996,
+  "tahunTotal": 226860.06999999995,
   "kapal": {
     "nama": "KM.TL-XVIII",
     "voyage": "017/08/2026",
     "opc": "4.173,306 Mts",
     "pcc": "4.024,697 Mts",
     "total": "8.198,003 mts",
-    "statusKapal": "Selesai Sandar di PP Samarinda Persiapan Initial Draft & Pasang Hose.",
+    "statusKapal": "🏗️ SANDAR DI JETTY PALARAN",
     "statusOperasi": "F.W.E/PilotOff/TugOff.",
-    "update": "05/08/2026 10:23"
+    "update": "05/08/2026 10:42"
   },
   "fisikSilo": {
     "hari": "Minggu",
