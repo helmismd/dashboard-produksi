@@ -358,9 +358,21 @@ console.log("TOTAL :", bulanTotal);
 
 document.getElementById("periode").textContent = periode;
 
-document.getElementById("lastUpdate").textContent =
-    "Data terakhir diperbarui : " + periode;
+const sekarang = new Date();
 
+const update = sekarang.toLocaleDateString("id-ID", {
+    weekday: "long",
+    day: "2-digit",
+    month: "long",
+    year: "numeric"
+}) + " " +
+sekarang.toLocaleTimeString("id-ID", {
+    hour: "2-digit",
+    minute: "2-digit"
+});
+
+document.getElementById("lastUpdate").textContent =
+    "Data terakhir diperbarui : " + update + " WITA";
 
        // ===========================
 // KPI PRODUKSI HARIAN
@@ -512,7 +524,7 @@ document.getElementById("tahunBulkPersen").textContent =
        dashboardData = {
 
     periode: periode,
-    lastUpdate: "Data terakhir diperbarui : " + periode,
+    lastUpdate: "Data terakhir diperbarui : " + update + " WITA",
 
     totalOPC: totalOPC,
     totalPCC: totalPCC,
