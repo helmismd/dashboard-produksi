@@ -1,40 +1,40 @@
 {
-  "periode": "Rabu, 05 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Kamis, 06 Agustus 2026 08.36 WITA",
-  "totalOPC": 487.4,
-  "totalPCC": 694.6,
-  "totalBag": 694.6,
-  "totalBulk": 487.4,
-  "grandTotal": 1182,
-  "bulanOPC": 3198.05,
-  "bulanPCC": 3133.73,
-  "bulanBag": 3050.6,
-  "bulanBulk": 3281.18,
-  "bulanTotal": 6331.78,
+  "periode": "Kamis, 06 Agustus 2026",
+  "lastUpdate": "Data terakhir diperbarui : Jumat, 07 Agustus 2026 08.14 WITA",
+  "totalOPC": 543.65,
+  "totalPCC": 632,
+  "totalBag": 632,
+  "totalBulk": 543.65,
+  "grandTotal": 1175.65,
+  "bulanOPC": 3741.7000000000003,
+  "bulanPCC": 3765.73,
+  "bulanBag": 3682.6,
+  "bulanBulk": 3824.83,
+  "bulanTotal": 7507.43,
   "labelTanggal": [
-    "05-08-26"
+    "06-08-26"
   ],
   "dataProduksi": [
-    1182
+    1175.65
   ],
   "stokSilo": {
-    "opc": 3325.461,
-    "pcc": 4510.781
+    "opc": 5007.658,
+    "pcc": 4013.678
   },
-  "tahunOPC": 101803.79999999996,
-  "tahunPCC": 126238.26999999999,
-  "tahunBag": 121646.69999999998,
-  "tahunBulk": 106395.36999999997,
-  "tahunTotal": 228042.06999999995,
+  "tahunOPC": 102347.44999999995,
+  "tahunPCC": 126870.26999999999,
+  "tahunBag": 122278.69999999998,
+  "tahunBulk": 106939.01999999996,
+  "tahunTotal": 229217.71999999994,
   "kapal": {
     "nama": "KM.TL-XVIII",
     "voyage": "017/08/2026",
     "opc": "4.173,306 Mts",
     "pcc": "4.024,697 Mts",
     "total": "8.198,003 mts",
-    "statusKapal": "🏗️ SANDAR DI JETTY PALARAN",
-    "statusOperasi": "Bongkaran masih Berlanjut,Cargo OPC yang terbongkar -/+ 1.350,000 Mt",
-    "update": "2026-08-06 07:00"
+    "statusKapal": "Berangkat Tujuan Biringkassi ETA Tgl 08/08/2026 Jam 23.00 LT",
+    "statusOperasi": "TD Samarinda",
+    "update": "2026-08-07 04:30"
   },
   "fisikSilo": {
     "hari": "Minggu",
