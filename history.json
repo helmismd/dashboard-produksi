@@ -109,5 +109,14 @@
     "totalBag": 632,
     "totalBulk": 543.65,
     "grandTotal": 1175.65
+  },
+  {
+    "tahun": 2026,
+    "periode": "Sabtu, 08 Agustus 2026",
+    "totalOPC": 816.9,
+    "totalPCC": 581.5,
+    "totalBag": 581.5,
+    "totalBulk": 816.9,
+    "grandTotal": 1398.4
   }
 ]
