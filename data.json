@@ -28,26 +28,26 @@
   "tahunTotal": 233082.53999999995,
   "kapal": {},
   "fisikSilo": {
-    "hari": "Minggu",
-    "tanggal": "02-Agt-26",
+    "hari": "Selasa",
+    "tanggal": "11-Agt-26",
     "silo1_opc": {
       "mentah": {
-        "l1": 16.5,
-        "l2": 19.7,
-        "l3": 20.1
+        "l1": 16.9,
+        "l2": 20.4,
+        "l3": 21.4
       },
-      "rata": 17.9,
-      "tonase": 3148.732
+      "rata": 18.7,
+      "tonase": 2991.64
     },
     "silo2_pcc": {
       "mentah": {
-        "l1": 22.4,
-        "l2": 27.5,
-        "l3": 23.3
+        "l1": 25.6,
+        "l2": 29.9,
+        "l3": 29.1
       },
-      "rata": 23.4,
-      "tonase": 2270.672
+      "rata": 27.2,
+      "tonase": 1553.334
     },
-    "updateTime": "3/8/2026, 23.18.36"
+    "updateTime": "11/8/2026, 07.25.10"
   }
 }
