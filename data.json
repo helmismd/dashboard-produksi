@@ -26,7 +26,16 @@
   "tahunBag": 125922.59999999998,
   "tahunBulk": 110107.69999999995,
   "tahunTotal": 236030.29999999993,
-  "kapal": {},
+  "kapal": {
+    "nama": "KM.TL-XIX",
+    "voyage": "018/08/2026",
+    "opc": "4.131,597 Mts",
+    "pcc": "4.118,314 Mts",
+    "total": "8.198,003 mts",
+    "statusKapal": "-",
+    "statusOperasi": "Finished With Engine/",
+    "update": "13/08/2026 00:41"
+  },
   "fisikSilo": {
     "hari": "Selasa",
     "tanggal": "11-Agt-26",
