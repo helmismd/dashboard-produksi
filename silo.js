@@ -1,6 +1,8 @@
 
 
-fetch("https://smart-tps-b3.helmi-2573er.workers.dev/api/silo")
+fetch("https://smart-tps-b3.helmi-2573er.workers.dev/api/silo", {
+    credentials: "include"
+})
 /*fetch("data.json")*/
 .then(response => response.json())
 .then(data => {
