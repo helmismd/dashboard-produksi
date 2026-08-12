@@ -886,7 +886,7 @@ async function getHistorySHA(token) {
 
 }
 
-
+/*
 async function downloadHistory(token) {
 
     const url =
@@ -935,6 +935,24 @@ function hitungTahunanHistory(history, tahun) {
 
     return hasil;
 }
+*/
+
+async function downloadHistory(token) {
+
+    const url =
+        "https://smart-tps-b3.helmi-2573er.workers.dev/api/history";
+
+    const response = await fetch(url, {
+        credentials: "include"
+    });
+
+    if (!response.ok) {
+        return [];
+    }
+
+    return await response.json();
+}
+
 
 async function uploadHistory(token, history) {
 
