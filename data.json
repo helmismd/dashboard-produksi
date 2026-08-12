@@ -1,31 +1,31 @@
 {
-  "periode": "Senin, 10 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Selasa, 11 Agustus 2026 09.36 WITA",
-  "totalOPC": 837.97,
-  "totalPCC": 858.76,
-  "totalBag": 806.35,
-  "totalBulk": 890.38,
-  "grandTotal": 1696.73,
-  "bulanOPC": 6246.01,
-  "bulanPCC": 6822.97,
-  "bulanBag": 6554,
-  "bulanBulk": 6514.98,
-  "bulanTotal": 13068.98,
+  "periode": "Selasa, 11 Agustus 2026",
+  "lastUpdate": "Data terakhir diperbarui : Rabu, 12 Agustus 2026 15.27 WITA",
+  "totalOPC": 447.88,
+  "totalPCC": 803.15,
+  "totalBag": 772.5,
+  "totalBulk": 478.53,
+  "grandTotal": 1251.03,
+  "bulanOPC": 6693.89,
+  "bulanPCC": 7626.12,
+  "bulanBag": 7326.5,
+  "bulanBulk": 6993.509999999999,
+  "bulanTotal": 14320.01,
   "labelTanggal": [
-    "10-08-26"
+    "11-08-26"
   ],
   "dataProduksi": [
-    1696.73
+    1251.03
   ],
   "stokSilo": {
-    "opc": 2991.64,
-    "pcc": 1553.334
+    "opc": 2644.727,
+    "pcc": 769.611
   },
-  "tahunOPC": 104851.75999999995,
-  "tahunPCC": 129927.50999999998,
-  "tahunBag": 125150.09999999998,
-  "tahunBulk": 109629.16999999995,
-  "tahunTotal": 234779.26999999993,
+  "tahunOPC": 105299.63999999996,
+  "tahunPCC": 130730.65999999997,
+  "tahunBag": 125922.59999999998,
+  "tahunBulk": 110107.69999999995,
+  "tahunTotal": 236030.29999999993,
   "kapal": {},
   "fisikSilo": {
     "hari": "Selasa",
