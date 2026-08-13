@@ -661,6 +661,43 @@ document.getElementById("resetWABtn").addEventListener("click", function(){
     document.getElementById("waInput").value = "";
 
 });
+
+// =====================================================
+// PASTE WA
+// Jika pesan WA berisi FOTO + TEKS,
+// yang ditempel ke waInput hanya TEKS-nya.
+// Gambar diabaikan.
+// =====================================================
+
+document.getElementById("waInput").addEventListener("paste", function(e) {
+
+    const clipboard = e.clipboardData;
+    if (!clipboard) return;
+
+    const teks = clipboard.getData("text/plain");
+
+    // Selalu ambil teks saja dari clipboard
+    if (teks) {
+
+        e.preventDefault();
+
+        const start = this.selectionStart;
+        const end = this.selectionEnd;
+
+        this.value =
+            this.value.substring(0, start) +
+            teks +
+            this.value.substring(end);
+
+        this.selectionStart =
+        this.selectionEnd =
+            start + teks.length;
+    }
+});
+
+
+
+
 async function publishDashboard() {
 
     console.log("dashboardData =", dashboardData);
@@ -1452,6 +1489,15 @@ else if(
     lower.includes("pcc")
 )
     status="Sedang Bongkar PCC";
+
+else if (lower.includes("stop bongkar")) {
+
+    let statusStop = barisTrim
+        .replace(/^[^0-9]*\d{2}\.\s*\d{2}\s*:?/i, "")
+        .trim();
+
+    status = "⛔ " + statusStop;
+}
         
 else if (lower.includes("selesai bongkar")) {
 
