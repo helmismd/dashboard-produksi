@@ -937,14 +937,44 @@ function hitungTahunanHistory(history, tahun) {
 }
 */
 
+function pulihkanHasilAnalisaWA() {
+
+    const tersimpan = localStorage.getItem("hasilAnalisaWA");
+
+    if (!tersimpan) return;
+
+    const data = JSON.parse(tersimpan);
+
+    dashboardData = dashboardData || {};
+    dashboardData.kapal = data;
+
+    document.getElementById("kapalNama").value = data.nama || "-";
+    document.getElementById("kapalVoyage").value = data.voyage || "-";
+    document.getElementById("kapalOPC").value = data.opc || "0";
+    document.getElementById("kapalPCC").value = data.pcc || "0";
+    document.getElementById("kapalTotal").value = data.total || "0";
+    document.getElementById("kapalStatus").value = data.statusKapal || "-";
+    document.getElementById("kapalStatusOperasi").value = data.statusOperasi || "-";
+    document.getElementById("kapalUpdate").value = data.update || "";
+
+    document.getElementById("hasilAnalisa").style.display = "block";
+
+    document.getElementById("haNama").textContent = data.nama || "-";
+    document.getElementById("haVoyage").textContent = data.voyage || "-";
+    document.getElementById("haOPC").textContent = data.opc || "0";
+    document.getElementById("haPCC").textContent = data.pcc || "0";
+    document.getElementById("haTotal").textContent = data.total || "0";
+    document.getElementById("haStatus").textContent = data.statusKapal || "-";
+    document.getElementById("haStatusOperasi").textContent = data.statusOperasi || "-";
+    document.getElementById("haUpdate").textContent = data.update || "-";
+}
+
 async function downloadHistory(token) {
 
     const url =
         "https://smart-tps-b3.helmi-2573er.workers.dev/api/history";
 
-    const response = await fetch(url, {
-        credentials: "include"
-    });
+    const response = await fetch(url);
 
     if (!response.ok) {
         return [];
@@ -952,7 +982,6 @@ async function downloadHistory(token) {
 
     return await response.json();
 }
-
 
 async function uploadHistory(token, history) {
 
@@ -1172,6 +1201,10 @@ function analisaWA(){
     const posisiTerakhir = eventTerakhir(eventPosisi);
     const statusKapal = posisiTerakhir ? posisiTerakhir.status : "-";
 
+console.log("EVENT POSISI =", eventPosisi);
+console.log("POSISI TERAKHIR =", posisiTerakhir);
+console.log("STATUS KAPAL FINAL =", statusKapal);
+
     // ====================================================================
     // 🟢 BENTENG PERTAHANAN AKHIR: PAKSA AMBIL BARIS JAM VALID TERBAWAH
     // ====================================================================
@@ -1242,7 +1275,7 @@ function analisaWA(){
         opc: kapal.opc || "0",
         pcc: kapal.pcc || "0",
         total: kapal.total || "0",
-        statusKapal: kapal.status || statusKapal || "-",
+        statusKapal: statusKapal || kapal.status || "-",
         statusOperasi: statusOperasi, // Sudah dikunci aman ke "Lanjut Bongkar"
         update: terakhir ? terakhir.datetime : ""
     };
@@ -1268,6 +1301,13 @@ function analisaWA(){
     document.getElementById("haStatusOperasi").textContent = statusOperasi;
     document.getElementById("haUpdate").textContent = dashboardData.kapal.update || "-";
 
+// SIMPAN HASIL ANALISA WA
+localStorage.setItem(
+    "hasilAnalisaWA",
+    JSON.stringify(dashboardData.kapal)
+);
+
+
     alert(`HASIL PEMBACAAN BERHASIL DISINKRONKAN!`);
 }
 
@@ -1275,7 +1315,7 @@ function ambilEventWA(teks){
 
     const baris = teks.split(/\r?\n/);
 
-    let tanggalAktif = "";
+    let tanggalAktif = new Date().toISOString().slice(0,10);
 
     const events = [];
 
@@ -1337,7 +1377,8 @@ if(tgl2){
         // Deteksi jam
         // ==========================
 
-        const jam = barisTrim.match(/(\d{2})\.(\d{2})/);
+        
+        const jam = barisTrim.match(/(\d{2})\.\s*(\d{2})/);
 
         if(!jam) continue;
 
@@ -1474,19 +1515,20 @@ if(
 }
 
 const EVENT_POSISI = [
-  { cari: "AT SEA", status: "🚢 BERLAYAR" },
-  { cari: "BERANGKAT TUJUAN", status: "🚢 BERLAYAR" },
-  { cari: "FULL AWAY", status: "🚢 BERLAYAR" },
-  /*{ cari: "ETA", status: "🚢 MENUJU DERMAGA" },*/
-  { cari: "TUNGGU INFO MASUK ALUR", status: "⏳ MENUNGGU MASUK ALUR" },
-  { cari: "DROP ANCHOR", status: "⚓ BERLABUH" },
-  { cari: "LETGO", status: "⚓ BERLABUH" },
-  { cari: "SELESAI BERLABUH", status: "⚓ BERLABUH" },
-  { cari: "TUG LINE ON", status: "🚢 APPROACH JETTY" },
-  { cari: "FIRST LINE", status: "🏗️ SANDAR DI JETTY PALARAN" },
-  { cari: "INPOST", status: "🏗️ SANDAR DI JETTY PALARAN" }
+    { cari: "AT SEA", status: "🚢 BERLAYAR" },
+    { cari: "BERANGKAT TUJUAN", status: "🚢 BERLAYAR" },
+    { cari: "FULL AWAY", status: "🚢 BERLAYAR" },
+    /*{ cari: "ETA", status: "🚢 MENUJU DERMAGA" },*/
+    { cari: "TUNGGU INFO MASUK ALUR", status: "⏳ MENUNGGU MASUK ALUR" },
+    { cari: "DROP ANCHOR", status: "⚓ BERLABUH" },
+    { cari: "LET GO ANCHOR", status: "⚓ BERLABUH" },
+    { cari: "LETGO", status: "⚓ BERLABUH" },
+    { cari: "SELESAI BERLABUH", status: "⚓ BERLABUH" },
+    { cari: "TUG LINE ON", status: "🚢 APPROACH JETTY" },
+    { cari: "FIRST LINE", status: "🏗️ SANDAR DI JETTY PALARAN" },
+    { cari: "INPOST", status: "🏗️ SANDAR DI JETTY PALARAN" },
+    { cari: "MULAI BONGKAR", status: "🏗️ SANDAR DI JETTY PALARAN" }
 ];
-
 const BANNER_KAPAL = [
   {
     cari: "TL XVIII",
@@ -1559,46 +1601,73 @@ function ambilEventPosisi(teks){
         desember:"12"
     };
 
+    // ==========================
+    // DEFAULT TANGGAL HARI INI
+    // ==========================
+    const sekarang = new Date();
+
+    tanggalAktif =
+        sekarang.getFullYear() + "-" +
+        String(sekarang.getMonth() + 1).padStart(2,"0") + "-" +
+        String(sekarang.getDate()).padStart(2,"0");
+
     for(const b of baris){
 
         const barisTrim = b.replace(/\*/g,"").trim();
 
-        // ===== Deteksi tanggal =====
-        const tgl = barisTrim.match(/(\d{1,2})\/(\d{1,2})\/'?(\d{2,4})/);
+        // ==========================
+        // DETEKSI TANGGAL 13/08/26
+        // ==========================
+        const tgl = barisTrim.match(
+            /(\d{1,2})\s*\/\s*(\d{1,2})\s*\/\s*'?(\d{2,4})/
+        );
 
         if(tgl){
 
             let tahun = tgl[3];
 
-            if(tahun.length===2)
-                tahun = "20"+tahun;
+            if(tahun.length === 2)
+                tahun = "20" + tahun;
 
             tanggalAktif =
-                tahun+"-"+
-                tgl[2].padStart(2,"0")+"-"+
+                tahun + "-" +
+                tgl[2].padStart(2,"0") + "-" +
                 tgl[1].padStart(2,"0");
-
         }
 
-        const tgl2 = barisTrim.match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/i);
+        // ==========================
+        // DETEKSI TANGGAL 13 AGUSTUS 2026
+        // ==========================
+        const tgl2 = barisTrim.match(
+            /(\d{1,2})\s+([A-Za-z]+)\s+(\d{2,4})/i
+        );
 
-        if(tgl2){
+        if(tgl2 && bulan[tgl2[2].toLowerCase()]){
+
+            let tahun = tgl2[3];
+
+            if(tahun.length === 2)
+                tahun = "20" + tahun;
 
             tanggalAktif =
-                tgl2[3]+"-"+
-                bulan[tgl2[2].toLowerCase()]+"-"+
+                tahun + "-" +
+                bulan[tgl2[2].toLowerCase()] + "-" +
                 tgl2[1].padStart(2,"0");
-
         }
 
-        // ===== Deteksi jam =====
-        const jam = barisTrim.match(/(\d{2})\.(\d{2})/);
+        // ==========================
+        // DETEKSI JAM
+        // Bisa 11.50 atau 11. 50
+        // ==========================
+        const jam = barisTrim.match(
+            /(\d{2})\.\s*(\d{2})/
+        );
 
         if(!jam) continue;
 
         const upper = barisTrim.toUpperCase();
 
-        EVENT_POSISI.forEach(e=>{
+        EVENT_POSISI.forEach(e => {
 
             if(upper.includes(e.cari)){
 
@@ -1606,11 +1675,11 @@ function ambilEventPosisi(teks){
 
                     tanggal : tanggalAktif,
 
-                    jam : jam[1]+":"+jam[2],
+                    jam : jam[1] + ":" + jam[2],
 
                     datetime :
-                        tanggalAktif+" "+
-                        jam[1]+":"+jam[2],
+                        tanggalAktif + " " +
+                        jam[1] + ":" + jam[2],
 
                     event : e.cari,
 
@@ -1627,6 +1696,9 @@ function ambilEventPosisi(teks){
     }
 
     return hasil;
-
 }
+pulihkanHasilAnalisaWA();
+
+
+
 
