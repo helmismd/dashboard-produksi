@@ -974,7 +974,9 @@ async function downloadHistory(token) {
     const url =
         "https://smart-tps-b3.helmi-2573er.workers.dev/api/history";
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+        credentials: "include"
+    });
 
     if (!response.ok) {
         return [];
@@ -982,6 +984,7 @@ async function downloadHistory(token) {
 
     return await response.json();
 }
+
 
 async function uploadHistory(token, history) {
 
