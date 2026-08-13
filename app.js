@@ -1327,7 +1327,6 @@ console.log("STATUS KAPAL FINAL =", statusKapal);
 dashboardData = dashboardData || {};
 
 
-
 dashboardData.kapal = {
     nama: kapal.nama || dataLama.nama || "-",
     voyage: kapal.voyage || dataLama.voyage || "-",
