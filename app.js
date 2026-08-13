@@ -1307,6 +1307,7 @@ localStorage.setItem(
 );
 
 
+
     alert(`HASIL PEMBACAAN BERHASIL DISINKRONKAN!`);
 }
 
@@ -1376,8 +1377,7 @@ if(tgl2){
         // Deteksi jam
         // ==========================
 
-        const jam = barisTrim.match(/(\d{2})\.\s*(\d{2})/);
-const jam = barisTrim.match(/(\d{2})\.\s*(\d{2})/);
+        const jam = barisTrim.match(/(\d{2})\.(\d{2})/);
 
         if(!jam) continue;
 
@@ -1514,20 +1514,19 @@ if(
 }
 
 const EVENT_POSISI = [
-    { cari: "AT SEA", status: "🚢 BERLAYAR" },
-    { cari: "BERANGKAT TUJUAN", status: "🚢 BERLAYAR" },
-    { cari: "FULL AWAY", status: "🚢 BERLAYAR" },
-    /*{ cari: "ETA", status: "🚢 MENUJU DERMAGA" },*/
-    { cari: "TUNGGU INFO MASUK ALUR", status: "⏳ MENUNGGU MASUK ALUR" },
-    { cari: "DROP ANCHOR", status: "⚓ BERLABUH" },
-    { cari: "LET GO ANCHOR", status: "⚓ BERLABUH" },
-    { cari: "LETGO", status: "⚓ BERLABUH" },
-    { cari: "SELESAI BERLABUH", status: "⚓ BERLABUH" },
-    { cari: "TUG LINE ON", status: "🚢 APPROACH JETTY" },
-    { cari: "FIRST LINE", status: "🏗️ SANDAR DI JETTY PALARAN" },
-    { cari: "INPOST", status: "🏗️ SANDAR DI JETTY PALARAN" },
-    { cari: "MULAI BONGKAR", status: "🏗️ SANDAR DI JETTY PALARAN" }
+  { cari: "AT SEA", status: "🚢 BERLAYAR" },
+  { cari: "BERANGKAT TUJUAN", status: "🚢 BERLAYAR" },
+  { cari: "FULL AWAY", status: "🚢 BERLAYAR" },
+  /*{ cari: "ETA", status: "🚢 MENUJU DERMAGA" },*/
+  { cari: "TUNGGU INFO MASUK ALUR", status: "⏳ MENUNGGU MASUK ALUR" },
+  { cari: "DROP ANCHOR", status: "⚓ BERLABUH" },
+  { cari: "LETGO", status: "⚓ BERLABUH" },
+  { cari: "SELESAI BERLABUH", status: "⚓ BERLABUH" },
+  { cari: "TUG LINE ON", status: "🚢 APPROACH JETTY" },
+  { cari: "FIRST LINE", status: "🏗️ SANDAR DI JETTY PALARAN" },
+  { cari: "INPOST", status: "🏗️ SANDAR DI JETTY PALARAN" }
 ];
+
 const BANNER_KAPAL = [
   {
     cari: "TL XVIII",
@@ -1670,9 +1669,4 @@ function ambilEventPosisi(teks){
     return hasil;
 
 }
-
-pulihkanHasilAnalisaWA();
-
-
-
 
