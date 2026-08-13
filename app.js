@@ -1314,7 +1314,7 @@ function ambilEventWA(teks){
 
     const baris = teks.split(/\r?\n/);
 
-    let tanggalAktif = "";
+    let tanggalAktif = new Date().toISOString().slice(0,10);
 
     const events = [];
 
@@ -1600,46 +1600,73 @@ function ambilEventPosisi(teks){
         desember:"12"
     };
 
+    // ==========================
+    // DEFAULT TANGGAL HARI INI
+    // ==========================
+    const sekarang = new Date();
+
+    tanggalAktif =
+        sekarang.getFullYear() + "-" +
+        String(sekarang.getMonth() + 1).padStart(2,"0") + "-" +
+        String(sekarang.getDate()).padStart(2,"0");
+
     for(const b of baris){
 
         const barisTrim = b.replace(/\*/g,"").trim();
 
-        // ===== Deteksi tanggal =====
-        const tgl = barisTrim.match(/(\d{1,2})\/(\d{1,2})\/'?(\d{2,4})/);
+        // ==========================
+        // DETEKSI TANGGAL 13/08/26
+        // ==========================
+        const tgl = barisTrim.match(
+            /(\d{1,2})\s*\/\s*(\d{1,2})\s*\/\s*'?(\d{2,4})/
+        );
 
         if(tgl){
 
             let tahun = tgl[3];
 
-            if(tahun.length===2)
-                tahun = "20"+tahun;
+            if(tahun.length === 2)
+                tahun = "20" + tahun;
 
             tanggalAktif =
-                tahun+"-"+
-                tgl[2].padStart(2,"0")+"-"+
+                tahun + "-" +
+                tgl[2].padStart(2,"0") + "-" +
                 tgl[1].padStart(2,"0");
-
         }
 
-        const tgl2 = barisTrim.match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/i);
+        // ==========================
+        // DETEKSI TANGGAL 13 AGUSTUS 2026
+        // ==========================
+        const tgl2 = barisTrim.match(
+            /(\d{1,2})\s+([A-Za-z]+)\s+(\d{2,4})/i
+        );
 
-        if(tgl2){
+        if(tgl2 && bulan[tgl2[2].toLowerCase()]){
+
+            let tahun = tgl2[3];
+
+            if(tahun.length === 2)
+                tahun = "20" + tahun;
 
             tanggalAktif =
-                tgl2[3]+"-"+
-                bulan[tgl2[2].toLowerCase()]+"-"+
+                tahun + "-" +
+                bulan[tgl2[2].toLowerCase()] + "-" +
                 tgl2[1].padStart(2,"0");
-
         }
 
-        // ===== Deteksi jam =====
-                const jam = barisTrim.match(/(\d{2})\.\s*(\d{2})/);
+        // ==========================
+        // DETEKSI JAM
+        // Bisa 11.50 atau 11. 50
+        // ==========================
+        const jam = barisTrim.match(
+            /(\d{2})\.\s*(\d{2})/
+        );
 
         if(!jam) continue;
 
         const upper = barisTrim.toUpperCase();
 
-        EVENT_POSISI.forEach(e=>{
+        EVENT_POSISI.forEach(e => {
 
             if(upper.includes(e.cari)){
 
@@ -1647,11 +1674,11 @@ function ambilEventPosisi(teks){
 
                     tanggal : tanggalAktif,
 
-                    jam : jam[1]+":"+jam[2],
+                    jam : jam[1] + ":" + jam[2],
 
                     datetime :
-                        tanggalAktif+" "+
-                        jam[1]+":"+jam[2],
+                        tanggalAktif + " " +
+                        jam[1] + ":" + jam[2],
 
                     event : e.cari,
 
@@ -1668,9 +1695,7 @@ function ambilEventPosisi(teks){
     }
 
     return hasil;
-
 }
-
 pulihkanHasilAnalisaWA();
 
 
