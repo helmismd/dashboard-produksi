@@ -1,6 +1,6 @@
 {
   "periode": "Rabu, 12 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Kamis, 13 Agustus 2026 19.50 WITA",
+  "lastUpdate": "Data terakhir diperbarui : Kamis, 13 Agustus 2026 21.04 WITA",
   "totalOPC": 974.9,
   "totalPCC": 660.82,
   "totalBag": 703.5,
@@ -26,16 +26,7 @@
   "tahunBag": 126626.09999999998,
   "tahunBulk": 111039.91999999997,
   "tahunTotal": 237666.01999999996,
-  "kapal": {
-    "nama": "KM.TL-XIX",
-    "voyage": "018/08/2026",
-    "opc": "4.131,597 Mts",
-    "pcc": "4.118,314 Mts",
-    "total": "8.249,911 mts",
-    "statusKapal": "🏗️ SANDAR DI JETTY PALARAN",
-    "statusOperasi": ": Lanjut Bongkar Type PCC",
-    "update": "2026-08-13 17:15"
-  },
+  "kapal": {},
   "fisikSilo": {
     "hari": "Selasa",
     "tanggal": "11-Agt-26",
