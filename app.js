@@ -1205,8 +1205,20 @@ function analisaWA(){
     let statusOperasi = terakhir ? terakhir.status : "-";
 
     const eventPosisi = ambilEventPosisi(teks);
-    const posisiTerakhir = eventTerakhir(eventPosisi);
-    const statusKapal = posisiTerakhir ? posisiTerakhir.status : "-";
+const posisiTerakhir = eventTerakhir(eventPosisi);
+let statusKapal = posisiTerakhir ? posisiTerakhir.status : "-";
+
+// ======================================================
+// 🟢 WA UPDATE PARSIAL
+// Jika WA hanya berisi update operasi,
+// pertahankan STATUS KAPAL sebelumnya.
+// ======================================================
+
+const dataLama = dashboardData?.kapal || {};
+
+if (!posisiTerakhir && dataLama.statusKapal) {
+    statusKapal = dataLama.statusKapal;
+}
 
 console.log("EVENT POSISI =", eventPosisi);
 console.log("POSISI TERAKHIR =", posisiTerakhir);
