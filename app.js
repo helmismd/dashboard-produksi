@@ -1669,3 +1669,8 @@ function ambilEventPosisi(teks){
 
 }
 
+pulihkanHasilAnalisaWA();
+
+
+
+
