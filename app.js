@@ -1286,21 +1286,33 @@ console.log("STATUS KAPAL FINAL =", statusKapal);
         kapal.status = document.getElementById("kapalStatus").value || statusKapal || "-";
     }
 
-    // Masukkan hasil pembersihan final ke objek memori utama sistem
-    dashboardData = dashboardData || {};
-    dashboardData.kapal = {
-        nama: kapal.nama || "-",
-        voyage: kapal.voyage || "-",
-        opc: kapal.opc || "0",
-        pcc: kapal.pcc || "0",
-        total: kapal.total || "0",
-        statusKapal:
-    (kapal.status && kapal.status !== "-")
-        ? kapal.status
-        : (statusKapal || "-"),
-        statusOperasi: statusOperasi, // Sudah dikunci aman ke "Lanjut Bongkar"
-        update: terakhir ? terakhir.datetime : ""
-    };
+       // Masukkan hasil pembersihan final ke objek memori utama sistem
+dashboardData = dashboardData || {};
+
+const dataLama = dashboardData.kapal || {};
+
+dashboardData.kapal = {
+    nama: kapal.nama || dataLama.nama || "-",
+    voyage: kapal.voyage || dataLama.voyage || "-",
+    opc: kapal.opc || dataLama.opc || "0",
+    pcc: kapal.pcc || dataLama.pcc || "0",
+    total: kapal.total || dataLama.total || "0",
+
+    statusKapal:
+        posisiTerakhir
+            ? posisiTerakhir.status
+            : (dataLama.statusKapal || kapal.status || "-"),
+
+    statusOperasi:
+        terakhir
+            ? statusOperasi
+            : (dataLama.statusOperasi || "-"),
+
+    update:
+        terakhir
+            ? terakhir.datetime
+            : (dataLama.update || "")
+};
 
     // Tampilkan hasil murni aman ke elemen form layar HTML Anda
     document.getElementById("kapalNama").value = dashboardData.kapal.nama;
