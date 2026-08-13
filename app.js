@@ -974,7 +974,9 @@ async function downloadHistory(token) {
     const url =
         "https://smart-tps-b3.helmi-2573er.workers.dev/api/history";
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+        credentials: "include"
+    });
 
     if (!response.ok) {
         return [];
@@ -982,6 +984,7 @@ async function downloadHistory(token) {
 
     return await response.json();
 }
+
 
 async function uploadHistory(token, history) {
 
@@ -1201,10 +1204,6 @@ function analisaWA(){
     const posisiTerakhir = eventTerakhir(eventPosisi);
     const statusKapal = posisiTerakhir ? posisiTerakhir.status : "-";
 
-console.log("EVENT POSISI =", eventPosisi);
-console.log("POSISI TERAKHIR =", posisiTerakhir);
-console.log("STATUS KAPAL FINAL =", statusKapal);
-
     // ====================================================================
     // 🟢 BENTENG PERTAHANAN AKHIR: PAKSA AMBIL BARIS JAM VALID TERBAWAH
     // ====================================================================
@@ -1275,7 +1274,7 @@ console.log("STATUS KAPAL FINAL =", statusKapal);
         opc: kapal.opc || "0",
         pcc: kapal.pcc || "0",
         total: kapal.total || "0",
-        statusKapal: statusKapal || kapal.status || "-",
+        statusKapal: kapal.status || statusKapal || "-",
         statusOperasi: statusOperasi, // Sudah dikunci aman ke "Lanjut Bongkar"
         update: terakhir ? terakhir.datetime : ""
     };
@@ -1315,7 +1314,7 @@ function ambilEventWA(teks){
 
     const baris = teks.split(/\r?\n/);
 
-    let tanggalAktif = new Date().toISOString().slice(0,10);
+    let tanggalAktif = "";
 
     const events = [];
 
@@ -1377,8 +1376,8 @@ if(tgl2){
         // Deteksi jam
         // ==========================
 
-        
         const jam = barisTrim.match(/(\d{2})\.\s*(\d{2})/);
+const jam = barisTrim.match(/(\d{2})\.\s*(\d{2})/);
 
         if(!jam) continue;
 
@@ -1601,73 +1600,46 @@ function ambilEventPosisi(teks){
         desember:"12"
     };
 
-    // ==========================
-    // DEFAULT TANGGAL HARI INI
-    // ==========================
-    const sekarang = new Date();
-
-    tanggalAktif =
-        sekarang.getFullYear() + "-" +
-        String(sekarang.getMonth() + 1).padStart(2,"0") + "-" +
-        String(sekarang.getDate()).padStart(2,"0");
-
     for(const b of baris){
 
         const barisTrim = b.replace(/\*/g,"").trim();
 
-        // ==========================
-        // DETEKSI TANGGAL 13/08/26
-        // ==========================
-        const tgl = barisTrim.match(
-            /(\d{1,2})\s*\/\s*(\d{1,2})\s*\/\s*'?(\d{2,4})/
-        );
+        // ===== Deteksi tanggal =====
+        const tgl = barisTrim.match(/(\d{1,2})\/(\d{1,2})\/'?(\d{2,4})/);
 
         if(tgl){
 
             let tahun = tgl[3];
 
-            if(tahun.length === 2)
-                tahun = "20" + tahun;
+            if(tahun.length===2)
+                tahun = "20"+tahun;
 
             tanggalAktif =
-                tahun + "-" +
-                tgl[2].padStart(2,"0") + "-" +
+                tahun+"-"+
+                tgl[2].padStart(2,"0")+"-"+
                 tgl[1].padStart(2,"0");
+
         }
 
-        // ==========================
-        // DETEKSI TANGGAL 13 AGUSTUS 2026
-        // ==========================
-        const tgl2 = barisTrim.match(
-            /(\d{1,2})\s+([A-Za-z]+)\s+(\d{2,4})/i
-        );
+        const tgl2 = barisTrim.match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/i);
 
-        if(tgl2 && bulan[tgl2[2].toLowerCase()]){
-
-            let tahun = tgl2[3];
-
-            if(tahun.length === 2)
-                tahun = "20" + tahun;
+        if(tgl2){
 
             tanggalAktif =
-                tahun + "-" +
-                bulan[tgl2[2].toLowerCase()] + "-" +
+                tgl2[3]+"-"+
+                bulan[tgl2[2].toLowerCase()]+"-"+
                 tgl2[1].padStart(2,"0");
+
         }
 
-        // ==========================
-        // DETEKSI JAM
-        // Bisa 11.50 atau 11. 50
-        // ==========================
-        const jam = barisTrim.match(
-            /(\d{2})\.\s*(\d{2})/
-        );
+        // ===== Deteksi jam =====
+        const jam = barisTrim.match(/(\d{2})\.(\d{2})/);
 
         if(!jam) continue;
 
         const upper = barisTrim.toUpperCase();
 
-        EVENT_POSISI.forEach(e => {
+        EVENT_POSISI.forEach(e=>{
 
             if(upper.includes(e.cari)){
 
@@ -1675,11 +1647,11 @@ function ambilEventPosisi(teks){
 
                     tanggal : tanggalAktif,
 
-                    jam : jam[1] + ":" + jam[2],
+                    jam : jam[1]+":"+jam[2],
 
                     datetime :
-                        tanggalAktif + " " +
-                        jam[1] + ":" + jam[2],
+                        tanggalAktif+" "+
+                        jam[1]+":"+jam[2],
 
                     event : e.cari,
 
@@ -1696,7 +1668,9 @@ function ambilEventPosisi(teks){
     }
 
     return hasil;
+
 }
+
 pulihkanHasilAnalisaWA();
 
 
