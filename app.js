@@ -1282,7 +1282,10 @@ console.log("STATUS KAPAL FINAL =", statusKapal);
         opc: kapal.opc || "0",
         pcc: kapal.pcc || "0",
         total: kapal.total || "0",
-        statusKapal: statusKapal || kapal.status || "-",
+        statusKapal:
+    (kapal.status && kapal.status !== "-")
+        ? kapal.status
+        : (statusKapal || "-"),
         statusOperasi: statusOperasi, // Sudah dikunci aman ke "Lanjut Bongkar"
         update: terakhir ? terakhir.datetime : ""
     };
