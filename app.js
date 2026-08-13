@@ -1326,7 +1326,6 @@ console.log("STATUS KAPAL FINAL =", statusKapal);
        // Masukkan hasil pembersihan final ke objek memori utama sistem
 dashboardData = dashboardData || {};
 
-const dataLama = dashboardData.kapal || {};
 
 dashboardData.kapal = {
     nama: kapal.nama || dataLama.nama || "-",
