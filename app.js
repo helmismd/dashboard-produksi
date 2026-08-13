@@ -1376,7 +1376,7 @@ if(tgl2){
         // Deteksi jam
         // ==========================
 
-        const jam = barisTrim.match(/(\d{2})\.(\d{2})/);
+        const jam = barisTrim.match(/(\d{2})\.\s*(\d{2})/);
 
         if(!jam) continue;
 
