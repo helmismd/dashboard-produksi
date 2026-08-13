@@ -1082,30 +1082,81 @@ async function uploadHistory(token, history) {
 
 async function uploadGithub() {
 
-    const data = JSON.stringify(dashboardData);
+    const token = window.githubToken;
 
-    const response = await fetch(
-        "https://smart-tps-b3.helmi-2573er.workers.dev/api/db",
-        {
-            method: "POST",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: data
-        }
-    );
-
-    const hasil = await response.json();
-
-    if (!response.ok || hasil.success === false) {
-        throw new Error(
-            hasil.error || "Gagal menyimpan data melalui Worker."
-        );
+    if (!token) {
+        alert("Masukkan GitHub Token terlebih dahulu.");
+        return;
     }
 
-    console.log("✅ data.json berhasil disimpan melalui Worker");
+    const sha = await getGithubSHA(token);
+const dataLama = await downloadData(token);
+
+const keyLama =
+    `${dataLama.kapal?.nama || ""}|${dataLama.kapal?.voyage || ""}`;
+
+const keyBaru =
+    `${dashboardData.kapal?.nama || ""}|${dashboardData.kapal?.voyage || ""}`;
+
+dashboardData = {
+    ...dataLama,
+    ...dashboardData,
+    kapal: (keyLama === keyBaru)
+        ? {
+            ...dataLama.kapal,
+            ...dashboardData.kapal
+        }
+        : {
+            ...dashboardData.kapal
+        }
+};
+
+    const url =
+        `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
+
+    const content =
+        btoa(unescape(encodeURIComponent(
+            JSON.stringify(dashboardData, null, 2)
+        )));
+
+
+    const response = await fetch(url, {
+
+        method: "PUT",
+
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+
+            message: "Update Dashboard Produksi",
+
+            content: content,
+
+            sha: sha,
+
+            branch: GITHUB_BRANCH
+
+        })
+
+    });
+
+    if (!response.ok) {
+
+        const err = await response.json();
+
+        console.error(err);
+
+        throw new Error("Upload GitHub gagal.");
+
+    }
+
+    alert("✅ Dashboard berhasil diupload ke GitHub.");
+
 }
+
     
 function ambilNilai(teks, kataKunci){
 
@@ -1274,6 +1325,7 @@ console.log("STATUS KAPAL FINAL =", statusKapal);
 
        // Masukkan hasil pembersihan final ke objek memori utama sistem
 dashboardData = dashboardData || {};
+
 
 
 dashboardData.kapal = {
