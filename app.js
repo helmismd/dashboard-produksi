@@ -1300,14 +1300,6 @@ function analisaWA(){
     document.getElementById("haStatusOperasi").textContent = statusOperasi;
     document.getElementById("haUpdate").textContent = dashboardData.kapal.update || "-";
 
-// SIMPAN HASIL ANALISA WA
-localStorage.setItem(
-    "hasilAnalisaWA",
-    JSON.stringify(dashboardData.kapal)
-);
-
-
-
     alert(`HASIL PEMBACAAN BERHASIL DISINKRONKAN!`);
 }
 
