@@ -1204,6 +1204,10 @@ function analisaWA(){
     const posisiTerakhir = eventTerakhir(eventPosisi);
     const statusKapal = posisiTerakhir ? posisiTerakhir.status : "-";
 
+console.log("EVENT POSISI =", eventPosisi);
+console.log("POSISI TERAKHIR =", posisiTerakhir);
+console.log("STATUS KAPAL FINAL =", statusKapal);
+
     // ====================================================================
     // 🟢 BENTENG PERTAHANAN AKHIR: PAKSA AMBIL BARIS JAM VALID TERBAWAH
     // ====================================================================
