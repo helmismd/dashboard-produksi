@@ -1,31 +1,31 @@
 {
-  "periode": "Selasa, 11 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Kamis, 13 Agustus 2026 00.32 WITA",
-  "totalOPC": 447.88,
-  "totalPCC": 803.15,
-  "totalBag": 772.5,
-  "totalBulk": 478.53,
-  "grandTotal": 1251.03,
-  "bulanOPC": 6693.89,
-  "bulanPCC": 7626.12,
-  "bulanBag": 7326.5,
-  "bulanBulk": 6993.509999999999,
-  "bulanTotal": 14320.01,
+  "periode": "Rabu, 12 Agustus 2026",
+  "lastUpdate": "Data terakhir diperbarui : Kamis, 13 Agustus 2026 10.43 WITA",
+  "totalOPC": 974.9,
+  "totalPCC": 660.82,
+  "totalBag": 703.5,
+  "totalBulk": 932.22,
+  "grandTotal": 1635.72,
+  "bulanOPC": 7668.79,
+  "bulanPCC": 8286.94,
+  "bulanBag": 8030,
+  "bulanBulk": 7925.73,
+  "bulanTotal": 15955.73,
   "labelTanggal": [
-    "11-08-26"
+    "12-08-26"
   ],
   "dataProduksi": [
-    1251.03
+    1635.72
   ],
   "stokSilo": {
-    "opc": 2644.727,
-    "pcc": 769.611
+    "opc": 1427.262,
+    "pcc": 340.627
   },
-  "tahunOPC": 105299.63999999996,
-  "tahunPCC": 130730.65999999997,
-  "tahunBag": 125922.59999999998,
-  "tahunBulk": 110107.69999999995,
-  "tahunTotal": 236030.29999999993,
+  "tahunOPC": 106274.53999999996,
+  "tahunPCC": 131391.47999999998,
+  "tahunBag": 126626.09999999998,
+  "tahunBulk": 111039.91999999997,
+  "tahunTotal": 237666.01999999996,
   "kapal": {
     "nama": "KM.TL-XIX",
     "voyage": "018/08/2026",
@@ -34,7 +34,7 @@
     "total": "8.198,003 mts",
     "statusKapal": "-",
     "statusOperasi": "Finished With Engine/",
-    "update": "13/08/2026 00:41"
+    "update": "13/08/2026 10:44"
   },
   "fisikSilo": {
     "hari": "Selasa",
