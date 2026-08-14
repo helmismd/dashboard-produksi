@@ -1489,6 +1489,16 @@ else if(
 )
     status="Sedang Bongkar PCC";
 
+else if (lower.includes("lanjut bongkar")) {
+
+    let statusLanjut = barisTrim
+        .replace(/^[^0-9]*\d{2}\.\s*\d{2}\s*:?/i, "")
+        .trim();
+
+    status = "🟢 " + statusLanjut;
+
+}
+
 else if (lower.includes("stop bongkar")) {
 
     let statusStop = barisTrim
