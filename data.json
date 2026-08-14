@@ -1,6 +1,6 @@
 {
   "periode": "Rabu, 12 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Jumat, 14 Agustus 2026 15.01 WITA",
+  "lastUpdate": "Data terakhir diperbarui : Jumat, 14 Agustus 2026 15.18 WITA",
   "totalOPC": 559.4000000000001,
   "totalPCC": 972.08,
   "totalBag": 897,
@@ -33,8 +33,8 @@
     "pcc": "4.118,314 Mts",
     "total": "8.249,911 mts",
     "statusKapal": "🏗️ SANDAR DI JETTY PALARAN",
-    "statusOperasi": "-",
-    "update": ""
+    "statusOperasi": "🟢 Lanjut Bongkar",
+    "update": "2026-08-14 14:05"
   },
   "fisikSilo": {
     "hari": "Selasa",
