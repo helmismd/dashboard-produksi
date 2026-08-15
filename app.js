@@ -709,68 +709,118 @@ async function publishDashboard() {
 
     try {
 
-        document.getElementById("status").textContent =
-            "Mengambil history...";
+    const token = tokenInput.value.trim();
 
-        const history = await downloadHistory();
+    window.githubToken = token;
+
+    if (!token) {
+        alert("Masukkan GitHub Token terlebih dahulu.");
+        return;
+    }
+
+    document.getElementById("status").textContent =
+        "Mengupload ke GitHub...";
+
+            
+        // =====================
+        // Download history
+        // =====================
+
+
+document.getElementById("status").textContent =
+    "1. Membaca history...";
+
+        const history = await downloadHistory(window.githubToken);
+
+        console.log("Jumlah history =", history.length);
+        console.log(history);
 
         const dataBaru = {
+
             tahun: new Date().getFullYear(),
+
             periode: dashboardData.periode,
+
             totalOPC: dashboardData.totalOPC,
             totalPCC: dashboardData.totalPCC,
             totalBag: dashboardData.totalBag,
             totalBulk: dashboardData.totalBulk,
             grandTotal: dashboardData.grandTotal
+
         };
+
+
+        // =====================
+        // Update history
+        // =====================
 
         const historyBaru = history.filter(
             item => item.periode !== dashboardData.periode
         );
 
         historyBaru.push(dataBaru);
+	
+	/*
+        // =====================
+        // Hitung Tahunan
+        // =====================
+
+        const hasilTahun =
+            hitungTahunanHistory(
+                historyBaru,
+                new Date().getFullYear()
+            );
+
+        dashboardData.tahunOPC = hasilTahun.opc;
+        dashboardData.tahunPCC = hasilTahun.pcc;
+        dashboardData.tahunBag = hasilTahun.bag;
+        dashboardData.tahunBulk = hasilTahun.bulk;
+        dashboardData.tahunTotal = hasilTahun.total;
+
+        console.log(JSON.stringify(hasilTahun, null, 2));
+        console.log(JSON.stringify(historyBaru, null, 2));
+	*/
+
+
+        // =====================
+        // Baru upload
+        // =====================
 
         document.getElementById("status").textContent =
-            "Mengupload melalui Worker...";
+    "2. Upload dashboard...";
 
-        const response = await fetch(
-            "https://smart-tps-b3.helmi-2573er.workers.dev/api/publish-dashboard",
-            {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    dashboardData: dashboardData,
-                    history: historyBaru
-                })
-            }
-        );
+await uploadGithub();
 
-        const result = await response.json();
+document.getElementById("status").textContent =
+    "3. Upload history...";
 
-        if (!response.ok || !result.success) {
-            throw new Error(
-                result.error || "Publish gagal."
-            );
-        }
+await uploadHistory(
+    window.githubToken,
+    historyBaru
+);
 
         document.getElementById("status").textContent =
             "Dashboard berhasil dipublish.";
 
-        alert("✅ Dashboard berhasil dipublish.");
-
-    } catch (err) {
-
-        console.error(err);
-
-        alert("Publish gagal:\n" + err.message);
-
-        document.getElementById("status").textContent =
-            "Publish gagal.";
     }
-}// ===========================
+
+    catch (err) {
+
+        if (err.name !== "AbortError") {
+
+            console.error(err);
+
+            alert(err.message);
+
+            document.getElementById("status").textContent =
+                "Publish gagal.";
+
+        }
+
+    }
+
+}
+// ===========================
 // SIMPAN TOKEN GITHUB
 // ===========================
 
