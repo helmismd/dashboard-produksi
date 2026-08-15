@@ -726,10 +726,6 @@ async function publishDashboard() {
         // Download history
         // =====================
 
-
-document.getElementById("status").textContent =
-    "1. Membaca history...";
-
         const history = await downloadHistory(window.githubToken);
 
         console.log("Jumlah history =", history.length);
