@@ -1014,10 +1014,14 @@ async function downloadHistory(token) {
 
     const url =
         "https://smart-tps-b3.helmi-2573er.workers.dev/api/history";
-
+	
+/*
     const response = await fetch(url, {
         credentials: "include"
     });
+*/
+
+const response = await fetch(url);
 
     if (!response.ok) {
         return [];
