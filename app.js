@@ -726,6 +726,10 @@ async function publishDashboard() {
         // Download history
         // =====================
 
+
+document.getElementById("status").textContent =
+    "1. Membaca history...";
+
         const history = await downloadHistory(window.githubToken);
 
         console.log("Jumlah history =", history.length);
@@ -782,12 +786,18 @@ async function publishDashboard() {
         // Baru upload
         // =====================
 
-        await uploadGithub();
+        document.getElementById("status").textContent =
+    "2. Upload dashboard...";
 
-        await uploadHistory(
-            window.githubToken,
-            historyBaru
-        );
+await uploadGithub();
+
+document.getElementById("status").textContent =
+    "3. Upload history...";
+
+await uploadHistory(
+    window.githubToken,
+    historyBaru
+);
 
         document.getElementById("status").textContent =
             "Dashboard berhasil dipublish.";
