@@ -782,18 +782,12 @@ async function publishDashboard() {
         // Baru upload
         // =====================
 
-        document.getElementById("status").textContent =
-    "2. Upload dashboard...";
+        await uploadGithub();
 
-await uploadGithub();
-
-document.getElementById("status").textContent =
-    "3. Upload history...";
-
-await uploadHistory(
-    window.githubToken,
-    historyBaru
-);
+        await uploadHistory(
+            window.githubToken,
+            historyBaru
+        );
 
         document.getElementById("status").textContent =
             "Dashboard berhasil dipublish.";
