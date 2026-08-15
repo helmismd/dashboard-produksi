@@ -26,7 +26,16 @@
   "tahunBag": 128339.09999999998,
   "tahunBulk": 112765.49999999997,
   "tahunTotal": 241104.59999999995,
-  "kapal": {},
+  "kapal": {
+    "nama": "KM.TL-XIX",
+    "voyage": "018/08/2026",
+    "opc": "4.131,597 Mts",
+    "pcc": "4.118,314 Mts",
+    "total": "8.249,911 mts",
+    "statusKapal": "🏗️ SANDAR DI JETTY PALARAN",
+    "statusOperasi": "Sedang Bongkar PCC",
+    "update": "2026-08-15 19:40"
+  },
   "fisikSilo": {
     "hari": "Selasa",
     "tanggal": "11-Agt-26",
