@@ -1,40 +1,40 @@
 {
-  "periode": "Jumat, 14 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Sabtu, 15 Agustus 2026 21.20 WITA",
-  "totalOPC": 828,
-  "totalPCC": 1079.1,
-  "totalBag": 816,
-  "totalBulk": 1091.1000000000001,
-  "grandTotal": 1907.1,
-  "bulanOPC": 9056.19,
-  "bulanPCC": 10338.12,
-  "bulanBag": 9743,
-  "bulanBulk": 9651.31,
-  "bulanTotal": 19394.309999999998,
+  "periode": "Sabtu, 15 Agustus 2026",
+  "lastUpdate": "Data terakhir diperbarui : Minggu, 16 Agustus 2026 10.55 WITA",
+  "totalOPC": 897.71,
+  "totalPCC": 824.42,
+  "totalBag": 751,
+  "totalBulk": 971.13,
+  "grandTotal": 1722.13,
+  "bulanOPC": 9953.900000000001,
+  "bulanPCC": 11162.54,
+  "bulanBag": 10494,
+  "bulanBulk": 10622.439999999999,
+  "bulanTotal": 21116.44,
   "labelTanggal": [
-    "14-08-26"
+    "15-08-26"
   ],
   "dataProduksi": [
-    1907.1
+    1722.13
   ],
   "stokSilo": {
-    "opc": 2330.543,
-    "pcc": 1912.003
+    "opc": 3017.822,
+    "pcc": 1779.862
   },
-  "tahunOPC": 107661.93999999997,
-  "tahunPCC": 133442.65999999997,
-  "tahunBag": 128339.09999999998,
-  "tahunBulk": 112765.49999999997,
-  "tahunTotal": 241104.59999999995,
+  "tahunOPC": 108559.64999999998,
+  "tahunPCC": 134267.07999999996,
+  "tahunBag": 129090.09999999998,
+  "tahunBulk": 113736.62999999998,
+  "tahunTotal": 242826.72999999995,
   "kapal": {
     "nama": "KM.TL-XIX",
     "voyage": "018/08/2026",
     "opc": "4.131,597 Mts",
     "pcc": "4.118,314 Mts",
     "total": "8.249,911 mts",
-    "statusKapal": "🏗️ SANDAR DI JETTY PALARAN",
-    "statusOperasi": ": Selesai/komplite Bongkar , lanjut Draught survey dan lepas hose, tks",
-    "update": "16/08/2026 07:41"
+    "statusKapal": "🚢 APPROACH JETTY",
+    "statusOperasi": "09. 12 : Tug line off",
+    "update": "16/08/2026 10:55"
   },
   "fisikSilo": {
     "hari": "Selasa",
