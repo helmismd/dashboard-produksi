@@ -27,14 +27,14 @@
   "tahunBulk": 113736.62999999998,
   "tahunTotal": 242826.72999999995,
   "kapal": {
-    "nama": "KM.TL-XIX",
+    "nama": "KM.TL-XVIII",
     "voyage": "018/08/2026",
-    "opc": "4.131,597 Mts",
-    "pcc": "4.118,314 Mts",
-    "total": "8.249,911 mts",
-    "statusKapal": "🚢 APPROACH JETTY",
-    "statusOperasi": "09. 12 : Tug line off",
-    "update": "16/08/2026 10:55"
+    "opc": "3.016, 014 Mts",
+    "pcc": "5.132,112 Mts",
+    "total": "8.148,126 mts",
+    "statusKapal": "🏗️ SANDAR DI JETTY PALARAN",
+    "statusOperasi": "Inposition/Pilot Away/F.W.E",
+    "update": "16/08/2026 11:31"
   },
   "fisikSilo": {
     "hari": "Selasa",
