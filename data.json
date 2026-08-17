@@ -1,6 +1,6 @@
 {
   "periode": "Minggu, 16 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Senin, 17 Agustus 2026 17.40 WITA",
+  "lastUpdate": "Data terakhir diperbarui : Senin, 17 Agustus 2026 18.02 WITA",
   "totalOPC": 251.84,
   "totalPCC": 432.23,
   "totalBag": 422,
@@ -26,16 +26,7 @@
   "tahunBag": 129512.09999999998,
   "tahunBulk": 113998.69999999998,
   "tahunTotal": 243510.79999999996,
-  "kapal": {
-    "nama": "KM.TL-XVIII",
-    "voyage": "018/08/2026",
-    "opc": "3.016, 014 Mts",
-    "pcc": "5.132,112 Mts",
-    "total": "8.148,126 mts",
-    "statusKapal": "🏗️ SANDAR DI JETTY PALARAN",
-    "statusOperasi": "Bongkaran masih Berlanjut,Estimasi Bongkaran Sore ini -/+ 4.000,000 Mt",
-    "update": "17/08/2026 17:41"
-  },
+  "kapal": {},
   "fisikSilo": {
     "hari": "Selasa",
     "tanggal": "11-Agt-26",
