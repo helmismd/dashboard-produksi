@@ -1,41 +1,32 @@
 {
-  "periode": "Minggu, 16 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Senin, 17 Agustus 2026 17.40 WITA",
-  "totalOPC": 251.84,
-  "totalPCC": 432.23,
-  "totalBag": 422,
-  "totalBulk": 262.07,
-  "grandTotal": 684.07,
-  "bulanOPC": 10205.740000000002,
-  "bulanPCC": 11594.77,
-  "bulanBag": 10916,
-  "bulanBulk": 10884.509999999998,
-  "bulanTotal": 21800.51,
+  "periode": "Kamis, 20 Agustus 2026",
+  "lastUpdate": "Data terakhir diperbarui : Jumat, 21 Agustus 2026 20.46 WITA",
+  "totalOPC": 637.39,
+  "totalPCC": 782.43,
+  "totalBag": 671.5,
+  "totalBulk": 748.32,
+  "grandTotal": 1419.82,
+  "bulanOPC": 12696.5,
+  "bulanPCC": 14995.170000000002,
+  "bulanBag": 14027,
+  "bulanBulk": 13664.669999999998,
+  "bulanTotal": 27691.67,
   "labelTanggal": [
-    "16-08-26"
+    "20-08-26"
   ],
   "dataProduksi": [
-    684.07
+    1419.82
   ],
   "stokSilo": {
-    "opc": 2782.183,
-    "pcc": 3724.226
+    "opc": 3246.915,
+    "pcc": 2635.633
   },
-  "tahunOPC": 108811.48999999998,
-  "tahunPCC": 134699.30999999997,
-  "tahunBag": 129512.09999999998,
-  "tahunBulk": 113998.69999999998,
-  "tahunTotal": 243510.79999999996,
-  "kapal": {
-    "nama": "KM.TL-XVIII",
-    "voyage": "018/08/2026",
-    "opc": "3.016, 014 Mts",
-    "pcc": "5.132,112 Mts",
-    "total": "8.148,126 mts",
-    "statusKapal": "ðï¸ SANDAR DI JETTY PALARAN",
-    "statusOperasi": "Lanjut Bongkar Type PCC",
-    "update": "2026-08-18 19:30"
-  },
+  "tahunOPC": 111302.24999999997,
+  "tahunPCC": 138099.71000000002,
+  "tahunBag": 132623.1,
+  "tahunBulk": 116778.85999999999,
+  "tahunTotal": 249401.96,
+  "kapal": {},
   "fisikSilo": {
     "hari": "Kamis",
     "tanggal": "20-Agt-26",
