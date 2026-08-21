@@ -181,5 +181,14 @@
   },
   {
     "tahun": 2026
+  },
+  {
+    "tahun": 2026,
+    "periode": "Kamis, 20 Agustus 2026",
+    "totalOPC": 637.39,
+    "totalPCC": 782.43,
+    "totalBag": 671.5,
+    "totalBulk": 748.32,
+    "grandTotal": 1419.82
   }
 ]
