@@ -709,106 +709,67 @@ async function publishDashboard() {
 
     try {
 
-    const token = tokenInput.value.trim();
+        document.getElementById("status").textContent =
+            "Mengambil history...";
 
-    window.githubToken = token;
-
-    if (!token) {
-        alert("Masukkan GitHub Token terlebih dahulu.");
-        return;
-    }
-
-    document.getElementById("status").textContent =
-        "Mengupload ke GitHub...";
-
-            
-        // =====================
-        // Download history
-        // =====================
-
-        const history = await downloadHistory(window.githubToken);
-
-        console.log("Jumlah history =", history.length);
-        console.log(history);
+        const history = await downloadHistory();
 
         const dataBaru = {
-
             tahun: new Date().getFullYear(),
-
             periode: dashboardData.periode,
-
             totalOPC: dashboardData.totalOPC,
             totalPCC: dashboardData.totalPCC,
             totalBag: dashboardData.totalBag,
             totalBulk: dashboardData.totalBulk,
             grandTotal: dashboardData.grandTotal
-
         };
-
-
-        // =====================
-        // Update history
-        // =====================
 
         const historyBaru = history.filter(
             item => item.periode !== dashboardData.periode
         );
 
         historyBaru.push(dataBaru);
-	
-	/*
-        // =====================
-        // Hitung Tahunan
-        // =====================
 
-        const hasilTahun =
-            hitungTahunanHistory(
-                historyBaru,
-                new Date().getFullYear()
-            );
+        document.getElementById("status").textContent =
+            "Mengupload melalui Worker...";
 
-        dashboardData.tahunOPC = hasilTahun.opc;
-        dashboardData.tahunPCC = hasilTahun.pcc;
-        dashboardData.tahunBag = hasilTahun.bag;
-        dashboardData.tahunBulk = hasilTahun.bulk;
-        dashboardData.tahunTotal = hasilTahun.total;
-
-        console.log(JSON.stringify(hasilTahun, null, 2));
-        console.log(JSON.stringify(historyBaru, null, 2));
-	*/
-
-
-        // =====================
-        // Baru upload
-        // =====================
-
-        await uploadGithub();
-
-        await uploadHistory(
-            window.githubToken,
-            historyBaru
+        const response = await fetch(
+            "https://smart-tps-b3.helmi-2573er.workers.dev/api/publish-dashboard",
+            {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    dashboardData: dashboardData,
+                    history: historyBaru
+                })
+            }
         );
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+            throw new Error(
+                result.error || "Publish gagal."
+            );
+        }
 
         document.getElementById("status").textContent =
             "Dashboard berhasil dipublish.";
 
+        alert("✅ Dashboard berhasil dipublish.");
+
+    } catch (err) {
+
+        console.error(err);
+
+        alert("Publish gagal:\n" + err.message);
+
+        document.getElementById("status").textContent =
+            "Publish gagal.";
     }
-
-    catch (err) {
-
-        if (err.name !== "AbortError") {
-
-            console.error(err);
-
-            alert(err.message);
-
-            document.getElementById("status").textContent =
-                "Publish gagal.";
-
-        }
-
-    }
-
 }
 // ===========================
 // SIMPAN TOKEN GITHUB
@@ -1660,7 +1621,7 @@ function gantiBannerKapal(namaKapal) {
     // 3. Set gambar ke element
     img.src = kapal
         ? kapal.gambar
-        : "img/tl-xviii.webp";
+        : "img/dermaga-utara.webp";
 
     console.log("GAMBAR BANNER YANG DIPASANG =", img.src);
 }
