@@ -26,7 +26,16 @@
   "tahunBag": 133338.95,
   "tahunBulk": 117620.93999999997,
   "tahunTotal": 250959.88999999998,
-  "kapal": {},
+  "kapal": {
+    "nama": "TL-XIX",
+    "voyage": "VOY-2026-015.",
+    "opc": "0",
+    "pcc": "8.162,452 mts",
+    "total": "8.162,452 mts",
+    "statusKapal": "🚢 BERLAYAR",
+    "statusOperasi": "Full Away Tujuan: Samarinda / ETA: 24/08/2026 08:00",
+    "update": "22/08/2026 12:18"
+  },
   "fisikSilo": {
     "hari": "Kamis",
     "tanggal": "20-Agt-26",
