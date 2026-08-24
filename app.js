@@ -1570,7 +1570,7 @@ const EVENT_POSISI = [
     { cari: "FULL AWAY", status: "🚢 BERLAYAR" },
     /*{ cari: "ETA", status: "🚢 MENUJU DERMAGA" },*/
     { cari: "TUNGGU INFO MASUK ALUR", status: "⏳ MENUNGGU MASUK ALUR" },
-    { cari: "DROP ANCHOR", status: "⚓ BERLABUH" },
+    { cari: "DROP", status: "⚓ BERLABUH" },
     { cari: "LET GO ANCHOR", status: "⚓ BERLABUH" },
     { cari: "LETGO", status: "⚓ BERLABUH" },
     { cari: "SELESAI BERLABUH", status: "⚓ BERLABUH" },
