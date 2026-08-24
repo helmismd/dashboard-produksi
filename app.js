@@ -734,7 +734,7 @@ async function publishDashboard() {
             "Mengupload melalui Worker...";
 
         const response = await fetch(
-            "https://smart-tps-b3.helmi-2573er.workers.dev/api/publish-dashboard",
+            "https://worker-produksi.helmi-2573er.workers.dev/api/publish-dashboard",
             {
                 method: "POST",
                 credentials: "include",
@@ -974,7 +974,7 @@ function pulihkanHasilAnalisaWA() {
 async function downloadHistory(token) {
 
     const url =
-        "https://smart-tps-b3.helmi-2573er.workers.dev/api/history";
+        "https://worker-produksi.helmi-2573er.workers.dev/api/history";
 
     const response = await fetch(url, {
         credentials: "include"
