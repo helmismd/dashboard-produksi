@@ -698,27 +698,6 @@ document.getElementById("waInput").addEventListener("paste", function(e) {
 
 
 
-async function getWorkerSession() {
-    const response = await fetch(
-        "https://worker-produksi.helmi-2573er.workers.dev/api/session",
-        {
-            credentials: "include"
-        }
-    );
-
-    if (!response.ok) {
-        throw new Error("Session Worker tidak valid.");
-    }
-
-    const data = await response.json();
-
-    if (!data.session) {
-        throw new Error("Session Worker tidak ditemukan.");
-    }
-
-    return data.session;
-}
-
 async function publishDashboard() {
 
     console.log("dashboardData =", dashboardData);
@@ -729,13 +708,10 @@ async function publishDashboard() {
     }
 
     try {
-
-        const session = await getWorkerSession();
-
         document.getElementById("status").textContent =
             "Mengambil history...";
 
-        const history = await downloadHistory(session);
+        const history = await downloadHistory();
 
         const dataBaru = {
             tahun: new Date().getFullYear(),
@@ -762,8 +738,7 @@ async function publishDashboard() {
                 method: "POST",
                 credentials: "include",
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${session}`
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     dashboardData: dashboardData,
@@ -795,6 +770,7 @@ async function publishDashboard() {
             "Publish gagal.";
     }
 }
+
 // ===========================
 // SIMPAN TOKEN GITHUB
 // ===========================
@@ -995,16 +971,13 @@ function pulihkanHasilAnalisaWA() {
     document.getElementById("haUpdate").textContent = data.update || "-";
 }
 
-async function downloadHistory(session) {
+async function downloadHistory() {
 
     const url =
         "https://worker-produksi.helmi-2573er.workers.dev/api/history";
 
     const response = await fetch(url, {
         credentials: "include",
-        headers: {
-            "Authorization": `Bearer ${session}`
-        }
     });
 
     if (!response.ok) {
