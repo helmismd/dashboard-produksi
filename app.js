@@ -1706,6 +1706,26 @@ function ambilEventPosisi(teks){
         }
 
         // ==========================
+        // DETEKSI TANGGAL 17-08-2026
+        // ==========================
+        const tgl3 = barisTrim.match(
+            /(\d{1,2})\s*-\s*(\d{1,2})\s*-\s*'?(\d{2,4})/
+        );
+
+        if(tgl3){
+
+            let tahun = tgl3[3];
+
+            if(tahun.length === 2)
+                tahun = "20" + tahun;
+
+            tanggalAktif =
+                tahun + "-" +
+                tgl3[2].padStart(2,"0") + "-" +
+                tgl3[1].padStart(2,"0");
+        }
+
+        // ==========================
         // DETEKSI JAM
         // Bisa 11.50 atau 11. 50
         // ==========================
