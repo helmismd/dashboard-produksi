@@ -698,35 +698,6 @@ document.getElementById("waInput").addEventListener("paste", function(e) {
 
 
 
-function getWorkerSession() {
-    // Session dikirim oleh Worker melalui URL fragment setelah login.
-    // Fragment (#...) tidak dikirim ke server, sehingga token tidak masuk
-    // ke log/request HTTP. Setelah dibaca, token disimpan di sessionStorage.
-    const params = new URLSearchParams(window.location.hash.replace(/^#/, ""));
-    const fromHash = params.get("worker_session");
-
-    if (fromHash) {
-        sessionStorage.setItem("worker_session", fromHash);
-
-        // Bersihkan token dari address bar setelah berhasil disimpan.
-        const cleanUrl =
-            window.location.pathname +
-            window.location.search;
-
-        window.history.replaceState({}, document.title, cleanUrl);
-
-        return fromHash;
-    }
-
-    const saved = sessionStorage.getItem("worker_session");
-
-    if (!saved) {
-        throw new Error("Session Worker tidak ditemukan. Silakan login admin terlebih dahulu.");
-    }
-
-    return saved;
-}
-
 async function publishDashboard() {
 
     console.log("dashboardData =", dashboardData);
@@ -738,12 +709,10 @@ async function publishDashboard() {
 
     try {
 
-        const session = await getWorkerSession();
-
         document.getElementById("status").textContent =
             "Mengambil history...";
 
-        const history = await downloadHistory(session);
+        const history = await downloadHistory();
 
         const dataBaru = {
             tahun: new Date().getFullYear(),
@@ -770,8 +739,7 @@ async function publishDashboard() {
                 method: "POST",
                 credentials: "include",
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${session}`
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     dashboardData: dashboardData,
@@ -1003,16 +971,13 @@ function pulihkanHasilAnalisaWA() {
     document.getElementById("haUpdate").textContent = data.update || "-";
 }
 
-async function downloadHistory(session) {
+async function downloadHistory() {
 
     const url =
         "https://worker-produksi.helmi-2573er.workers.dev/api/history";
 
     const response = await fetch(url, {
-        credentials: "include",
-        headers: {
-            "Authorization": `Bearer ${session}`
-        }
+        credentials: "include"
     });
 
     if (!response.ok) {
