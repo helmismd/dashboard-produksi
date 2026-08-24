@@ -698,25 +698,33 @@ document.getElementById("waInput").addEventListener("paste", function(e) {
 
 
 
-async function getWorkerSession() {
-    const response = await fetch(
-        "https://worker-produksi.helmi-2573er.workers.dev/api/session",
-        {
-            credentials: "include"
-        }
-    );
+function getWorkerSession() {
+    // Session dikirim oleh Worker melalui URL fragment setelah login.
+    // Fragment (#...) tidak dikirim ke server, sehingga token tidak masuk
+    // ke log/request HTTP. Setelah dibaca, token disimpan di sessionStorage.
+    const params = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+    const fromHash = params.get("worker_session");
 
-    if (!response.ok) {
-        throw new Error("Session Worker tidak valid.");
+    if (fromHash) {
+        sessionStorage.setItem("worker_session", fromHash);
+
+        // Bersihkan token dari address bar setelah berhasil disimpan.
+        const cleanUrl =
+            window.location.pathname +
+            window.location.search;
+
+        window.history.replaceState({}, document.title, cleanUrl);
+
+        return fromHash;
     }
 
-    const data = await response.json();
+    const saved = sessionStorage.getItem("worker_session");
 
-    if (!data.session) {
-        throw new Error("Session Worker tidak ditemukan.");
+    if (!saved) {
+        throw new Error("Session Worker tidak ditemukan. Silakan login admin terlebih dahulu.");
     }
 
-    return data.session;
+    return saved;
 }
 
 async function publishDashboard() {
