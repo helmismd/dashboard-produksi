@@ -698,6 +698,27 @@ document.getElementById("waInput").addEventListener("paste", function(e) {
 
 
 
+async function getWorkerSession() {
+    const response = await fetch(
+        "https://worker-produksi.helmi-2573er.workers.dev/api/session",
+        {
+            credentials: "include"
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Session Worker tidak valid.");
+    }
+
+    const data = await response.json();
+
+    if (!data.session) {
+        throw new Error("Session Worker tidak ditemukan.");
+    }
+
+    return data.session;
+}
+
 async function publishDashboard() {
 
     console.log("dashboardData =", dashboardData);
@@ -709,10 +730,12 @@ async function publishDashboard() {
 
     try {
 
+        const session = await getWorkerSession();
+
         document.getElementById("status").textContent =
             "Mengambil history...";
 
-        const history = await downloadHistory();
+        const history = await downloadHistory(session);
 
         const dataBaru = {
             tahun: new Date().getFullYear(),
@@ -739,7 +762,8 @@ async function publishDashboard() {
                 method: "POST",
                 credentials: "include",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${session}`
                 },
                 body: JSON.stringify({
                     dashboardData: dashboardData,
@@ -971,13 +995,16 @@ function pulihkanHasilAnalisaWA() {
     document.getElementById("haUpdate").textContent = data.update || "-";
 }
 
-async function downloadHistory(token) {
+async function downloadHistory(session) {
 
     const url =
         "https://worker-produksi.helmi-2573er.workers.dev/api/history";
 
     const response = await fetch(url, {
-        credentials: "include"
+        credentials: "include",
+        headers: {
+            "Authorization": `Bearer ${session}`
+        }
     });
 
     if (!response.ok) {
