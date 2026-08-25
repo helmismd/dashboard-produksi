@@ -5,6 +5,34 @@
 
 let chartProduksi = null;
 let dashboardData = {};
+// ======================================================
+// SESSION WORKER DARI REDIRECT LOGIN
+// ======================================================
+(function ambilWorkerSession() {
+    const hash = window.location.hash || "";
+    const match = hash.match(/worker_session=([^&]+)/);
+
+    if (match) {
+        const token = decodeURIComponent(match[1]);
+
+        if (token) {
+            localStorage.setItem("worker_session", token);
+            window.workerSession = token;
+        }
+
+        window.history.replaceState(
+            null,
+            document.title,
+            window.location.pathname + window.location.search
+        );
+    } else {
+        const token = localStorage.getItem("worker_session") || "";
+        if (token) {
+            window.workerSession = token;
+        }
+    }
+})();
+
 // ===========================
 // KONFIGURASI GITHUB
 // ===========================
@@ -650,12 +678,6 @@ document.getElementById("resetExcelBtn").addEventListener("click", function(){
     document.getElementById("excelFile").value = "";
 
 });
-document.getElementById("resetExcelBtn").addEventListener("click", function(){
-
-    document.getElementById("excelFile").value = "";
-
-});
-
 document.getElementById("resetWABtn").addEventListener("click", function(){
 
     document.getElementById("waInput").value = "";
@@ -698,31 +720,6 @@ document.getElementById("waInput").addEventListener("paste", function(e) {
 
 
 
-// ======================================================
-// WORKER ADMIN SESSION
-// GitHub Pages tidak dapat mengandalkan cookie dari workers.dev.
-// Token dikirim melalui fragment URL setelah login admin.
-// ======================================================
-function getWorkerSessionToken() {
-    const saved = localStorage.getItem("workerSessionToken");
-    if (saved) return saved;
-
-    const hash = window.location.hash || "";
-    const match = hash.match(/(?:^|[&#])worker_session=([^&]+)/);
-    if (!match) return "";
-
-    const token = decodeURIComponent(match[1]);
-    if (token) {
-        localStorage.setItem("workerSessionToken", token);
-        // Bersihkan token dari address bar setelah disimpan.
-        history.replaceState(null, "", window.location.pathname + window.location.search);
-    }
-    return token;
-}
-
-// Ambil session saat halaman dibuka.
-getWorkerSessionToken();
-
 async function publishDashboard() {
 
     console.log("dashboardData =", dashboardData);
@@ -757,7 +754,10 @@ async function publishDashboard() {
         document.getElementById("status").textContent =
             "Mengupload melalui Worker...";
 
-        const token = getWorkerSessionToken();
+        const token =
+            localStorage.getItem("worker_session") ||
+            window.workerSession ||
+            "";
 
         const headers = {
             "Content-Type": "application/json"
@@ -772,7 +772,7 @@ async function publishDashboard() {
             {
                 method: "POST",
                 credentials: "include",
-                headers: headers,
+                headers,
                 body: JSON.stringify({
                     dashboardData: dashboardData,
                     history: historyBaru
@@ -783,9 +783,7 @@ async function publishDashboard() {
         const result = await response.json();
 
         if (!response.ok || !result.success) {
-            throw new Error(
-                result.error || "Publish gagal."
-            );
+            throw new Error(result.error || "Publish gagal.");
         }
 
         document.getElementById("status").textContent =
@@ -794,11 +792,8 @@ async function publishDashboard() {
         alert("✅ Dashboard berhasil dipublish.");
 
     } catch (err) {
-
         console.error(err);
-
         alert("Publish gagal:\n" + err.message);
-
         document.getElementById("status").textContent =
             "Publish gagal.";
     }
@@ -921,57 +916,6 @@ async function getHistorySHA(token) {
 
 }
 
-/*
-async function downloadHistory(token) {
-
-    const url =
-        `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${HISTORY_FILE}`;
-
-    const response = await fetch(url, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    });
-
-    if (!response.ok) {
-        return [];
-    }
-
-    const json = await response.json();
-
-    const text = decodeURIComponent(
-        escape(atob(json.content.replace(/\n/g, "")))
-    );
-
-    return JSON.parse(text);
-
-}
-
-function hitungTahunanHistory(history, tahun) {
-
-    let hasil = {
-        opc: 0,
-        pcc: 0,
-        bag: 0,
-        bulk: 0,
-        total: 0
-    };
-
-    for (const item of history) {
-
-        if (item.tahun != tahun) continue;
-
-        hasil.opc += Number(item.totalOPC) || 0;
-        hasil.pcc += Number(item.totalPCC) || 0;
-        hasil.bag += Number(item.totalBag) || 0;
-        hasil.bulk += Number(item.totalBulk) || 0;
-        hasil.total += Number(item.grandTotal) || 0;
-    }
-
-    return hasil;
-}
-*/
-
 function pulihkanHasilAnalisaWA() {
 
     const tersimpan = localStorage.getItem("hasilAnalisaWA");
@@ -1009,7 +953,10 @@ async function downloadHistory() {
     const url =
         "https://worker-produksi.helmi-2573er.workers.dev/api/history";
 
-    const token = getWorkerSessionToken();
+    const token =
+        localStorage.getItem("worker_session") ||
+        window.workerSession ||
+        "";
 
     const headers = {
         "Content-Type": "application/json"
@@ -1022,7 +969,7 @@ async function downloadHistory() {
     const response = await fetch(url, {
         method: "GET",
         credentials: "include",
-        headers: headers
+        headers
     });
 
     if (!response.ok) {
