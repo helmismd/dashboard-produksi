@@ -1,6 +1,6 @@
 {
   "periode": "Senin, 24 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Selasa, 25 Agustus 2026 23.03 WITA",
+  "lastUpdate": "Data terakhir diperbarui : Selasa, 25 Agustus 2026 23.23 WITA",
   "totalOPC": 859.63,
   "totalPCC": 593.5,
   "totalBag": 484.5,
@@ -27,13 +27,13 @@
   "tahunBulk": 119867.55999999995,
   "tahunTotal": 254773.50999999995,
   "kapal": {
-    "nama": ": TL-XIX",
-    "voyage": "VOY-2026-015.",
-    "opc": "4.131,391 mt",
-    "pcc": "4.112,687 mt",
-    "total": "8.162,452 mts",
-    "statusKapal": "🚢 APPROACH JETTY",
-    "statusOperasi": "09. 12 : Tug line off",
-    "update": "25/08/2026 23:04"
+    "nama": "",
+    "voyage": "",
+    "opc": "0",
+    "pcc": "0",
+    "total": "0",
+    "statusKapal": "",
+    "statusOperasi": "",
+    "update": ""
   }
 }
