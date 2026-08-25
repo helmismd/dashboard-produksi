@@ -1318,6 +1318,59 @@ const posisiTerakhir = eventTerakhir(eventPosisi);
 let statusKapal = posisiTerakhir ? posisiTerakhir.status : "-";
 
 // ======================================================
+// 🟢 KAPAL SELESAI OPERASI
+// SELESAI BONGKAR + CAST OFF + TUG LINE OFF
+// → kosongkan data kapal dan kembalikan banner ke dermaga
+// ======================================================
+
+const teksUpper = teks.toUpperCase();
+
+const selesaiBongkar =
+    teksUpper.includes("SELESAI BONGKAR") ||
+    teksUpper.includes("SELESAI BONGKARAN");
+
+const adaCastOff =
+    teksUpper.includes("CAST OFF");
+
+const adaTugLineOff =
+    teksUpper.includes("TUG LINE OFF");
+
+const kapalSelesai =
+    selesaiBongkar &&
+    adaCastOff &&
+    adaTugLineOff;
+
+if (kapalSelesai) {
+
+    dashboardData = dashboardData || {};
+
+    dashboardData.kapal = {
+        nama: "",
+        voyage: "",
+        opc: "0",
+        pcc: "0",
+        total: "0",
+        statusKapal: "",
+        statusOperasi: "",
+        update: ""
+    };
+
+    // Hapus data kapal tersimpan agar tidak muncul lagi setelah refresh
+    localStorage.removeItem("hasilAnalisaWA");
+
+    // Kembalikan banner ke Dermaga Utara
+    const banner = document.getElementById("bannerKapal");
+
+    if (banner) {
+        banner.src = "img/dermaga-utara.webp";
+    }
+
+    console.log("KAPAL SELESAI OPERASI → DATA KAPAL DIKOSONGKAN");
+
+}
+
+
+// ======================================================
 // 🟢 WA UPDATE PARSIAL
 // Jika WA hanya berisi update operasi,
 // pertahankan STATUS KAPAL sebelumnya.
