@@ -970,66 +970,32 @@ function pulihkanHasilAnalisaWA() {
 
     if (!tersimpan) return;
 
-    try {
+    const data = JSON.parse(tersimpan);
 
-        const data = JSON.parse(tersimpan);
+    dashboardData = dashboardData || {};
+    dashboardData.kapal = data;
 
-        dashboardData = dashboardData || {};
-        dashboardData.kapal = data;
+    document.getElementById("kapalNama").value = data.nama || "-";
+    document.getElementById("kapalVoyage").value = data.voyage || "-";
+    document.getElementById("kapalOPC").value = data.opc || "0";
+    document.getElementById("kapalPCC").value = data.pcc || "0";
+    document.getElementById("kapalTotal").value = data.total || "0";
+    document.getElementById("kapalStatus").value = data.statusKapal || "-";
+    document.getElementById("kapalStatusOperasi").value = data.statusOperasi || "-";
+    document.getElementById("kapalUpdate").value = data.update || "";
 
-        // ==========================
-        // HASIL ANALISA WA
-        // ==========================
+    document.getElementById("hasilAnalisa").style.display = "block";
 
-        const hasil = document.getElementById("hasilAnalisa");
-
-        if (hasil) {
-            hasil.style.display = "block";
-        }
-
-        const haNama = document.getElementById("haNama");
-        const haVoyage = document.getElementById("haVoyage");
-        const haOPC = document.getElementById("haOPC");
-        const haPCC = document.getElementById("haPCC");
-        const haTotal = document.getElementById("haTotal");
-        const haStatus = document.getElementById("haStatus");
-        const haStatusOperasi = document.getElementById("haStatusOperasi");
-        const haUpdate = document.getElementById("haUpdate");
-
-        if (haNama)
-            haNama.textContent = data.nama || "-";
-
-        if (haVoyage)
-            haVoyage.textContent = data.voyage || "-";
-
-        if (haOPC)
-            haOPC.textContent = data.opc || "0";
-
-        if (haPCC)
-            haPCC.textContent = data.pcc || "0";
-
-        if (haTotal)
-            haTotal.textContent = data.total || "0";
-
-        if (haStatus)
-            haStatus.textContent = data.statusKapal || "-";
-
-        if (haStatusOperasi)
-            haStatusOperasi.textContent =
-                data.statusOperasi || "-";
-
-        if (haUpdate)
-            haUpdate.textContent = data.update || "-";
-
-    } catch (err) {
-
-        console.error(
-            "Gagal memulihkan hasil analisa WA:",
-            err
-        );
-
-    }
+    document.getElementById("haNama").textContent = data.nama || "-";
+    document.getElementById("haVoyage").textContent = data.voyage || "-";
+    document.getElementById("haOPC").textContent = data.opc || "0";
+    document.getElementById("haPCC").textContent = data.pcc || "0";
+    document.getElementById("haTotal").textContent = data.total || "0";
+    document.getElementById("haStatus").textContent = data.statusKapal || "-";
+    document.getElementById("haStatusOperasi").textContent = data.statusOperasi || "-";
+    document.getElementById("haUpdate").textContent = data.update || "-";
 }
+
 async function downloadHistory() {
 
     const url =
@@ -1292,32 +1258,12 @@ let statusKapal = posisiTerakhir ? posisiTerakhir.status : "-";
 // pertahankan STATUS KAPAL sebelumnya.
 // ======================================================
 
-// ======================================================
-// DATA LAMA = ambil dari localStorage terlebih dahulu
-// agar WA parsial tidak menghapus data sebelumnya
-// ======================================================
+const dataLama = dashboardData?.kapal || {};
 
-let dataLama = {};
-
-try {
-    const tersimpan = localStorage.getItem("hasilAnalisaWA");
-
-    if (tersimpan) {
-        dataLama = JSON.parse(tersimpan) || {};
-    }
-} catch (e) {
-    console.warn("Data hasil analisa lama tidak dapat dibaca:", e);
-}
-
-// Jika localStorage kosong, gunakan data memori
-if (!dataLama.nama && dashboardData?.kapal) {
-    dataLama = dashboardData.kapal;
-}
-
-// Pertahankan status kapal jika WA baru tidak punya event posisi
 if (!posisiTerakhir && dataLama.statusKapal) {
     statusKapal = dataLama.statusKapal;
 }
+
 console.log("EVENT POSISI =", eventPosisi);
 console.log("POSISI TERAKHIR =", posisiTerakhir);
 console.log("STATUS KAPAL FINAL =", statusKapal);
@@ -1376,13 +1322,13 @@ console.log("STATUS KAPAL FINAL =", statusKapal);
 
     // 6 Baris logika penyelamat lokal kargo Anda yang terbukti aman
     if (!kapal.nama && !kapal.voyage) {
-    kapal.nama   = "-";
-    kapal.voyage = "-";
-    kapal.opc    = "0";
-    kapal.pcc    = "0";
-    kapal.total  = "0";
-    kapal.status = statusKapal || "-";
-}
+        kapal.nama   = document.getElementById("kapalNama").value || "-";
+        kapal.voyage = document.getElementById("kapalVoyage").value || "-";
+        kapal.opc    = document.getElementById("kapalOPC").value || "0";
+        kapal.pcc    = document.getElementById("kapalPCC").value || "0";
+        kapal.total  = document.getElementById("kapalTotal").value || "0";
+        kapal.status = document.getElementById("kapalStatus").value || statusKapal || "-";
+    }
 
        // Masukkan hasil pembersihan final ke objek memori utama sistem
 dashboardData = dashboardData || {};
@@ -1411,23 +1357,15 @@ dashboardData.kapal = {
             : (dataLama.update || "")
 };
 
-   const kapalNamaEl = document.getElementById("kapalNama");
-const kapalVoyageEl = document.getElementById("kapalVoyage");
-const kapalOPCEl = document.getElementById("kapalOPC");
-const kapalPCCEl = document.getElementById("kapalPCC");
-const kapalTotalEl = document.getElementById("kapalTotal");
-const kapalStatusEl = document.getElementById("kapalStatus");
-const kapalStatusOperasiEl = document.getElementById("kapalStatusOperasi");
-const kapalUpdateEl = document.getElementById("kapalUpdate");
-
-if (kapalNamaEl) kapalNamaEl.value = dashboardData.kapal.nama;
-if (kapalVoyageEl) kapalVoyageEl.value = dashboardData.kapal.voyage;
-if (kapalOPCEl) kapalOPCEl.value = dashboardData.kapal.opc;
-if (kapalPCCEl) kapalPCCEl.value = dashboardData.kapal.pcc;
-if (kapalTotalEl) kapalTotalEl.value = dashboardData.kapal.total;
-if (kapalStatusEl) kapalStatusEl.value = dashboardData.kapal.statusKapal;
-if (kapalStatusOperasiEl) kapalStatusOperasiEl.value = dashboardData.kapal.statusOperasi;
-if (kapalUpdateEl) kapalUpdateEl.value = dashboardData.kapal.update;
+    // Tampilkan hasil murni aman ke elemen form layar HTML Anda
+    document.getElementById("kapalNama").value = dashboardData.kapal.nama;
+    document.getElementById("kapalVoyage").value = dashboardData.kapal.voyage;
+    document.getElementById("kapalOPC").value = dashboardData.kapal.opc;
+    document.getElementById("kapalPCC").value = dashboardData.kapal.pcc;
+    document.getElementById("kapalTotal").value = dashboardData.kapal.total;
+    document.getElementById("kapalStatus").value = dashboardData.kapal.statusKapal;
+    document.getElementById("kapalStatusOperasi").value = dashboardData.kapal.statusOperasi;
+    document.getElementById("kapalUpdate").value = dashboardData.kapal.update;
 
     // Tampilkan ke kotak pratinjau hijau di bawah layar Anda
     document.getElementById("hasilAnalisa").style.display = "block";
