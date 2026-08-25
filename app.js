@@ -1194,16 +1194,17 @@ dashboardData = {
 
     
 function ambilNilai(teks, kataKunci){
+    teks = teks.replace(/\*/g, "");
 
-    teks = teks.replace(/\*/g,"");
-
-    const regex = new RegExp(kataKunci + "\\s*:\\s*(.+)", "i");
+    const regex = new RegExp(
+        "^\\s*" + kataKunci + "\\s*[:.]\\s*(.+)$",
+        "im"
+    );
 
     const hasil = teks.match(regex);
 
     return hasil ? hasil[1].trim() : "";
 }
-
 function deteksiStatusOperasi(teks){
 
     teks = teks.toLowerCase();
