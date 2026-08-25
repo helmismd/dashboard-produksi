@@ -1450,6 +1450,8 @@ const kapalStatusEl = document.getElementById("kapalStatus");
 const kapalStatusOperasiEl = document.getElementById("kapalStatusOperasi");
 const kapalUpdateEl = document.getElementById("kapalUpdate");
 
+*/
+
 if (kapalNamaEl) kapalNamaEl.value = dashboardData.kapal.nama;
 if (kapalVoyageEl) kapalVoyageEl.value = dashboardData.kapal.voyage;
 if (kapalOPCEl) kapalOPCEl.value = dashboardData.kapal.opc;
@@ -1470,7 +1472,6 @@ if (kapalUpdateEl) kapalUpdateEl.value = dashboardData.kapal.update;
     document.getElementById("haStatusOperasi").textContent = statusOperasi;
     document.getElementById("haUpdate").textContent = dashboardData.kapal.update || "-";
 
-*/
 
 // SIMPAN HASIL ANALISA WA
 localStorage.setItem(
