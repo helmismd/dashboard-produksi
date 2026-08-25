@@ -1376,6 +1376,7 @@ console.log("STATUS KAPAL FINAL =", statusKapal);
     }
 
     // 6 Baris logika penyelamat lokal kargo Anda yang terbukti aman
+/*
     if (!kapal.nama && !kapal.voyage) {
     kapal.nama   = "-";
     kapal.voyage = "-";
@@ -1384,7 +1385,7 @@ console.log("STATUS KAPAL FINAL =", statusKapal);
     kapal.total  = "0";
     kapal.status = statusKapal || "-";
 }
-
+*/
        // Masukkan hasil pembersihan final ke objek memori utama sistem
 dashboardData = dashboardData || {};
 
