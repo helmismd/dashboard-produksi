@@ -1,6 +1,6 @@
 {
   "periode": "Senin, 24 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Selasa, 25 Agustus 2026 21.50 WITA",
+  "lastUpdate": "Data terakhir diperbarui : Selasa, 25 Agustus 2026 22.09 WITA",
   "totalOPC": 859.63,
   "totalPCC": 593.5,
   "totalBag": 484.5,
@@ -25,15 +25,5 @@
   "tahunPCC": 140656.71,
   "tahunBag": 134905.95,
   "tahunBulk": 119867.55999999995,
-  "tahunTotal": 254773.50999999995,
-  "kapal": {
-    "nama": "-",
-    "voyage": "-",
-    "opc": "0",
-    "pcc": "8.162,452 mts",
-    "total": "8.162,452 mts",
-    "statusKapal": "🚢 BERLAYAR",
-    "statusOperasi": ": total muatan PCC yang terbongkar+/-: 1.137,100 m/t",
-    "update": "25/08/2026 21:51"
-  }
+  "tahunTotal": 254773.50999999995
 }
