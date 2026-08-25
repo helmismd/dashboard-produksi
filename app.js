@@ -1292,12 +1292,32 @@ let statusKapal = posisiTerakhir ? posisiTerakhir.status : "-";
 // pertahankan STATUS KAPAL sebelumnya.
 // ======================================================
 
-const dataLama = dashboardData?.kapal || {};
+// ======================================================
+// DATA LAMA = ambil dari localStorage terlebih dahulu
+// agar WA parsial tidak menghapus data sebelumnya
+// ======================================================
 
+let dataLama = {};
+
+try {
+    const tersimpan = localStorage.getItem("hasilAnalisaWA");
+
+    if (tersimpan) {
+        dataLama = JSON.parse(tersimpan) || {};
+    }
+} catch (e) {
+    console.warn("Data hasil analisa lama tidak dapat dibaca:", e);
+}
+
+// Jika localStorage kosong, gunakan data memori
+if (!dataLama.nama && dashboardData?.kapal) {
+    dataLama = dashboardData.kapal;
+}
+
+// Pertahankan status kapal jika WA baru tidak punya event posisi
 if (!posisiTerakhir && dataLama.statusKapal) {
     statusKapal = dataLama.statusKapal;
 }
-
 console.log("EVENT POSISI =", eventPosisi);
 console.log("POSISI TERAKHIR =", posisiTerakhir);
 console.log("STATUS KAPAL FINAL =", statusKapal);
