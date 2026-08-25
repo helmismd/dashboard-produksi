@@ -1450,7 +1450,7 @@ const kapalStatusEl = document.getElementById("kapalStatus");
 const kapalStatusOperasiEl = document.getElementById("kapalStatusOperasi");
 const kapalUpdateEl = document.getElementById("kapalUpdate");
 
-*/
+
 
 if (kapalNamaEl) kapalNamaEl.value = dashboardData.kapal.nama;
 if (kapalVoyageEl) kapalVoyageEl.value = dashboardData.kapal.voyage;
@@ -1460,7 +1460,7 @@ if (kapalTotalEl) kapalTotalEl.value = dashboardData.kapal.total;
 if (kapalStatusEl) kapalStatusEl.value = dashboardData.kapal.statusKapal;
 if (kapalStatusOperasiEl) kapalStatusOperasiEl.value = dashboardData.kapal.statusOperasi;
 if (kapalUpdateEl) kapalUpdateEl.value = dashboardData.kapal.update;
-
+*/
     // Tampilkan ke kotak pratinjau hijau di bawah layar Anda
     document.getElementById("hasilAnalisa").style.display = "block";
     document.getElementById("haNama").textContent = dashboardData.kapal.nama;
