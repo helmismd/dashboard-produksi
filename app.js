@@ -1625,7 +1625,11 @@ const EVENT_POSISI = [
     { cari: "INPOST", status: "🏗️ SANDAR DI JETTY PALARAN" },
     { cari: "MULAI BONGKAR", status: "🏗️ SANDAR DI JETTY PALARAN" },
 { cari: "START BONGKAR", status: "🏗️ SANDAR DI JETTY PALARAN" },
-{ cari: "STAR BONGKAR", status: "🏗️ SANDAR DI JETTY PALARAN" }
+{ cari: "STAR BONGKAR", status: "🏗️ SANDAR DI JETTY PALARAN" },
+{ cari: "PILOT ON BOARD", status: "🚢 MENUJU JETTY" },
+{ cari: "P.O.B", status: "🚢 MENUJU JETTY" },
+{ cari: "P O B", status: "🚢 MENUJU JETTY" },
+
 ];
 const BANNER_KAPAL = [
   {
