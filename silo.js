@@ -1,6 +1,6 @@
 
 
-fetch("https://smart-tps-b3.helmi-2573er.workers.dev/api/silo", {
+fetch("https://worker-produksi.helmi-2573er.workers.dev/api/silo", {
     credentials: "include"
 })
 /*fetch("data.json")*/
