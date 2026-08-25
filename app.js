@@ -1476,33 +1476,18 @@ dashboardData.kapal = {
 };
 
 // ======================================================
-// 🟢 KAPAL SELESAI OPERASI
-// Selesai/komplit bongkar + Cast Off + Tug Line Off
+// KAPAL SELESAI BONGKAR
 // ======================================================
 
 const teksUpper = teks.toUpperCase();
 
-const selesaiBongkarSekarang =
-    teksUpper.includes("SELESAI BONGKAR") ||
-    teksUpper.includes("SELESAI/ KOMPLIT BONGKAR") ||
-    teksUpper.includes("SELESAI / KOMPLIT BONGKAR") ||
-    teksUpper.includes("KOMPLIT BONGKAR");
-
-const operasiSebelumnyaBongkar =
-    String(dataLama.statusOperasi || "")
-        .toUpperCase()
-        .includes("BONGKAR");
-
-const castOffSekarang =
-    teksUpper.includes("CAST OFF");
-
-const tugLineOffSekarang =
-    teksUpper.includes("TUG LINE OFF");
-
 const kapalSelesai =
-    (selesaiBongkarSekarang || operasiSebelumnyaBongkar) &&
-    castOffSekarang &&
-    tugLineOffSekarang;
+    (
+        teksUpper.includes("SELESAI BONGKAR") ||
+        teksUpper.includes("KOMPLIT BONGKAR")
+    ) &&
+    teksUpper.includes("CAST OFF") &&
+    teksUpper.includes("TUG LINE OFF");
 
 if (kapalSelesai) {
 
@@ -1517,19 +1502,11 @@ if (kapalSelesai) {
         update: ""
     };
 
-    // Hapus data kapal tersimpan
     localStorage.removeItem("hasilAnalisaWA");
 
-    // Kembalikan banner ke Dermaga Utara
-    const banner = document.getElementById("bannerKapal");
+    statusOperasi = "-";
 
-    if (banner) {
-        banner.src = "img/dermaga-utara.webp";
-    }
-
-    console.log(
-        "KAPAL SELESAI → DATA KAPAL DIKOSONGKAN"
-    );
+    console.log("KAPAL SELESAI → DATA KAPAL DIKOSONGKAN");
 }
 
     
@@ -1859,9 +1836,13 @@ function gantiBannerKapal(namaKapal) {
     });
 
     // 3. Set gambar ke element
+    if (!namaKapal || namaKapal.trim() === "") {
+    img.src = "img/dermaga-utara.webp";
+} else {
     img.src = kapal
         ? kapal.gambar
         : "img/dermaga-utara.webp";
+}
 
     console.log("GAMBAR BANNER YANG DIPASANG =", img.src);
 }
