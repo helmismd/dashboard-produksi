@@ -1322,13 +1322,13 @@ console.log("STATUS KAPAL FINAL =", statusKapal);
 
     // 6 Baris logika penyelamat lokal kargo Anda yang terbukti aman
     if (!kapal.nama && !kapal.voyage) {
-        kapal.nama   = document.getElementById("kapalNama").value || "-";
-        kapal.voyage = document.getElementById("kapalVoyage").value || "-";
-        kapal.opc    = document.getElementById("kapalOPC").value || "0";
-        kapal.pcc    = document.getElementById("kapalPCC").value || "0";
-        kapal.total  = document.getElementById("kapalTotal").value || "0";
-        kapal.status = document.getElementById("kapalStatus").value || statusKapal || "-";
-    }
+    kapal.nama   = "-";
+    kapal.voyage = "-";
+    kapal.opc    = "0";
+    kapal.pcc    = "0";
+    kapal.total  = "0";
+    kapal.status = statusKapal || "-";
+}
 
        // Masukkan hasil pembersihan final ke objek memori utama sistem
 dashboardData = dashboardData || {};
