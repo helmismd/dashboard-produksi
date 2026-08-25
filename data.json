@@ -1,6 +1,6 @@
 {
   "periode": "Senin, 24 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Selasa, 25 Agustus 2026 15.47 WITA",
+  "lastUpdate": "Data terakhir diperbarui : Selasa, 25 Agustus 2026 16.19 WITA",
   "totalOPC": 859.63,
   "totalPCC": 593.5,
   "totalBag": 484.5,
@@ -27,13 +27,13 @@
   "tahunBulk": 119867.55999999995,
   "tahunTotal": 254773.50999999995,
   "kapal": {
-    "nama": "TL-XIX",
+    "nama": "-",
     "voyage": "VOY-2026-015.",
     "opc": "0",
     "pcc": "8.162,452 mts",
     "total": "8.162,452 mts",
-    "statusKapal": "⚓ BERLABUH",
+    "statusKapal": "🏗️ SANDAR DI JETTY PALARAN",
     "statusOperasi": ": star bongkar, tks",
-    "update": "25/08/2026 15:55"
+    "update": "25/08/2026 16:22"
   }
 }
