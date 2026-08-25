@@ -1439,22 +1439,8 @@ dashboardData.kapal = {
             ? terakhir.datetime
             : (dataLama.update || "")
 };
-    statusKapal:
-        posisiTerakhir
-            ? posisiTerakhir.status
-            : (dataLama.statusKapal || kapal.status || "-"),
-
-    statusOperasi:
-        terakhir
-            ? statusOperasi
-            : (dataLama.statusOperasi || "-"),
-
-    update:
-        terakhir
-            ? terakhir.datetime
-            : (dataLama.update || "")
-};
-
+    
+/*
    const kapalNamaEl = document.getElementById("kapalNama");
 const kapalVoyageEl = document.getElementById("kapalVoyage");
 const kapalOPCEl = document.getElementById("kapalOPC");
@@ -1483,6 +1469,8 @@ if (kapalUpdateEl) kapalUpdateEl.value = dashboardData.kapal.update;
     document.getElementById("haStatus").textContent = dashboardData.kapal.statusKapal;
     document.getElementById("haStatusOperasi").textContent = statusOperasi;
     document.getElementById("haUpdate").textContent = dashboardData.kapal.update || "-";
+
+*/
 
 // SIMPAN HASIL ANALISA WA
 localStorage.setItem(
