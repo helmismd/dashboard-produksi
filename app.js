@@ -1292,12 +1292,32 @@ let statusKapal = posisiTerakhir ? posisiTerakhir.status : "-";
 // pertahankan STATUS KAPAL sebelumnya.
 // ======================================================
 
-const dataLama = dashboardData?.kapal || {};
+// ======================================================
+// DATA LAMA = ambil dari localStorage terlebih dahulu
+// agar WA parsial tidak menghapus data sebelumnya
+// ======================================================
 
+let dataLama = {};
+
+try {
+    const tersimpan = localStorage.getItem("hasilAnalisaWA");
+
+    if (tersimpan) {
+        dataLama = JSON.parse(tersimpan) || {};
+    }
+} catch (e) {
+    console.warn("Data hasil analisa lama tidak dapat dibaca:", e);
+}
+
+// Jika localStorage kosong, gunakan data memori
+if (!dataLama.nama && dashboardData?.kapal) {
+    dataLama = dashboardData.kapal;
+}
+
+// Pertahankan status kapal jika WA baru tidak punya event posisi
 if (!posisiTerakhir && dataLama.statusKapal) {
     statusKapal = dataLama.statusKapal;
 }
-
 console.log("EVENT POSISI =", eventPosisi);
 console.log("POSISI TERAKHIR =", posisiTerakhir);
 console.log("STATUS KAPAL FINAL =", statusKapal);
@@ -1368,13 +1388,60 @@ console.log("STATUS KAPAL FINAL =", statusKapal);
 dashboardData = dashboardData || {};
 
 
-dashboardData.kapal = {
-    nama: kapal.nama || dataLama.nama || "-",
-    voyage: kapal.voyage || dataLama.voyage || "-",
-    opc: kapal.opc || dataLama.opc || "0",
-    pcc: kapal.pcc || dataLama.pcc || "0",
-    total: kapal.total || dataLama.total || "0",
+dashboardData = dashboardData || {};
 
+dashboardData.kapal = {
+
+    nama:
+        kapal.nama ||
+        dataLama.nama ||
+        "-",
+
+    voyage:
+        kapal.voyage ||
+        dataLama.voyage ||
+        "-",
+
+    opc:
+        ambilNilai(teks, "Type OPC") ||
+        (
+            ambilNilai(teks, "Type").toUpperCase() === "OPC"
+                ? ambilNilai(teks, "Volume")
+                : ""
+        ) ||
+        dataLama.opc ||
+        "0",
+
+    pcc:
+        ambilNilai(teks, "Type PCC") ||
+        (
+            ambilNilai(teks, "Type").toUpperCase() === "PCC"
+                ? ambilNilai(teks, "Volume")
+                : ""
+        ) ||
+        dataLama.pcc ||
+        "0",
+
+    total:
+        ambilNilai(teks, "Volume") ||
+        dataLama.total ||
+        "0",
+
+    statusKapal:
+        posisiTerakhir
+            ? posisiTerakhir.status
+            : (dataLama.statusKapal || kapal.status || "-"),
+
+    statusOperasi:
+        terakhir
+            ? statusOperasi
+            : (dataLama.statusOperasi || "-"),
+
+    update:
+        terakhir
+            ? terakhir.datetime
+            : (dataLama.update || "")
+};
     statusKapal:
         posisiTerakhir
             ? posisiTerakhir.status
