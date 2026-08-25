@@ -823,17 +823,12 @@ async function publishDashboard() {
 
         const result = await response.json();
 
-        if (response.status === 401) {
-    clearWorkerSession();
-    alert("Sesi login sudah tidak berlaku. Silakan login kembali.");
-    window.location.href = WORKER_URL + "/login";
-    return;
-}
-
-if (response.status === 403) {
-    alert("Akses ditolak. Gunakan kode ADMIN untuk melakukan Publish.");
-    return;
-}
+        if (response.status === 401 || response.status === 403) {
+            clearWorkerSession();
+            alert("Sesi admin sudah tidak berlaku. Silakan login kembali.");
+            window.location.href = WORKER_URL + "/login";
+            return;
+        }
 
         if (!response.ok || !result.success) {
             throw new Error(result.error || "Publish gagal.");
@@ -1179,17 +1174,23 @@ function deteksiStatusOperasi(teks){
 
     teks = teks.toLowerCase();
 
-    if(teks.includes("lanjut bongkar opc"))
-        return "🟢 Sedang Bongkar OPC";
+    if(
+    teks.includes("lanjut bongkar opc") ||
+    teks.includes("start discharge type opc")
+)
+    return "🟢 Sedang Bongkar OPC";
 
-    if(teks.includes("start discharge type opc"))
-        return "🟢 Sedang Bongkar OPC";
+if(
+    teks.includes("lanjut bongkar pcc") ||
+    teks.includes("start discharge type pcc")
+)
+    return "🟢 Sedang Bongkar PCC";
 
-    if(teks.includes("lanjut bongkar pcc"))
-        return "🟢 Sedang Bongkar PCC";
-
-    if(teks.includes("start discharge type pcc"))
-        return "🟢 Sedang Bongkar PCC";
+if(
+    teks.includes("star bongkar") ||
+    teks.includes("start bongkar")
+)
+    return "🟢 Sedang Bongkar PCC";
 
     if(teks.includes("stop bongkar"))
         return "⛔ Stop Bongkar";
@@ -1622,7 +1623,9 @@ const EVENT_POSISI = [
     { cari: "TUG LINE ON", status: "🚢 APPROACH JETTY" },
     { cari: "FIRST LINE", status: "🏗️ SANDAR DI JETTY PALARAN" },
     { cari: "INPOST", status: "🏗️ SANDAR DI JETTY PALARAN" },
-    { cari: "MULAI BONGKAR", status: "🏗️ SANDAR DI JETTY PALARAN" }
+    { cari: "MULAI BONGKAR", status: "🏗️ SANDAR DI JETTY PALARAN" },
+{ cari: "START BONGKAR", status: "🏗️ SANDAR DI JETTY PALARAN" },
+{ cari: "STAR BONGKAR", status: "🏗️ SANDAR DI JETTY PALARAN" }
 ];
 const BANNER_KAPAL = [
   {
