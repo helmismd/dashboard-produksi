@@ -823,12 +823,17 @@ async function publishDashboard() {
 
         const result = await response.json();
 
-        if (response.status === 401 || response.status === 403) {
-            clearWorkerSession();
-            alert("Sesi admin sudah tidak berlaku. Silakan login kembali.");
-            window.location.href = WORKER_URL + "/login";
-            return;
-        }
+        if (response.status === 401) {
+    clearWorkerSession();
+    alert("Sesi login sudah tidak berlaku. Silakan login kembali.");
+    window.location.href = WORKER_URL + "/login";
+    return;
+}
+
+if (response.status === 403) {
+    alert("Akses ditolak. Gunakan kode ADMIN untuk melakukan Publish.");
+    return;
+}
 
         if (!response.ok || !result.success) {
             throw new Error(result.error || "Publish gagal.");
