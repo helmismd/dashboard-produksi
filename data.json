@@ -1,62 +1,29 @@
 {
-  "periode": "Jumat, 21 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Sabtu, 22 Agustus 2026 11.29 WITA",
-  "totalOPC": 763.55,
-  "totalPCC": 794.38,
-  "totalBag": 715.85,
-  "totalBulk": 842.0799999999999,
-  "grandTotal": 1557.9299999999998,
-  "bulanOPC": 13460.05,
-  "bulanPCC": 15789.550000000001,
-  "bulanBag": 14742.85,
-  "bulanBulk": 14506.749999999998,
-  "bulanTotal": 29249.6,
+  "periode": "Minggu, 23 Agustus 2026",
+  "lastUpdate": "Data terakhir diperbarui : Selasa, 25 Agustus 2026 13.38 WITA",
+  "totalOPC": 102.59,
+  "totalPCC": 428.9,
+  "totalBag": 409.5,
+  "totalBulk": 121.99000000000001,
+  "grandTotal": 531.49,
+  "bulanOPC": 14651.42,
+  "bulanPCC": 16958.670000000002,
+  "bulanBag": 15825.35,
+  "bulanBulk": 15784.739999999998,
+  "bulanTotal": 31610.09,
   "labelTanggal": [
-    "21-08-26"
+    "23-08-26"
   ],
   "dataProduksi": [
-    1557.9299999999998
+    531.49
   ],
   "stokSilo": {
-    "opc": 2664.364,
-    "pcc": 1874.248
+    "opc": 1610.536,
+    "pcc": 698.889
   },
-  "tahunOPC": 112065.79999999997,
-  "tahunPCC": 138894.09000000003,
-  "tahunBag": 133338.95,
-  "tahunBulk": 117620.93999999997,
-  "tahunTotal": 250959.88999999998,
-  "kapal": {
-    "nama": "TL-XIX",
-    "voyage": "VOY-2026-015.",
-    "opc": "0",
-    "pcc": "8.162,452 mts",
-    "total": "8.162,452 mts",
-    "statusKapal": "🚢 BERLAYAR",
-    "statusOperasi": "Full Away Tujuan: Samarinda / ETA: 24/08/2026 08:00",
-    "update": "22/08/2026 12:18"
-  },
-  "fisikSilo": {
-    "hari": "Kamis",
-    "tanggal": "20-Agt-26",
-    "silo1_opc": {
-      "mentah": {
-        "l1": 15.3,
-        "l2": 18.6,
-        "l3": 20.9
-      },
-      "rata": 17.4,
-      "tonase": 3246.915
-    },
-    "silo2_pcc": {
-      "mentah": {
-        "l1": 19.1,
-        "l2": 24.9,
-        "l3": 23.4
-      },
-      "rata": 21.47,
-      "tonase": 2635.633
-    },
-    "updateTime": "20/8/2026, 23.05.04"
-  }
+  "tahunOPC": 113257.16999999995,
+  "tahunPCC": 140063.21,
+  "tahunBag": 134421.45,
+  "tahunBulk": 118898.92999999996,
+  "tahunTotal": 253320.37999999998
 }
