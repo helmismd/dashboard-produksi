@@ -5,34 +5,6 @@
 
 let chartProduksi = null;
 let dashboardData = {};
-// ======================================================
-// SESSION WORKER DARI REDIRECT LOGIN
-// ======================================================
-(function ambilWorkerSession() {
-    const hash = window.location.hash || "";
-    const match = hash.match(/worker_session=([^&]+)/);
-
-    if (match) {
-        const token = decodeURIComponent(match[1]);
-
-        if (token) {
-            localStorage.setItem("worker_session", token);
-            window.workerSession = token;
-        }
-
-        window.history.replaceState(
-            null,
-            document.title,
-            window.location.pathname + window.location.search
-        );
-    } else {
-        const token = localStorage.getItem("worker_session") || "";
-        if (token) {
-            window.workerSession = token;
-        }
-    }
-})();
-
 // ===========================
 // KONFIGURASI GITHUB
 // ===========================
@@ -667,6 +639,55 @@ datasets: [{
 }
 
 // ======================================================
+// WORKER SESSION / LOGOUT
+// ======================================================
+
+const WORKER_URL = "https://worker-produksi.helmi-2573er.workers.dev";
+
+function clearWorkerSession() {
+    localStorage.removeItem("worker_session");
+    window.workerSession = "";
+}
+
+function handleWorkerSessionFromHash() {
+    const hash = window.location.hash || "";
+    const match = hash.match(/(?:^|[#&])worker_session=([^&]+)/);
+
+    if (!match) return;
+
+    const token = decodeURIComponent(match[1] || "");
+
+    if (token) {
+        localStorage.setItem("worker_session", token);
+        window.workerSession = token;
+    }
+
+    history.replaceState(
+        null,
+        document.title,
+        window.location.pathname + window.location.search
+    );
+}
+
+handleWorkerSessionFromHash();
+
+window.addEventListener("offline", function () {
+    clearWorkerSession();
+    const status = document.getElementById("status");
+    if (status) status.textContent = "Offline. Sesi login telah dihapus.";
+});
+
+window.addEventListener("pageshow", function () {
+    if (!navigator.onLine) clearWorkerSession();
+});
+
+window.logoutWorker = function () {
+    clearWorkerSession();
+    window.location.href = WORKER_URL + "/logout";
+};
+
+// ======================================================
+// ======================================================
 // PUBLISH DASHBOARD
 // ======================================================
 
@@ -678,6 +699,7 @@ document.getElementById("resetExcelBtn").addEventListener("click", function(){
     document.getElementById("excelFile").value = "";
 
 });
+
 document.getElementById("resetWABtn").addEventListener("click", function(){
 
     document.getElementById("waInput").value = "";
@@ -724,14 +746,30 @@ async function publishDashboard() {
 
     console.log("dashboardData =", dashboardData);
 
+    if (!navigator.onLine) {
+        clearWorkerSession();
+        alert("Perangkat sedang offline. Silakan online dan login kembali.");
+        return;
+    }
+
     if (Object.keys(dashboardData).length === 0) {
         alert("Silakan pilih file Excel terlebih dahulu.");
         return;
     }
 
+    const token =
+        localStorage.getItem("worker_session") ||
+        window.workerSession ||
+        "";
+
+    if (!token) {
+        alert("Sesi login tidak ditemukan. Silakan login kembali.");
+        window.location.href = WORKER_URL + "/login";
+        return;
+    }
+
     try {
-        document.getElementById("status").textContent =
-            "Mengambil history...";
+        document.getElementById("status").textContent = "Mengambil history...";
 
         const history = await downloadHistory();
 
@@ -754,25 +792,16 @@ async function publishDashboard() {
         document.getElementById("status").textContent =
             "Mengupload melalui Worker...";
 
-        const token =
-            localStorage.getItem("worker_session") ||
-            window.workerSession ||
-            "";
-
-        const headers = {
-            "Content-Type": "application/json"
-        };
-
-        if (token) {
-            headers["Authorization"] = `Bearer ${token}`;
-        }
-
         const response = await fetch(
-            "https://worker-produksi.helmi-2573er.workers.dev/api/publish-dashboard",
+            WORKER_URL + "/api/publish-dashboard",
             {
                 method: "POST",
                 credentials: "include",
-                headers,
+                cache: "no-store",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
                 body: JSON.stringify({
                     dashboardData: dashboardData,
                     history: historyBaru
@@ -781,6 +810,13 @@ async function publishDashboard() {
         );
 
         const result = await response.json();
+
+        if (response.status === 401 || response.status === 403) {
+            clearWorkerSession();
+            alert("Sesi admin sudah tidak berlaku. Silakan login kembali.");
+            window.location.href = WORKER_URL + "/login";
+            return;
+        }
 
         if (!response.ok || !result.success) {
             throw new Error(result.error || "Publish gagal.");
@@ -793,9 +829,15 @@ async function publishDashboard() {
 
     } catch (err) {
         console.error(err);
-        alert("Publish gagal:\n" + err.message);
-        document.getElementById("status").textContent =
-            "Publish gagal.";
+
+        if (!navigator.onLine) {
+            clearWorkerSession();
+            alert("Koneksi terputus. Sesi login telah dihapus. Silakan login kembali.");
+        } else {
+            alert("Publish gagal:\n" + err.message);
+        }
+
+        document.getElementById("status").textContent = "Publish gagal.";
     }
 }
 
@@ -916,6 +958,57 @@ async function getHistorySHA(token) {
 
 }
 
+/*
+async function downloadHistory(token) {
+
+    const url =
+        `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${HISTORY_FILE}`;
+
+    const response = await fetch(url, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) {
+        return [];
+    }
+
+    const json = await response.json();
+
+    const text = decodeURIComponent(
+        escape(atob(json.content.replace(/\n/g, "")))
+    );
+
+    return JSON.parse(text);
+
+}
+
+function hitungTahunanHistory(history, tahun) {
+
+    let hasil = {
+        opc: 0,
+        pcc: 0,
+        bag: 0,
+        bulk: 0,
+        total: 0
+    };
+
+    for (const item of history) {
+
+        if (item.tahun != tahun) continue;
+
+        hasil.opc += Number(item.totalOPC) || 0;
+        hasil.pcc += Number(item.totalPCC) || 0;
+        hasil.bag += Number(item.totalBag) || 0;
+        hasil.bulk += Number(item.totalBulk) || 0;
+        hasil.total += Number(item.grandTotal) || 0;
+    }
+
+    return hasil;
+}
+*/
+
 function pulihkanHasilAnalisaWA() {
 
     const tersimpan = localStorage.getItem("hasilAnalisaWA");
@@ -950,30 +1043,40 @@ function pulihkanHasilAnalisaWA() {
 
 async function downloadHistory() {
 
-    const url =
-        "https://worker-produksi.helmi-2573er.workers.dev/api/history";
+    if (!navigator.onLine) {
+        clearWorkerSession();
+        return [];
+    }
 
     const token =
         localStorage.getItem("worker_session") ||
         window.workerSession ||
         "";
 
-    const headers = {
-        "Content-Type": "application/json"
-    };
-
-    if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
+    if (!token) {
+        throw new Error("Sesi login tidak ditemukan.");
     }
 
-    const response = await fetch(url, {
-        method: "GET",
-        credentials: "include",
-        headers
-    });
+    const response = await fetch(
+        WORKER_URL + "/api/history",
+        {
+            method: "GET",
+            credentials: "include",
+            cache: "no-store",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }
+    );
+
+    if (response.status === 401 || response.status === 403) {
+        clearWorkerSession();
+        throw new Error("Sesi login sudah tidak berlaku.");
+    }
 
     if (!response.ok) {
-        return [];
+        throw new Error("Gagal mengambil history.");
     }
 
     return await response.json();
