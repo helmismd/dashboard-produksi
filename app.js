@@ -1504,6 +1504,8 @@ if (kapalSelesai) {
 
     localStorage.removeItem("hasilAnalisaWA");
 
+    gantiBannerKapal("");
+
     statusOperasi = "-";
 
     console.log("KAPAL SELESAI → DATA KAPAL DIKOSONGKAN");
