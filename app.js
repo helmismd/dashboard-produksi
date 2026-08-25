@@ -698,6 +698,31 @@ document.getElementById("waInput").addEventListener("paste", function(e) {
 
 
 
+// ======================================================
+// WORKER ADMIN SESSION
+// GitHub Pages tidak dapat mengandalkan cookie dari workers.dev.
+// Token dikirim melalui fragment URL setelah login admin.
+// ======================================================
+function getWorkerSessionToken() {
+    const saved = localStorage.getItem("workerSessionToken");
+    if (saved) return saved;
+
+    const hash = window.location.hash || "";
+    const match = hash.match(/(?:^|[&#])worker_session=([^&]+)/);
+    if (!match) return "";
+
+    const token = decodeURIComponent(match[1]);
+    if (token) {
+        localStorage.setItem("workerSessionToken", token);
+        // Bersihkan token dari address bar setelah disimpan.
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+    return token;
+}
+
+// Ambil session saat halaman dibuka.
+getWorkerSessionToken();
+
 async function publishDashboard() {
 
     console.log("dashboardData =", dashboardData);
@@ -732,14 +757,22 @@ async function publishDashboard() {
         document.getElementById("status").textContent =
             "Mengupload melalui Worker...";
 
+        const token = getWorkerSessionToken();
+
+        const headers = {
+            "Content-Type": "application/json"
+        };
+
+        if (token) {
+            headers["Authorization"] = `Bearer ${token}`;
+        }
+
         const response = await fetch(
             "https://worker-produksi.helmi-2573er.workers.dev/api/publish-dashboard",
             {
                 method: "POST",
                 credentials: "include",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: headers,
                 body: JSON.stringify({
                     dashboardData: dashboardData,
                     history: historyBaru
@@ -976,8 +1009,20 @@ async function downloadHistory() {
     const url =
         "https://worker-produksi.helmi-2573er.workers.dev/api/history";
 
+    const token = getWorkerSessionToken();
+
+    const headers = {
+        "Content-Type": "application/json"
+    };
+
+    if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+    }
+
     const response = await fetch(url, {
+        method: "GET",
         credentials: "include",
+        headers: headers
     });
 
     if (!response.ok) {
