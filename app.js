@@ -1357,15 +1357,23 @@ dashboardData.kapal = {
             : (dataLama.update || "")
 };
 
-    // Tampilkan hasil murni aman ke elemen form layar HTML Anda
-    document.getElementById("kapalNama").value = dashboardData.kapal.nama;
-    document.getElementById("kapalVoyage").value = dashboardData.kapal.voyage;
-    document.getElementById("kapalOPC").value = dashboardData.kapal.opc;
-    document.getElementById("kapalPCC").value = dashboardData.kapal.pcc;
-    document.getElementById("kapalTotal").value = dashboardData.kapal.total;
-    document.getElementById("kapalStatus").value = dashboardData.kapal.statusKapal;
-    document.getElementById("kapalStatusOperasi").value = dashboardData.kapal.statusOperasi;
-    document.getElementById("kapalUpdate").value = dashboardData.kapal.update;
+   const kapalNamaEl = document.getElementById("kapalNama");
+const kapalVoyageEl = document.getElementById("kapalVoyage");
+const kapalOPCEl = document.getElementById("kapalOPC");
+const kapalPCCEl = document.getElementById("kapalPCC");
+const kapalTotalEl = document.getElementById("kapalTotal");
+const kapalStatusEl = document.getElementById("kapalStatus");
+const kapalStatusOperasiEl = document.getElementById("kapalStatusOperasi");
+const kapalUpdateEl = document.getElementById("kapalUpdate");
+
+if (kapalNamaEl) kapalNamaEl.value = dashboardData.kapal.nama;
+if (kapalVoyageEl) kapalVoyageEl.value = dashboardData.kapal.voyage;
+if (kapalOPCEl) kapalOPCEl.value = dashboardData.kapal.opc;
+if (kapalPCCEl) kapalPCCEl.value = dashboardData.kapal.pcc;
+if (kapalTotalEl) kapalTotalEl.value = dashboardData.kapal.total;
+if (kapalStatusEl) kapalStatusEl.value = dashboardData.kapal.statusKapal;
+if (kapalStatusOperasiEl) kapalStatusOperasiEl.value = dashboardData.kapal.statusOperasi;
+if (kapalUpdateEl) kapalUpdateEl.value = dashboardData.kapal.update;
 
     // Tampilkan ke kotak pratinjau hijau di bawah layar Anda
     document.getElementById("hasilAnalisa").style.display = "block";
