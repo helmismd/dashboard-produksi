@@ -1,29 +1,12 @@
 {
-  "periode": "Senin, 24 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Selasa, 25 Agustus 2026 23.31 WITA",
-  "totalOPC": 859.63,
-  "totalPCC": 593.5,
-  "totalBag": 484.5,
-  "totalBulk": 968.63,
-  "grandTotal": 1453.13,
-  "bulanOPC": 15511.05,
-  "bulanPCC": 17552.170000000002,
-  "bulanBag": 16309.85,
-  "bulanBulk": 16753.37,
-  "bulanTotal": 33063.22,
-  "labelTanggal": [
-    "24-08-26"
-  ],
-  "dataProduksi": [
-    1453.13
-  ],
-  "stokSilo": {
-    "opc": 845.364,
-    "pcc": 345.576
-  },
-  "tahunOPC": 114116.79999999996,
-  "tahunPCC": 140656.71,
-  "tahunBag": 134905.95,
-  "tahunBulk": 119867.55999999995,
-  "tahunTotal": 254773.50999999995
+  "kapal": {
+    "nama": "",
+    "voyage": "",
+    "opc": "0",
+    "pcc": "0",
+    "total": "0",
+    "statusKapal": "",
+    "statusOperasi": "",
+    "update": ""
+  }
 }
