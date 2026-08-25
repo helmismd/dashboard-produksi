@@ -269,21 +269,53 @@ h2{
 /* LAYOUT IMPORT WA + HASIL ANALISA */
 .wa-row {
     display: grid !important;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    grid-template-columns: 420px 620px !important;
     gap: 20px;
     align-items: start;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
 }
 
 .wa-row > .card,
 .wa-row > .hasil-analisa {
     width: 100% !important;
     min-width: 0;
-    margin-top: 0;
+    margin: 0;
     box-sizing: border-box;
 }
 
+/* Perbesar tulisan di area WA */
+.wa-row h3 {
+    font-size: 16px;
+}
+
+.wa-row textarea {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.wa-row button {
+    font-size: 14px;
+    padding: 7px 12px;
+}
+
+/* Perbesar hasil analisa */
+.wa-row .tabel-analisa {
+    width: 100%;
+    font-size: 14px;
+}
+
+.wa-row .tabel-analisa td {
+    padding: 7px 10px;
+}
+
+/* HP */
 @media (max-width: 700px) {
     .wa-row {
         grid-template-columns: 1fr !important;
+        width: 95%;
     }
 }
