@@ -1388,60 +1388,13 @@ console.log("STATUS KAPAL FINAL =", statusKapal);
 dashboardData = dashboardData || {};
 
 
-dashboardData = dashboardData || {};
-
 dashboardData.kapal = {
+    nama: kapal.nama || dataLama.nama || "-",
+    voyage: kapal.voyage || dataLama.voyage || "-",
+    opc: kapal.opc || dataLama.opc || "0",
+    pcc: kapal.pcc || dataLama.pcc || "0",
+    total: kapal.total || dataLama.total || "0",
 
-    nama:
-        kapal.nama ||
-        dataLama.nama ||
-        "-",
-
-    voyage:
-        kapal.voyage ||
-        dataLama.voyage ||
-        "-",
-
-    opc:
-        ambilNilai(teks, "Type OPC") ||
-        (
-            ambilNilai(teks, "Type").toUpperCase() === "OPC"
-                ? ambilNilai(teks, "Volume")
-                : ""
-        ) ||
-        dataLama.opc ||
-        "0",
-
-    pcc:
-        ambilNilai(teks, "Type PCC") ||
-        (
-            ambilNilai(teks, "Type").toUpperCase() === "PCC"
-                ? ambilNilai(teks, "Volume")
-                : ""
-        ) ||
-        dataLama.pcc ||
-        "0",
-
-    total:
-        ambilNilai(teks, "Volume") ||
-        dataLama.total ||
-        "0",
-
-    statusKapal:
-        posisiTerakhir
-            ? posisiTerakhir.status
-            : (dataLama.statusKapal || kapal.status || "-"),
-
-    statusOperasi:
-        terakhir
-            ? statusOperasi
-            : (dataLama.statusOperasi || "-"),
-
-    update:
-        terakhir
-            ? terakhir.datetime
-            : (dataLama.update || "")
-};
     statusKapal:
         posisiTerakhir
             ? posisiTerakhir.status
