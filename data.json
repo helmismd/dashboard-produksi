@@ -1,6 +1,6 @@
 {
   "periode": "Senin, 24 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Selasa, 25 Agustus 2026 16.19 WITA",
+  "lastUpdate": "Data terakhir diperbarui : Selasa, 25 Agustus 2026 21.01 WITA",
   "totalOPC": 859.63,
   "totalPCC": 593.5,
   "totalBag": 484.5,
@@ -30,10 +30,10 @@
     "nama": "TL-XIX",
     "voyage": "VOY-2026-015.",
     "opc": "0",
-    "pcc": "0",
+    "pcc": "8.162,452 mts",
     "total": "8.162,452 mts",
-    "statusKapal": "🏗️ SANDAR DI JETTY PALARAN",
-    "statusOperasi": ": star bongkar, tks",
-    "update": "25/08/2026 16:23"
+    "statusKapal": "🚢 BERLAYAR",
+    "statusOperasi": "Full Away Tujuan: Samarinda / ETA: 24/08/2026 08:00",
+    "update": "25/08/2026 21:02"
   }
 }
