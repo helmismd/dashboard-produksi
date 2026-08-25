@@ -1,39 +1,29 @@
 {
-  "periode": "Minggu, 23 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Selasa, 25 Agustus 2026 15.44 WITA",
-  "totalOPC": 102.59,
-  "totalPCC": 428.9,
-  "totalBag": 409.5,
-  "totalBulk": 121.99000000000001,
-  "grandTotal": 531.49,
-  "bulanOPC": 14651.42,
-  "bulanPCC": 16958.670000000002,
-  "bulanBag": 15825.35,
-  "bulanBulk": 15784.739999999998,
-  "bulanTotal": 31610.09,
+  "periode": "Senin, 24 Agustus 2026",
+  "lastUpdate": "Data terakhir diperbarui : Selasa, 25 Agustus 2026 15.47 WITA",
+  "totalOPC": 859.63,
+  "totalPCC": 593.5,
+  "totalBag": 484.5,
+  "totalBulk": 968.63,
+  "grandTotal": 1453.13,
+  "bulanOPC": 15511.05,
+  "bulanPCC": 17552.170000000002,
+  "bulanBag": 16309.85,
+  "bulanBulk": 16753.37,
+  "bulanTotal": 33063.22,
   "labelTanggal": [
-    "23-08-26"
+    "24-08-26"
   ],
   "dataProduksi": [
-    531.49
+    1453.13
   ],
   "stokSilo": {
-    "opc": 1610.536,
-    "pcc": 698.889
+    "opc": 845.364,
+    "pcc": 345.576
   },
-  "tahunOPC": 113257.16999999995,
-  "tahunPCC": 140063.21,
-  "tahunBag": 134421.45,
-  "tahunBulk": 118898.92999999996,
-  "tahunTotal": 253320.37999999998,
-  "kapal": {
-    "nama": "TL-XIX",
-    "voyage": "VOY-2026-015.",
-    "opc": "0",
-    "pcc": "8.162,452 mts",
-    "total": "8.162,452 mts",
-    "statusKapal": "⚓ BERLABUH",
-    "statusOperasi": ": star bongkar, tks",
-    "update": "25/08/2026 15:45"
-  }
+  "tahunOPC": 114116.79999999996,
+  "tahunPCC": 140656.71,
+  "tahunBag": 134905.95,
+  "tahunBulk": 119867.55999999995,
+  "tahunTotal": 254773.50999999995
 }
