@@ -25,5 +25,15 @@
   "tahunPCC": 140656.71,
   "tahunBag": 134905.95,
   "tahunBulk": 119867.55999999995,
-  "tahunTotal": 254773.50999999995
+  "tahunTotal": 254773.50999999995,
+  "kapal": {
+    "nama": ": TL-XIX",
+    "voyage": "VOY-2026-015.",
+    "opc": "0",
+    "pcc": "8.162,452 mts",
+    "total": "8.162,452 mts",
+    "statusKapal": "🏗️ SANDAR DI JETTY PALARAN",
+    "statusOperasi": ": total muatan PCC yang terbongkar+/-: 1.137,100 m/t",
+    "update": "25/08/2026 23:59"
+  }
 }
