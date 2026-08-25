@@ -771,6 +771,36 @@ async function publishDashboard() {
         document.getElementById("status").textContent =
             "Mengambil history...";
 
+// PERTAHANKAN DATA KAPAL YANG SUDAH TERSIMPAN
+// jika publish Excel tidak membawa data kapal baru
+if (
+    !dashboardData.kapal ||
+    (
+        !dashboardData.kapal.nama &&
+        !dashboardData.kapal.voyage
+    )
+) {
+    const tersimpan = localStorage.getItem("hasilAnalisaWA");
+
+    if (tersimpan) {
+        try {
+            const kapalTersimpan = JSON.parse(tersimpan);
+
+            if (
+                kapalTersimpan.nama &&
+                kapalTersimpan.nama !== "-" &&
+                kapalTersimpan.voyage &&
+                kapalTersimpan.voyage !== "-"
+            ) {
+                dashboardData.kapal = kapalTersimpan;
+            }
+        } catch (e) {
+            console.warn("Data kapal tersimpan tidak valid.");
+        }
+    }
+}
+
+
         const history = await downloadHistory();
 
         const dataBaru = {
