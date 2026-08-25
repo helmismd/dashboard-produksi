@@ -25,5 +25,15 @@
   "tahunPCC": 140063.21,
   "tahunBag": 134421.45,
   "tahunBulk": 118898.92999999996,
-  "tahunTotal": 253320.37999999998
+  "tahunTotal": 253320.37999999998,
+  "kapal": {
+    "nama": "TL-XIX",
+    "voyage": "VOY-2026-015.",
+    "opc": "0",
+    "pcc": "8.162,452 mts",
+    "total": "8.162,452 mts",
+    "statusKapal": "⚓ BERLABUH",
+    "statusOperasi": "04. 28 : P. O. B",
+    "update": "25/08/2026 13:42"
+  }
 }
