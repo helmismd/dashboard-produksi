@@ -998,7 +998,10 @@ function pulihkanHasilAnalisaWA() {
 
     const tersimpan = localStorage.getItem("hasilAnalisaWA");
 
-    if (!tersimpan) return;
+if (!tersimpan) {
+    gantiBannerKapal("");
+    return;
+}
 
     try {
 
@@ -1006,7 +1009,7 @@ function pulihkanHasilAnalisaWA() {
 
         dashboardData = dashboardData || {};
         dashboardData.kapal = data;
-
+gantiBannerKapal(data.nama || "");
         // ==========================
         // HASIL ANALISA WA
         // ==========================
