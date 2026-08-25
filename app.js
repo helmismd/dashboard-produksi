@@ -970,32 +970,66 @@ function pulihkanHasilAnalisaWA() {
 
     if (!tersimpan) return;
 
-    const data = JSON.parse(tersimpan);
+    try {
 
-    dashboardData = dashboardData || {};
-    dashboardData.kapal = data;
+        const data = JSON.parse(tersimpan);
 
-    document.getElementById("kapalNama").value = data.nama || "-";
-    document.getElementById("kapalVoyage").value = data.voyage || "-";
-    document.getElementById("kapalOPC").value = data.opc || "0";
-    document.getElementById("kapalPCC").value = data.pcc || "0";
-    document.getElementById("kapalTotal").value = data.total || "0";
-    document.getElementById("kapalStatus").value = data.statusKapal || "-";
-    document.getElementById("kapalStatusOperasi").value = data.statusOperasi || "-";
-    document.getElementById("kapalUpdate").value = data.update || "";
+        dashboardData = dashboardData || {};
+        dashboardData.kapal = data;
 
-    document.getElementById("hasilAnalisa").style.display = "block";
+        // ==========================
+        // HASIL ANALISA WA
+        // ==========================
 
-    document.getElementById("haNama").textContent = data.nama || "-";
-    document.getElementById("haVoyage").textContent = data.voyage || "-";
-    document.getElementById("haOPC").textContent = data.opc || "0";
-    document.getElementById("haPCC").textContent = data.pcc || "0";
-    document.getElementById("haTotal").textContent = data.total || "0";
-    document.getElementById("haStatus").textContent = data.statusKapal || "-";
-    document.getElementById("haStatusOperasi").textContent = data.statusOperasi || "-";
-    document.getElementById("haUpdate").textContent = data.update || "-";
+        const hasil = document.getElementById("hasilAnalisa");
+
+        if (hasil) {
+            hasil.style.display = "block";
+        }
+
+        const haNama = document.getElementById("haNama");
+        const haVoyage = document.getElementById("haVoyage");
+        const haOPC = document.getElementById("haOPC");
+        const haPCC = document.getElementById("haPCC");
+        const haTotal = document.getElementById("haTotal");
+        const haStatus = document.getElementById("haStatus");
+        const haStatusOperasi = document.getElementById("haStatusOperasi");
+        const haUpdate = document.getElementById("haUpdate");
+
+        if (haNama)
+            haNama.textContent = data.nama || "-";
+
+        if (haVoyage)
+            haVoyage.textContent = data.voyage || "-";
+
+        if (haOPC)
+            haOPC.textContent = data.opc || "0";
+
+        if (haPCC)
+            haPCC.textContent = data.pcc || "0";
+
+        if (haTotal)
+            haTotal.textContent = data.total || "0";
+
+        if (haStatus)
+            haStatus.textContent = data.statusKapal || "-";
+
+        if (haStatusOperasi)
+            haStatusOperasi.textContent =
+                data.statusOperasi || "-";
+
+        if (haUpdate)
+            haUpdate.textContent = data.update || "-";
+
+    } catch (err) {
+
+        console.error(
+            "Gagal memulihkan hasil analisa WA:",
+            err
+        );
+
+    }
 }
-
 async function downloadHistory() {
 
     const url =
