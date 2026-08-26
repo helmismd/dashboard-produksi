@@ -381,11 +381,14 @@ for (let i = 0; i < rows.length; i++) {
 
 // Simpan ke data dashboard
 dashboardData.produksiRinci = monitoringProduk;
+tampilkanProduksiRinci();
 
 console.log(
     "MONITORING PRODUKSI RINCI =",
     monitoringProduk
 );
+
+
 
 
 // ==========================

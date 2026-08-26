@@ -308,6 +308,7 @@ h2{
     font-size: 14px;
 }
 
+
 .wa-row .tabel-analisa td {
     padding: 7px 10px;
 }
@@ -318,4 +319,39 @@ h2{
         grid-template-columns: 1fr !important;
         width: 95%;
     }
+}
+
+/* ======================================================
+   MONITORING PRODUKSI RINCI
+   ====================================================== */
+
+#tabelProduksiZak,
+#tabelProduksiCurah,
+#tabelProduksiJumbo {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 18px 0;
+}
+
+#tabelProduksiZak th,
+#tabelProduksiZak td,
+#tabelProduksiCurah th,
+#tabelProduksiCurah td,
+#tabelProduksiJumbo th,
+#tabelProduksiJumbo td {
+    border: 1px solid #ddd;
+    padding: 7px 10px;
+    text-align: left;
+}
+
+#tabelProduksiZak th,
+#tabelProduksiCurah th,
+#tabelProduksiJumbo th {
+    background: #f2f2f2;
+}
+
+#tabelProduksiZak td:last-child,
+#tabelProduksiCurah td:last-child,
+#tabelProduksiJumbo td:last-child {
+    text-align: right;
 }
