@@ -693,6 +693,80 @@ document.getElementById("tahunBag").textContent =
 document.getElementById("tahunBulk").textContent =
     formatTon(tahunBulk);
 
+// ======================================================
+// TAMPILKAN MONITORING PRODUKSI RINCI
+// ======================================================
+
+function tampilkanProduksiRinci() {
+
+    const data = dashboardData.produksiRinci;
+
+    if (!data) return;
+
+
+    // ==========================
+    // ZAK
+    // ==========================
+
+    const zakBody =
+        document.querySelector("#tabelProduksiZak tbody");
+
+    if (zakBody) {
+
+        zakBody.innerHTML = data.zak.map(x => `
+            <tr>
+                <td>${x.logo}</td>
+                <td>${x.typeKantong}</td>
+                <td>${x.semen}</td>
+                <td>${formatTon(x.ton)}</td>
+            </tr>
+        `).join("");
+
+    }
+
+
+    // ==========================
+    // CURAH
+    // ==========================
+
+    const curahBody =
+        document.querySelector("#tabelProduksiCurah tbody");
+
+    if (curahBody) {
+
+        curahBody.innerHTML = data.curah.map(x => `
+            <tr>
+                <td>${x.produk}</td>
+                <td>${x.semen}</td>
+                <td>${formatTon(x.ton)}</td>
+            </tr>
+        `).join("");
+
+    }
+
+
+    // ==========================
+    // JUMBO
+    // ==========================
+
+    const jumboBody =
+        document.querySelector("#tabelProduksiJumbo tbody");
+
+    if (jumboBody) {
+
+        jumboBody.innerHTML = data.jumbo.map(x => `
+            <tr>
+                <td>${x.produk}</td>
+                <td>${x.semen}</td>
+                <td>${formatTon(x.ton)}</td>
+            </tr>
+        `).join("");
+
+    }
+}
+
+tampilkanProduksiRinci();
+
 document.getElementById("tahunTotal").textContent =
     formatTon(tahunTotal);
 
