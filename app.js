@@ -182,6 +182,211 @@ let bulanTotal = 0;
             defval:""
         });
 
+// ======================================================
+// MONITORING PRODUKSI RINCI LHP
+// ZAK + CURAH + JUMBO
+// ======================================================
+
+const monitoringProduk = {
+    zak: [],
+    curah: [],
+    jumbo: []
+};
+
+for (let i = 0; i < rows.length; i++) {
+
+    const produk = String(rows[i][1] || "")
+        .trim();
+
+    const upper = produk.toUpperCase();
+
+    const ton = Number(rows[i][3]) || 0;
+
+    if (!produk || ton === 0) continue;
+
+
+    // ==================================================
+    // ZAK
+    // ==================================================
+
+    if (upper.includes("BAG")) {
+
+        const ukuran = upper.match(
+            /(\d+(?:[.,]\d+)?)\s*KG/
+        );
+
+        const semenMatch = upper.match(
+            /\b(OPC|PCC)\b/
+        );
+
+        const typeKantong =
+            ukuran ? ukuran[1] + " KG" : "-";
+
+        const semen =
+            semenMatch ? semenMatch[1] : "-";
+
+        // Ambil nama/logo sebelum tulisan BAG
+        const posisiBag = upper.indexOf("BAG");
+
+        let logo =
+            posisiBag >= 0
+                ? produk.substring(0, posisiBag).trim()
+                : produk;
+
+        if (!logo) logo = "-";
+
+
+        const key =
+            logo.toUpperCase() +
+            "|" +
+            typeKantong +
+            "|" +
+            semen;
+
+
+        const ada = monitoringProduk.zak.find(
+            x => x.key === key
+        );
+
+        if (ada) {
+
+            ada.ton += ton;
+
+        } else {
+
+            monitoringProduk.zak.push({
+
+                key: key,
+
+                logo: logo,
+
+                typeKantong: typeKantong,
+
+                semen: semen,
+
+                ton: ton
+
+            });
+
+        }
+
+    }
+
+
+    // ==================================================
+    // CURAH
+    // ==================================================
+
+    else if (upper.includes("CURAH")) {
+
+        const nama =
+            upper.includes("ULTRAPRO")
+                ? "UltraPro"
+                : upper.includes("EZPRO")
+                    ? "EZPRO"
+                    : produk;
+
+        const semenMatch =
+            upper.match(/\b(OPC|PCC)\b/);
+
+        const semen =
+            semenMatch ? semenMatch[1] : "-";
+
+        const key =
+            nama.toUpperCase() +
+            "|" +
+            semen;
+
+        const ada =
+            monitoringProduk.curah.find(
+                x => x.key === key
+            );
+
+        if (ada) {
+
+            ada.ton += ton;
+
+        } else {
+
+            monitoringProduk.curah.push({
+
+                key: key,
+
+                produk: nama,
+
+                semen: semen,
+
+                ton: ton
+
+            });
+
+        }
+
+    }
+
+
+    // ==================================================
+    // JUMBO
+    // ==================================================
+
+    else if (upper.includes("JUMBO")) {
+
+        const nama =
+            upper.includes("ULTRAPRO")
+                ? "UltraPro"
+                : upper.includes("EZPRO")
+                    ? "EZPRO"
+                    : produk;
+
+        const semenMatch =
+            upper.match(/\b(OPC|PCC)\b/);
+
+        const semen =
+            semenMatch ? semenMatch[1] : "-";
+
+        const key =
+            nama.toUpperCase() +
+            "|" +
+            semen;
+
+        const ada =
+            monitoringProduk.jumbo.find(
+                x => x.key === key
+            );
+
+        if (ada) {
+
+            ada.ton += ton;
+
+        } else {
+
+            monitoringProduk.jumbo.push({
+
+                key: key,
+
+                produk: nama,
+
+                semen: semen,
+
+                ton: ton
+
+            });
+
+        }
+
+    }
+
+}
+
+
+// Simpan ke data dashboard
+dashboardData.produksiRinci = monitoringProduk;
+
+console.log(
+    "MONITORING PRODUKSI RINCI =",
+    monitoringProduk
+);
+
 
 // ==========================
 // HITUNG PRODUKSI BULANAN
