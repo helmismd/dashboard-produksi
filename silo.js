@@ -18,7 +18,7 @@ document.getElementById("periode").textContent =
     // KONSTANTA
     // ==========================
     const kapasitas = 6000;
-    const deadStock = 200;
+    const deadStock = 300;
     const batasWaspada = 50;
 
     // ==========================
