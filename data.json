@@ -1,39 +1,29 @@
 {
-  "periode": "Kamis, 27 Agustus 2026",
-  "lastUpdate": "Data terakhir diperbarui : Jumat, 28 Agustus 2026 10.11 WITA",
+  "periode": "Sabtu, 29 Agustus 2026",
+  "lastUpdate": "Data terakhir diperbarui : Minggu, 30 Agustus 2026 10.55 WITA",
   "totalOPC": 0,
-  "totalPCC": 1438.0900000000001,
-  "totalBag": 1072.5,
-  "totalBulk": 365.59000000000003,
-  "grandTotal": 1438.0900000000001,
+  "totalPCC": 1504.02,
+  "totalBag": 739,
+  "totalBulk": 765.02,
+  "grandTotal": 1504.02,
   "bulanOPC": 15954.18,
-  "bulanPCC": 21191.07,
-  "bulanBag": 19146.1,
-  "bulanBulk": 17999.15,
-  "bulanTotal": 37145.25,
+  "bulanPCC": 24234.14,
+  "bulanBag": 20752.6,
+  "bulanBulk": 19435.72,
+  "bulanTotal": 40188.32,
   "labelTanggal": [
-    "27-08-26"
+    "29-08-26"
   ],
   "dataProduksi": [
-    1438.0900000000001
+    1504.02
   ],
   "stokSilo": {
     "opc": 237.651,
-    "pcc": 4290.545
+    "pcc": 1767.277
   },
   "tahunOPC": 114559.92999999995,
-  "tahunPCC": 144295.61000000002,
-  "tahunBag": 137742.2,
-  "tahunBulk": 121113.33999999995,
-  "tahunTotal": 258855.53999999998,
-  "kapal": {
-    "nama": "",
-    "voyage": "",
-    "opc": "0",
-    "pcc": "0",
-    "total": "0",
-    "statusKapal": "",
-    "statusOperasi": "",
-    "update": ""
-  }
+  "tahunPCC": 147338.68,
+  "tahunBag": 139348.7,
+  "tahunBulk": 122549.90999999995,
+  "tahunTotal": 261898.60999999996
 }
