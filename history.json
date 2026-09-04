@@ -271,5 +271,14 @@
     "totalBag": 632,
     "totalBulk": 157.06,
     "grandTotal": 789.06
+  },
+  {
+    "tahun": 2026,
+    "periode": "Kamis, 03 September 2026",
+    "totalOPC": 0,
+    "totalPCC": 0,
+    "totalBag": 0,
+    "totalBulk": 0,
+    "grandTotal": 0
   }
 ]
