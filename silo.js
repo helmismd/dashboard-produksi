@@ -48,7 +48,7 @@ document.getElementById("periode").textContent =
         if(stok <= deadStock){
 
             level.style.background="#d60000";
-            status.textContent="KRITIS";
+            status.textContent="STOKOUT";
             status.style.color="#d60000";
 
         }
