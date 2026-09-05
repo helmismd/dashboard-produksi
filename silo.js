@@ -122,9 +122,9 @@ if(data.kapal){
 })
 .catch(error=>{
 
-    console.error("ERROR SILO:", error);
+    console.error(error);
 
     document.getElementById("lastUpdate").textContent =
-        "Gagal: " + error.message;
+        "Silahkan Login Admin";
 
 });
