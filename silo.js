@@ -122,9 +122,9 @@ if(data.kapal){
 })
 .catch(error=>{
 
-    console.error(error);
+    console.error("ERROR SILO:", error);
 
     document.getElementById("lastUpdate").textContent =
-        "Gagal membaca data.json";
+        "Gagal: " + error.message;
 
 });
