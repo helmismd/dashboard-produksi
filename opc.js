@@ -27,8 +27,8 @@ function hitungVolumeSilo1(rataSilo1) {
     // Amankan agar angka volume tidak menghasilkan nilai minus di bawah nol
     if (volumeSilo < 0) volumeSilo = 0;
 
-    // 2. Kalikan dengan Faktor Kepadatan Semen OPC (LW = 1.2751)
-    const isiSiloTon = volumeSilo * 1.2751;
+    // 2. Kalikan dengan Faktor Kepadatan Semen OPC (LW = 1.2688)
+    const isiSiloTon = volumeSilo * 1.2688;
 
     console.log(`[CALCULATOR OPC] Rata: ${rataSilo1}m | Volume: ${volumeSilo.toFixed(3)} m3 | Hasil Akhir: ${isiSiloTon.toFixed(3)} Ton`);
 

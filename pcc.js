@@ -17,8 +17,8 @@ function hitungVolumeSilo2(rataSilo2) {
     // Pengaman utama dari nilai minus di bawah nol
     if (volumeSilo < 0) volumeSilo = 0;
     
-    // Kalikan dengan Faktor Kepadatan Semen PCC (LW = 1.2258)
-    const isiSiloTon = volumeSilo * 1.2258;
+    // Kalikan dengan Faktor Kepadatan Semen PCC (LW = 1.2217)
+    const isiSiloTon = volumeSilo * 1.2217;
     
     return { 
         volume: parseFloat(volumeSilo.toFixed(3)), 
