@@ -176,7 +176,7 @@ if (kode) {
             volumeSilo = 5226 - (154 * rataSilo1) + (0.4 * Math.pow((rataSilo1 - 27.25), 3));
         }
         if (volumeSilo < 0) volumeSilo = 0;
-        return { volume: volumeSilo, tonase: volumeSilo * 1.2751 };
+        return { volume: volumeSilo, tonase: volumeSilo * 1.2688 };
     }
 
     // 🟢 MATEMATIKA INTERNAL SILO 2 (PCC) - RUMUS ASLI 100% SUKSES
@@ -190,7 +190,7 @@ if (kode) {
             volumeSilo = 5456 - (154 * rataSilo2) + (0.4 * Math.pow((rataSilo2 - 28.75), 3));
         }
         if (volumeSilo < 0) volumeSilo = 0;
-        return { volume: volumeSilo, tonase: volumeSilo * 1.2258 };
+        return { volume: volumeSilo, tonase: volumeSilo * 1.2217 };
     }
 
     function hitungRataRataLive() {
