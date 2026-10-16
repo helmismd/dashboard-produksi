@@ -1778,8 +1778,10 @@ const kapalSelesai =
     ||
     teksUpper.includes("ETA BIRINGKASSI")
     ||
-    teksUpper.includes("ETA TUBAN");
-
+    teksUpper.includes("ETA TUBAN")
+    ||
+    teksUpper.includes("TD SAMARINDA");
+    
 if (kapalSelesai) {
 
     dashboardData.kapal = {
