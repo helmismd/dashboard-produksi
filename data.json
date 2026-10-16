@@ -1,6 +1,6 @@
 {
   "periode": "Kamis, 15 Oktober 2026",
-  "lastUpdate": "Data terakhir diperbarui : Jumat, 16 Oktober 2026 13.25 WITA",
+  "lastUpdate": "Data terakhir diperbarui : Jumat, 16 Oktober 2026 13.37 WITA",
   "totalOPC": 206.83,
   "totalPCC": 0,
   "totalBag": 0,
@@ -33,7 +33,7 @@
     "pcc": "0",
     "total": "8.194,763 Mt",
     "statusKapal": "🚢 BERLAYAR",
-    "statusOperasi": "TD Samarinda",
+    "statusOperasi": "Selesai Bongkar",
     "update": "2026-10-13 06:30"
   }
 }
