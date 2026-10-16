@@ -1768,11 +1768,17 @@ const teksUpper = teks.toUpperCase();
 
 const kapalSelesai =
     (
-        teksUpper.includes("SELESAI BONGKAR") ||
-        teksUpper.includes("KOMPLIT BONGKAR")
-    ) &&
-    teksUpper.includes("CAST OFF") &&
-    teksUpper.includes("TUG LINE OFF");
+        (
+            teksUpper.includes("SELESAI BONGKAR") ||
+            teksUpper.includes("KOMPLIT BONGKAR")
+        ) &&
+        teksUpper.includes("CAST OFF") &&
+        teksUpper.includes("TUG LINE OFF")
+    )
+    ||
+    teksUpper.includes("TD BIRINGKASSI")
+    ||
+    teksUpper.includes("TD TUBAN");
 
 if (kapalSelesai) {
 
