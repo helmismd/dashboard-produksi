@@ -289,5 +289,14 @@
     "totalBag": 0,
     "totalBulk": 0,
     "grandTotal": 0
+  },
+  {
+    "tahun": 2026,
+    "periode": "Kamis, 15 Oktober 2026",
+    "totalOPC": 206.83,
+    "totalPCC": 0,
+    "totalBag": 0,
+    "totalBulk": 206.83,
+    "grandTotal": 206.83
   }
 ]
