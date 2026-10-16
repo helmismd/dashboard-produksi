@@ -1,6 +1,6 @@
 {
   "periode": "Kamis, 15 Oktober 2026",
-  "lastUpdate": "Data terakhir diperbarui : Jumat, 16 Oktober 2026 19.09 WITA",
+  "lastUpdate": "Data terakhir diperbarui : Jumat, 16 Oktober 2026 19.55 WITA",
   "totalOPC": 206.83,
   "totalPCC": 0,
   "totalBag": 0,
@@ -25,5 +25,15 @@
   "tahunPCC": 158652.94000000003,
   "tahunBag": 149061.2,
   "tahunBulk": 130841.14000000001,
-  "tahunTotal": 279902.34
+  "tahunTotal": 279902.34,
+  "kapal": {
+    "nama": "SPB.Tonasa Line XVIII",
+    "voyage": "020/10/2026",
+    "opc": "0",
+    "pcc": "0",
+    "total": "8.194,763 Mt",
+    "statusKapal": "🚢 BERLAYAR",
+    "statusOperasi": "TD Samarinda",
+    "update": "2026-10-13 06:30"
+  }
 }
