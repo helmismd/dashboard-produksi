@@ -1,31 +1,31 @@
 {
-  "periode": "Minggu, 11 Oktober 2026",
-  "lastUpdate": "Data terakhir diperbarui : Jumat, 16 Oktober 2026 09.43 WITA",
-  "totalOPC": 0,
+  "periode": "Kamis, 15 Oktober 2026",
+  "lastUpdate": "Data terakhir diperbarui : Jumat, 16 Oktober 2026 13.25 WITA",
+  "totalOPC": 206.83,
   "totalPCC": 0,
   "totalBag": 0,
-  "totalBulk": 0,
-  "grandTotal": 0,
-  "bulanOPC": 0,
-  "bulanPCC": 427.87,
-  "bulanBag": 327,
-  "bulanBulk": 100.87,
-  "bulanTotal": 427.87,
+  "totalBulk": 206.83,
+  "grandTotal": 206.83,
+  "bulanOPC": 3899.13,
+  "bulanPCC": 4399.83,
+  "bulanBag": 3696,
+  "bulanBulk": 4602.96,
+  "bulanTotal": 8298.96,
   "labelTanggal": [
-    "11-10-26"
+    "15-10-26"
   ],
   "dataProduksi": [
-    0
+    206.83
   ],
   "stokSilo": {
-    "opc": 828.771,
-    "pcc": 3743.126
+    "opc": 75.377,
+    "pcc": 136.853
   },
-  "tahunOPC": 117350.27,
-  "tahunPCC": 154680.98,
-  "tahunBag": 145692.2,
-  "tahunBulk": 126339.05,
-  "tahunTotal": 272031.25,
+  "tahunOPC": 121249.40000000001,
+  "tahunPCC": 158652.94000000003,
+  "tahunBag": 149061.2,
+  "tahunBulk": 130841.14000000001,
+  "tahunTotal": 279902.34,
   "kapal": {
     "nama": "SPB.Tonasa Line XVIII",
     "voyage": "020/10/2026",
