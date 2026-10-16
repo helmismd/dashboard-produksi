@@ -1776,9 +1776,9 @@ const kapalSelesai =
         teksUpper.includes("TUG LINE OFF")
     )
     ||
-    teksUpper.includes("TD BIRINGKASSI")
+    teksUpper.includes("ETA BIRINGKASSI")
     ||
-    teksUpper.includes("TD TUBAN");
+    teksUpper.includes("ETA TUBAN");
 
 if (kapalSelesai) {
 
