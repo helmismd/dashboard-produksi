@@ -1,21 +1,21 @@
 {
-  "periode": "Kamis, 15 Oktober 2026",
-  "lastUpdate": "Data terakhir diperbarui : Jumat, 16 Oktober 2026 19.55 WITA",
-  "totalOPC": 206.83,
+  "periode": "Jumat, 16 Oktober 2026",
+  "lastUpdate": "Data terakhir diperbarui : Sabtu, 17 Oktober 2026 10.04 WITA",
+  "totalOPC": 0,
   "totalPCC": 0,
   "totalBag": 0,
-  "totalBulk": 206.83,
-  "grandTotal": 206.83,
+  "totalBulk": 0,
+  "grandTotal": 0,
   "bulanOPC": 3899.13,
   "bulanPCC": 4399.83,
   "bulanBag": 3696,
   "bulanBulk": 4602.96,
   "bulanTotal": 8298.96,
   "labelTanggal": [
-    "15-10-26"
+    "16-10-26"
   ],
   "dataProduksi": [
-    206.83
+    0
   ],
   "stokSilo": {
     "opc": 75.377,
@@ -25,15 +25,5 @@
   "tahunPCC": 158652.94000000003,
   "tahunBag": 149061.2,
   "tahunBulk": 130841.14000000001,
-  "tahunTotal": 279902.34,
-  "kapal": {
-    "nama": "SPB.Tonasa Line XVIII",
-    "voyage": "020/10/2026",
-    "opc": "0",
-    "pcc": "0",
-    "total": "8.194,763 Mt",
-    "statusKapal": "🚢 BERLAYAR",
-    "statusOperasi": "TD Samarinda",
-    "update": "2026-10-13 06:30"
-  }
+  "tahunTotal": 279902.34
 }
