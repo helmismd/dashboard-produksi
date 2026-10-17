@@ -1767,19 +1767,8 @@ dashboardData.kapal = {
 const teksUpper = teks.toUpperCase();
 
 const kapalSelesai =
-    (
-        (
-            teksUpper.includes("SELESAI BONGKAR") ||
-            teksUpper.includes("KOMPLIT BONGKAR")
-        ) &&
-        teksUpper.includes("CAST OFF") &&
-        teksUpper.includes("TUG LINE OFF")
-    )
-    ||
-    teksUpper.includes("ETA BIRINGKASSI")
-    ||
-    teksUpper.includes("ETA TUBAN")
-    ||
+    teksUpper.includes("ETA BIRINGKASSI") ||
+    teksUpper.includes("ETA TUBAN") ||
     teksUpper.includes("TD SAMARINDA");
     
 if (kapalSelesai) {
